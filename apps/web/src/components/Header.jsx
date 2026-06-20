@@ -22,7 +22,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center justify-between py-3 lg:h-20 lg:py-0 gap-3 lg:gap-0">
+        <div className="flex flex-col lg:flex-row items-center justify-between py-3 lg:py-3 gap-3 lg:gap-0">
           
           {/* Logo & CTA Row (Mobile view keeps them inline) */}
           <div className="flex items-center justify-between w-full lg:w-auto">
@@ -30,7 +30,7 @@ const Header = () => {
               <img 
                 src="/logo-scoopy-asheville.png" 
                 alt="Scoopy Chatt pet waste removal logo" 
-                className="w-[60px] md:w-[75px] h-auto object-contain"
+                className="w-[120px] md:w-[150px] h-auto object-contain"
               />
             </Link>
             
