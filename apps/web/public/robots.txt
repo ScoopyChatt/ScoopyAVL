@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /reddit-oauth-callback
+Disallow: /qb-oauth-callback
+Disallow: /thank-you
+Sitemap: https://www.scoopyavl.com/sitemap.xml

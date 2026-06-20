@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["curl", "unzip"]
+
+[phases.install]
+cmds = []
+
+[phases.build]
+cmds = []
+
+[start]
+cmd = "curl -fsSL https://github.com/pocketbase/pocketbase/releases/download/v0.38.0/pocketbase_0.38.0_linux_amd64.zip -o /tmp/pb.zip && unzip -o -q /tmp/pb.zip pocketbase && chmod +x pocketbase && ./pocketbase serve --http=0.0.0.0:$PORT --dir=./pb_data"

@@ -1,0 +1,136 @@
+{
+  "rewrites": [
+    {
+      "source": "/faq",
+      "destination": "/faq/index.html"
+    },
+    {
+      "source": "/comparison",
+      "destination": "/comparison/index.html"
+    },
+    {
+      "source": "/dp/:path*",
+      "destination": "/api/dp-gone"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/products/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/products/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/pricing",
+      "destination": "/quote",
+      "permanent": true
+    },
+    {
+      "source": "/about-us",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/about-us/",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/our-services",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/our-services/",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/quote",
+      "permanent": true
+    },
+    {
+      "source": "/contact/",
+      "destination": "/quote",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us",
+      "destination": "/quote",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us/",
+      "destination": "/quote",
+      "permanent": true
+    },
+    {
+      "source": "/service-area",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/service-area/",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/quoterequest",
+      "destination": "/quote",
+      "permanent": true
+    },
+    {
+      "source": "/quoterequest/",
+      "destination": "/quote",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/dp/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/faq",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        }
+      ]
+    },
+    {
+      "source": "/comparison",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        }
+      ]
+    }
+  ],
+  "buildCommand": "npm install --prefix apps/web && npm run build --prefix apps/web && node apps/web/tools/inject-seo.cjs && node apps/web/tools/generate-sitemap.cjs && node apps/web/tools/create-static-pages.cjs",
+  "outputDirectory": "dist/apps/web"
+}

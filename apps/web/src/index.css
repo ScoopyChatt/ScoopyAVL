@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark Theme (Scoopy Doo Brand) - Default globally applied */
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+    
+    --card: 223 47% 14%;
+    --card-foreground: 210 40% 98%;
+    
+    --popover: 223 47% 14%;
+    --popover-foreground: 210 40% 98%;
+    
+    /* Primary: Scoopy Doo Orange */
+    --primary: 32 100% 59%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Secondary: Deep Blue/Navy */
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
+    
+    /* Muted: Dark slate for subtle backgrounds */
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20% 65%;
+    
+    /* Accent: Teal/Green for eco-friendly vibes */
+    --accent: 175 70% 41%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 32 100% 59%;
+    
+    --radius: 0.75rem;
+  }
+
+  .light {
+    /* Optional Light Theme Toggle */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 32 100% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 175 70% 41%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 32 100% 59%;
+  }
+
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Outfit", sans-serif;
+    @apply text-balance;
+  }
+
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight; letter-spacing: -0.02em; }
+  h2 { @apply text-3xl md:text-4xl font-bold tracking-tight leading-snug; }
+  h3 { @apply text-2xl md:text-3xl font-semibold leading-snug; }
+  p { @apply leading-relaxed max-w-[65ch]; }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .container-shell {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .section-spacing {
+    @apply py-20 md:py-28;
+  }
+  
+  .pricing-row {
+    @apply flex flex-col lg:flex-row gap-6 lg:gap-8 items-start lg:items-center bg-card p-6 md:p-8 rounded-2xl shadow-sm border border-border hover:shadow-md hover:border-primary/50 transition-all duration-300;
+  }
+  
+  .testimonial-masonry {
+    @apply columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6;
+  }
+
+  /* Blog Prose Styles - Optimized for dark theme readability */
+  .blog-prose {
+    @apply max-w-none text-foreground leading-relaxed text-lg;
+  }
+  .blog-prose h2 {
+    @apply text-3xl font-bold mt-12 mb-6 text-foreground;
+  }
+  .blog-prose h3 {
+    @apply text-2xl font-semibold mt-8 mb-4 text-foreground/90;
+  }
+  .blog-prose p {
+    @apply mb-6 text-muted-foreground;
+  }
+  .blog-prose ul {
+    @apply list-disc pl-6 mb-6 space-y-2 text-muted-foreground;
+  }
+  .blog-prose ol {
+    @apply list-decimal pl-6 mb-6 space-y-2 text-muted-foreground;
+  }
+  .blog-prose li::marker {
+    @apply text-primary font-bold;
+  }
+  .blog-prose a {
+    @apply text-primary font-medium hover:underline underline-offset-4;
+  }
+  .blog-prose strong {
+    @apply font-bold text-foreground;
+  }
+  .blog-prose blockquote {
+    @apply border-l-4 border-primary pl-6 italic text-xl text-muted-foreground my-8 bg-muted/30 py-4 pr-4 rounded-r-lg;
+  }
+}
+
+@layer utilities {
+  .tabular-numbers-pricing {
+    font-variant-numeric: tabular-nums;
+  }
+  
+  /* Performance utilities */
+  .img-lazy {
+    content-visibility: auto;
+  }
+}

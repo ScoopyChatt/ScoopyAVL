@@ -1,0 +1,6 @@
+
+# Redirect non-www to www (canonical)
+https://scoopyavl.com/* https://www.scoopyavl.com/:splat 301!
+
+# Fallback for SPA routing
+/* /index.html 200

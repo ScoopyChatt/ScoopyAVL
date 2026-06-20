@@ -1,0 +1,21 @@
+import { Router } from 'express';
+import { stream } from '../api/integrated-ai.js';
+import { SystemPrompt } from '../constants/prompts.js';
+import { uploadFiles } from '../middleware/file-upload.js';
+import { integratedAiRateLimit } from '../middleware/integrated-ai-rate-limit.js';
+import { pocketbaseAuth } from '../middleware/pocketbase-auth.js';
+import logger from '../utils/logger.js';
+const router = Router();
+router.use(pocketbaseAuth);
+router.get('/health', (req, res) => res.json({ status: 'ok' }));
+router.post('/stream', integratedAiRateLimit, uploadFiles({ allowedMimeTypes: ['image/jpeg', 'image/png', 'image/webp'], fieldName: 'images' }), async (req, res) => {
+  if (!req.body.message) throw new Error('message is required');
+  const parsedMessage = JSON.parse(req.body.message);
+  const sseStream = await stream({ userId: req.pocketbaseUserId, systemPrompt: SystemPrompt, userMessage: parsedMessage });
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  sseStream.pipe(res, { end: false });
+  res.on('close', () => sseStream.destroy());
+});
+export default router;
