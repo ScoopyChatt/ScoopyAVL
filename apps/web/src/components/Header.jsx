@@ -22,7 +22,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center justify-between py-3 lg:py-3 gap-3 lg:gap-0">
+        <div className="flex flex-col lg:flex-row items-center justify-between py-3 lg:py-3 gap-3 lg:gap-8">
           
           {/* Logo & CTA Row (Mobile view keeps them inline) */}
           <div className="flex items-center justify-between w-full lg:w-auto">
@@ -46,7 +46,7 @@ const Header = () => {
           </div>
 
           {/* Horizontal Navigation */}
-          <nav className="flex items-center justify-start lg:justify-center space-x-1 sm:space-x-2 overflow-x-auto no-scrollbar w-full lg:w-auto -mx-4 px-4 lg:mx-0 lg:px-0 pb-1 lg:pb-0" aria-label="Main Navigation">
+          <nav className="flex items-center justify-start lg:justify-start space-x-1 sm:space-x-2 overflow-x-auto no-scrollbar w-full lg:w-auto -mx-4 px-4 lg:mx-0 lg:px-0 pb-1 lg:pb-0" aria-label="Main Navigation">
             {mainLinks.map((link) => (
               <Link
                 key={link.path}
