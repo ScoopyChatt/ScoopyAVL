@@ -61,7 +61,7 @@ const HomePage = () => {
                 className="w-full flex justify-center mb-8"
               >
                 <img 
-                  src="https://horizons-cdn.hostinger.com/d0188638-a120-4cbd-8c61-d1420711a271/7f889d94bae15b826df9c1daf461a7b9.png" 
+                  src="/logo-scoopy-asheville.png" 
                   alt="Scoopy Doo LLC - Professional dog poop removal service in Asheville" 
                   title="Scoopy Doo Pet Waste Removal Logo"
                   className="w-[180px] md:w-[220px] h-auto object-contain"

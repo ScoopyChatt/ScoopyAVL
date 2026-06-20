@@ -28,7 +28,7 @@ const Header = () => {
           <div className="flex items-center justify-between w-full lg:w-auto">
             <Link to="/" className="flex items-center space-x-2 transition-opacity hover:opacity-90 outline-none rounded-md focus-visible:ring-2 focus-visible:ring-primary">
               <img 
-                src="https://horizons-cdn.hostinger.com/d0188638-a120-4cbd-8c61-d1420711a271/7f889d94bae15b826df9c1daf461a7b9.png" 
+                src="/logo-scoopy-asheville.png" 
                 alt="Scoopy Chatt pet waste removal logo" 
                 className="w-[60px] md:w-[75px] h-auto object-contain"
               />

@@ -103,7 +103,7 @@ const CoreServicePage = () => {
 
             <div className="mb-10 mx-auto max-w-3xl">
               <img
-                src="https://horizons-cdn.hostinger.com/d0188638-a120-4cbd-8c61-d1420711a271/img_8567-OZjoO.jpeg"
+                src="/hero-asheville-1.jpeg"
                 alt="Dog waste removal service in action in Asheville, NC"
                 title="Scoopy Doo Professional Dog Poop Removal &mdash; Asheville, NC"
                 className="w-full h-auto rounded-2xl shadow-2xl border border-border/50 object-cover"
@@ -153,7 +153,7 @@ const CoreServicePage = () => {
               <div className="order-1 md:order-2">
                 <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-border bg-muted">
                   <img
-                    src="https://horizons-cdn.hostinger.com/d0188638-a120-4cbd-8c61-d1420711a271/img_9013-HYtyH.jpeg"
+                    src="/hero-asheville-2.jpeg"
                     alt="Professional pooper scooper equipment used by Scoopy Doo in Asheville"
                     title="Professional Pet Waste Removal Equipment &mdash; Scoopy Doo LLC"
                     className="w-full h-full object-cover"

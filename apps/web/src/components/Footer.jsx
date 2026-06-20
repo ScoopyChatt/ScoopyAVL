@@ -13,7 +13,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <img 
-              src="https://horizons-cdn.hostinger.com/d0188638-a120-4cbd-8c61-d1420711a271/7f889d94bae15b826df9c1daf461a7b9.png" 
+              src="/logo-scoopy-asheville.png" 
               alt="Scoopy Chatt - Professional Pooper Scooper Service Logo" 
               className="w-32 h-auto bg-white/10 rounded-lg p-2" 
             />
