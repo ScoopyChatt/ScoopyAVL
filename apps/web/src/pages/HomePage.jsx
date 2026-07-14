@@ -10,7 +10,6 @@ import Footer from '@/components/Footer.jsx';
 import ServiceCard from '@/components/ServiceCard.jsx';
 import FloatingCTA from '@/components/FloatingCTA.jsx';
 import PetSafeChecklistCTA from '@/components/PetSafeChecklistCTA.jsx';
-import CustomGoogleReviewsCarousel from '@/components/CustomGoogleReviewsCarousel.jsx';
 import { getCanonicalUrl } from '@/utils/seoHelpers.js';
 
 const HomePage = () => {
@@ -122,9 +121,9 @@ const HomePage = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
                 <div className="flex flex-col items-center gap-2 p-4">
-                  <span className="text-3xl">⭐</span>
-                  <div className="font-extrabold text-lg text-foreground">5-Star Rated</div>
-                  <div className="text-sm text-muted-foreground">on Google Reviews</div>
+                  <span className="text-3xl">📱</span>
+                  <div className="font-extrabold text-lg text-foreground">Online Booking</div>
+                  <div className="text-sm text-muted-foreground">Quote & pay in minutes</div>
                 </div>
                 <div className="flex flex-col items-center gap-2 p-4">
                   <span className="text-3xl">🏡</span>
@@ -149,25 +148,6 @@ const HomePage = () => {
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-primary" /> Residential, commercial & HOA service</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-primary" /> Fully insured & equipment sanitized</span>
               </div>
-            </div>
-          </section>
-
-          <section className="py-24 bg-background border-b border-border/50 overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }} 
-                whileInView={{ opacity: 1, y: 0 }} 
-                viewport={{ once: true }} 
-                transition={{ duration: 0.5 }} 
-                className="text-center mb-16"
-              >
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-balance">What Our Customers Say</h2>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                  Don't just take our word for it. See why pet owners across Asheville trust us with their yards.
-                </p>
-              </motion.div>
-              
-              <CustomGoogleReviewsCarousel />
             </div>
           </section>
 

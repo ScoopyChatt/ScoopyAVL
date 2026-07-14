@@ -95,13 +95,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start">
                 <Clock className="w-5 h-5 text-primary mr-3 flex-shrink-0 mt-0.5" />
-                <span className="text-sm">24/7 Always available for Ã°ÂÂÂ service</span>
-              </li>
-              <li className="flex items-start">
-                <a href="https://share.google/sOBVeLPqRabhfffPg" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-primary transition-colors text-sm">
-                  <Globe className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
-                  <span>Google My Business</span>
-                </a>
+                <span className="text-sm">24/7 online booking always available</span>
               </li>
             </ul>
           </div>

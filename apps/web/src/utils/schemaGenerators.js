@@ -50,13 +50,6 @@ export function generateLocalBusinessSchema() {
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "HOA Pet Waste Station Service" } }
       ]
     },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5",
-      "reviewCount": "85",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
       "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],

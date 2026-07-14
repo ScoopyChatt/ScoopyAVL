@@ -104,36 +104,6 @@ const AboutPage = () => {
           </div>
         </section>
 
-        {/* Reviews */}
-        <section className="py-16 bg-primary/5 px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="flex justify-center gap-1 mb-4">
-              {[...Array(5)].map((_, i) => <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400" />)}
-            </div>
-            <h2 className="text-2xl font-bold text-foreground mb-2">Five-Star Rated by Asheville Customers</h2>
-            <p className="text-muted-foreground mb-8">Asheville families trust us with their yards. Here is what they say.</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-              {[
-                { quote: "I have two big dogs and a small yard. Scoopy Doo shows up every week without fail &mdash; I literally never think about it anymore.", author: "Sarah M.", location: "West Asheville" },
-                { quote: "Our HOA was getting complaints about dog waste in the common areas. Scoopy Doo solved it in week one. We have had zero complaints since.", author: "HOA Board", location: "Cambridge Square, Hendersonville" },
-                { quote: "I was skeptical at first but after the first visit I was sold. They get every single spot. My yard looks better than it has in years.", author: "Tony R.", location: "Woodfin" },
-              ].map((review, i) => (
-                <div key={i} className="bg-card border border-border rounded-2xl p-6">
-                  <div className="flex gap-0.5 mb-3">{[...Array(5)].map((_, j) => <Star key={j} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}</div>
-                  <p className="text-foreground text-sm leading-relaxed mb-4 italic">"{review.quote}"</p>
-                  <div className="text-xs text-muted-foreground font-medium">{review.author} &mdash; {review.location}</div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-8">
-              <a href="https://share.google/sOBVeLPqRabhfffPg" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:underline font-semibold">
-                <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                Read all our Google reviews
-              </a>
-            </div>
-          </div>
-        </section>
-
         {/* Values */}
         <section className="py-20 px-4">
           <div className="max-w-4xl mx-auto">
