@@ -4,7 +4,7 @@ import pb from '../utils/pocketbaseClient.js';
 import { sendEmail } from '../utils/resend.js';
 
 const router = express.Router();
-const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL || 'info@scoopychatt.com';
+const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL || 'info@scoopyavl.com';
 const REQUIRED_FIELDS = ['name', 'email', 'phone', 'serviceZipCode', 'serviceType', 'numberOfDogs'];
 
 router.post('/', async (req, res) => {

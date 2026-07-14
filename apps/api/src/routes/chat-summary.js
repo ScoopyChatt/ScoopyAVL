@@ -3,7 +3,7 @@ import logger from '../utils/logger.js';
 import { sendEmail } from '../utils/resend.js';
 import pb from '../utils/pocketbaseClient.js';
 const router = express.Router();
-const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL || 'info@scoopychatt.com';
+const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL || 'info@scoopyavl.com';
 
 router.post('/send-summary', async (req, res) => {
   const { userId, conversationMessages, userEmail, userName, businessOwnerEmail } = req.body;

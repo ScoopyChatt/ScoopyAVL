@@ -1,55 +1,56 @@
 > ASHEVILLE LOCATION — this codebase was cloned from the Chattanooga ScoopyChatt site
 > and localized for Asheville, NC. The Chattanooga site/repo is separate and untouched.
-> PLACEHOLDERS to confirm: legal LLC name, owner name + About story, social profiles,
-> and the real logo/photo image files. Domain assumed: www.scoopyavl.com.
+> UNVERIFIED CLAIMS on the site (confirm before trusting): About-page stats (review
+> count, number of service vehicles, number of communities served), testimonials, and
+> the legal LLC name + owner names. Do not publish these as fact until Brandon confirms.
 
-# CLAUDE.md — Scoopy Doo LLC Website Project
+# CLAUDE.md — Scoopy Doo AVL Website Project
 
-> Last updated: 2026-05-31. Read this at the start of every session.
+> Last updated: 2026-07-13. Read this at the start of every session.
 
 ---
 
 ## Business
 
-**Company:** Scoopy Doo LLC — pet waste removal, Asheville NC  
-**Owner:** Brandon Carter (info@scoopyavl.com)  
-**Phone:** 828-844-8060  
-**Live site:** https://www.scoopyavl.com  
-**GitHub repo:** https://github.com/ScoopyChatt/ScoopyAVL  (NEW REPO — create this)  
-**GitHub token:** stored in your session — do not commit to repo  
-**Competitor reference:** pootagic.com (ranks above us for local terms)
+**Brand:** Scoopy Doo AVL — pet waste removal, Asheville NC
+**Email:** info@scoopyavl.com
+**Phone:** 828-844-8060
+**Live site:** https://www.scoopyavl.com
+**GitHub repo:** https://github.com/ScoopyChatt/ScoopyAVL  (exists — separate from the Chattanooga repo)
+**GitHub token:** provided per session — never commit to the repo
+**Owner name + About story:** UNVERIFIED placeholder — confirm with Brandon
 
 ---
 
 ## Architecture
 
 ### Frontend — Vite React SPA
-- **Host:** Vercel (project: `scoopy-chatt`, account: `scoopychatts-projects`)
+- **Host:** Vercel (auto-deploys on push to main)
 - **Root:** `apps/web/`
-- **Node version:** 24.x (Vercel dashboard setting — do NOT add nodeVersion to vercel.json, it is an invalid property that breaks builds)
+- **Node version:** set in Vercel dashboard (do NOT add nodeVersion to vercel.json — invalid property, breaks builds)
 - **Build command in vercel.json:** `npm install --prefix apps/web && npm run build --prefix apps/web && node apps/web/tools/inject-seo.cjs`
 - **Output dir:** `dist/apps/web`
 - **Path alias:** `@` = `apps/web/src/`
 
 ### Backend API — Express.js
-- **Host:** Railway (service: `dynamic-ambition`)
-- **Root:** `apps/api/`, port 8080, entry: `node src/main.js`
-- **Teardown enabled** on Railway — prevents duplicate active deployments
-- **AI:** Google Gemini 2.5 Flash via REST API (v1 endpoint, not SDK)
-- **Email:** Resend REST API (key in Railway env vars, NOT committed to repo)
+- **Host:** Railway, root `apps/api/`, port 8080, entry `node src/main.js`
+- **AI:** Google Gemini 2.5 Flash via REST API (v1 endpoint)
+- **Email:** Resend REST API — key in Railway env vars, NOT committed. Verify scoopyavl.com domain in Resend.
+- **Lead recipient:** `BUSINESS_EMAIL` env var, defaults to info@scoopyavl.com
 - **SSE format for chatbot:** `{type:'content', data:{content:'...'}}`
 
-### Database — PocketBase  
-- **Host:** Railway (service: `precious-surprise`)
-- **Root:** `apps/pocketbase/`
-- **Volume:** `scoopychatt-volume` at `/app/pb_data` — CRITICAL, without this data wipes on restart
-- **Admin credentials:** in Brandon's password manager
+### Database — PocketBase
+- **Host:** Railway, root `apps/pocketbase/`
+- **Volume:** must be mounted at `/app/pb_data` or data wipes on restart
+
+> NOTE: Vercel/Railway project + service names and the PocketBase volume name were
+> inherited from the Chattanooga clone. Confirm the actual AVL infra names before relying on them.
 
 ### Monorepo
 ```
-ScoopyChatt/
+ScoopyAVL/
 ├── apps/web/          # Vite React SPA
-├── apps/api/          # Express.js API  
+├── apps/api/          # Express.js API
 ├── apps/pocketbase/   # PocketBase binary
 ├── vercel.json        # Vercel config — routing, redirects, build command
 └── package.json       # npm workspaces root
@@ -59,17 +60,14 @@ ScoopyChatt/
 
 ## CRITICAL: JSX String Rules
 
-Never use straight apostrophes inside single-quoted JS strings. This caused a multi-hour build failure.
+Never use straight apostrophes inside single-quoted JS strings — it ends the string early and breaks the build.
 
 ```js
-// WRONG — syntax error, string ends at "don'"
+// WRONG — syntax error
 desc: 'You don't need to be home.'
-
-// CORRECT — use double quotes when string contains apostrophes
+// CORRECT — double-quote strings that contain apostrophes
 desc: "You don't need to be home."
 ```
-
-Always use double-quoted strings for any string that contains contractions or apostrophes.
 
 ---
 
@@ -89,50 +87,27 @@ Do ALL of these or the page will be missing SEO/nav/sitemap:
 ## SEO Architecture
 
 React SPA with no SSR. Per-page SEO via two layers:
-1. Build-time: inject-seo.cjs post-build script creates /route/index.html per route with correct title + meta tags
-2. Runtime: react-helmet-async updates tags for navigation within the app
+1. Build-time: `inject-seo.cjs` post-build script creates `/route/index.html` per route with the correct title + meta tags.
+2. Runtime: react-helmet-async updates tags for in-app navigation.
 
-inject-seo.cjs must be updated every time a new page is added, or that page gets the homepage title tag.
-
-GA cities (must NOT say TN): ringgold, rossville, flintstone, fort-oglethorpe
-
----
-
-## Known Issues & Status
-
-### Build
-- Root cause of all build failures: HowItWorksPage.jsx had apostrophes inside single-quoted JS strings — FIXED at commit 64888dc
-- nodeVersion is NOT a valid vercel.json property — causes immediate schema validation failure. Set Node version in Vercel dashboard (currently 24.x).
-- Build takes 17-20 seconds when healthy. If build fails in under 12 seconds, it is a syntax error or config issue, not a code logic problem.
-
-### SEO (Active problems)
-- 109,106 Soft 404 pages in Search Console — old Hostinger URLs crawled as HTTP 200. SPA returns 200 for everything. Need wildcard redirects for old URL patterns.
-- /dp/ spam URLs — 301 redirect added in vercel.json. Search Console removals submitted manually by Brandon.
-- Ringgold TN bug — fixed in inject-seo.cjs (GA state set correctly for Georgia cities)
-
-### Chatbot
-- Uses gemini-2.5-flash (1.5 and 2.0 unavailable for this API key)
-- Lead capture simplified: no PocketBase, just sets isLeadCaptured=true
-- SSE format: {type:'content', data:{content:'...'}}
-
-### Email
-- SMTP blocked by Railway — uses Resend HTTP API instead
-- Sending from info@scoopychatt.com (verify domain in Resend dashboard if failing)
+`inject-seo.cjs` must be updated every time a new page is added, or that page inherits the homepage title tag.
 
 ---
 
 ## Service Area Pages
 
-Dynamic route: /service/:slug via LocationTemplate.jsx → src/data/locations.js
+Dynamic route: `/service/:slug` via `LocationTemplate.jsx` → `src/data/locations.js`
 
-Active slugs: chattanooga, hixson, red-bank, signal-mountain, ooltewah, east-brainerd, soddy-daisy, cleveland, apison, collegedale, highland-park, downtown, east-ridge, lookout-mountain, ringgold (GA), rossville (GA), flintstone (GA), fort-oglethorpe (GA)
+Active Asheville-area slugs: asheville, west-asheville, arden, fletcher, hendersonville, black-mountain, weaverville, fairview, candler, swannanoa, woodfin, mills-river, biltmore-forest, brevard, downtown
+
+All towns are in Western North Carolina (NC). There are no Georgia/Tennessee cities in this market — do not carry over Chattanooga's GA/TN state logic.
 
 ---
 
 ## How It Works Page
 
-Located at /how-it-works. Key differentiators to always emphasize:
-- 100% online: quote and pay online, no phone calls
+Located at `/how-it-works`. Differentiators to emphasize:
+- 100% online: quote and pay online, no phone calls required
 - On-the-way text before every visit
 - Gate photo sent when done (gate secured + photo to phone)
 - No contracts, cancel anytime
@@ -141,9 +116,9 @@ Located at /how-it-works. Key differentiators to always emphasize:
 
 ## SEO TODO (Priority Order)
 
-1. Fix 109K soft 404s — add wildcard redirects for old Hostinger URL patterns to homepage
-2. Build commercial pages: HOA pet waste, apartment dog park, pet waste station
-3. More local-intent blog posts
-4. Verify Resend domain at resend.com/domains
-5. Update Google Business Profile URL to www.scoopychatt.com
-6. After every deploy: Search Console URL Inspection → Request Indexing for key pages
+1. Build/verify commercial pages: HOA pet waste, apartment dog park, pet waste station
+2. More Asheville local-intent blog posts
+3. Verify scoopyavl.com domain at resend.com/domains so lead emails send
+4. Set up + connect Google Business Profile for Asheville, link www.scoopyavl.com
+5. After every deploy: Search Console URL Inspection → Request Indexing for key pages
+6. Confirm and correct the unverified About-page claims (reviews, vehicles, communities, testimonials)

@@ -2,7 +2,7 @@ import express from 'express';
 import logger from '../utils/logger.js';
 import { sendEmail } from '../utils/resend.js';
 const router = express.Router();
-const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL || 'info@scoopychatt.com';
+const BUSINESS_EMAIL = process.env.BUSINESS_EMAIL || 'info@scoopyavl.com';
 
 router.post('/', async (req, res) => {
   const { messages, customerInfo, conversationStartTime } = req.body;

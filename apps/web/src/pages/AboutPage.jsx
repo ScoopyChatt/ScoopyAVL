@@ -71,7 +71,7 @@ const AboutPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
                 <h2 className="text-3xl font-bold text-foreground mb-6">Our Story</h2>
-                <p className="text-muted-foreground leading-relaxed mb-4">Scoopy Doo LLC &mdash; the company behind Scoopy Chatt &mdash; was founded by a Asheville-area father and daughter who saw a real need in their community and decided to fill it. What started as a simple idea has grown into a service that hundreds of Asheville families rely on every week.</p>
+                <p className="text-muted-foreground leading-relaxed mb-4">Scoopy Doo LLC was founded by an Asheville-area father and daughter who saw a real need in their community and decided to fill it. What started as a simple idea has grown into a service that Asheville families rely on every week.</p>
                 <p className="text-muted-foreground leading-relaxed mb-4">We run two branded service vehicles across 17+ communities in the Asheville metro area and Western North Carolina. Our team shows up in uniform, follows a systematic grid-pattern process on every yard, and never cuts corners &mdash; because this is our community too, and our name is on every truck.</p>
                 <p className="text-muted-foreground leading-relaxed mb-6">We built the business around a simple promise: make it easy. Online quotes. Online payment. A text when we are on the way. A photo of your secured gate when we are done. No contracts. No surprises.</p>
                 <Button asChild size="lg" className="rounded-xl px-8 font-bold">
