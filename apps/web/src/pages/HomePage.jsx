@@ -127,13 +127,13 @@ const HomePage = () => {
                   <div className="text-sm text-muted-foreground">on Google Reviews</div>
                 </div>
                 <div className="flex flex-col items-center gap-2 p-4">
-                  <span className="text-3xl">👨‍👧</span>
-                  <div className="font-extrabold text-lg text-foreground">Family Owned</div>
-                  <div className="text-sm text-muted-foreground">Local father & daughter team</div>
+                  <span className="text-3xl">🏡</span>
+                  <div className="font-extrabold text-lg text-foreground">Locally Owned</div>
+                  <div className="text-sm text-muted-foreground">Asheville-based team</div>
                 </div>
                 <div className="flex flex-col items-center gap-2 p-4">
                   <span className="text-3xl">📍</span>
-                  <div className="font-extrabold text-lg text-foreground">17+ Communities</div>
+                  <div className="font-extrabold text-lg text-foreground">Local Coverage</div>
                   <div className="text-sm text-muted-foreground">Asheville metro & North NC</div>
                 </div>
                 <div className="flex flex-col items-center gap-2 p-4">

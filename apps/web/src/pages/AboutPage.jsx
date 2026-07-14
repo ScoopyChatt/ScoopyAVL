@@ -13,10 +13,10 @@ const AboutPage = () => {
   const canonicalUrl = getCanonicalUrl('/about');
 
   const stats = [
-    { value: "80+", label: "Five-Star Google Reviews" },
-    { value: "2", label: "Branded Service Vehicles" },
-    { value: "17+", label: "Communities Served" },
+    { value: "Local", label: "Owned & Operated in Asheville" },
+    { value: "No", label: "Contracts, Cancel Anytime" },
     { value: "100%", label: "Satisfaction Guarantee" },
+    { value: "Free", label: "Online Quotes" },
   ];
 
   const values = [
@@ -30,10 +30,10 @@ const AboutPage = () => {
     <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
         <title>About Scoopy Doo | Asheville Pet Waste Removal</title>
-        <meta name="description" content="Meet Scoopy Doo LLC &mdash; Asheville's locally owned father and daughter pet waste removal company. 80+ five-star reviews, two branded service vehicles, serving 17+ communities." />
+        <meta name="description" content="Meet Scoopy Doo AVL &mdash; Asheville's locally owned and operated pet waste removal company. Weekly, bi-weekly, and one-time dog waste cleanup for homes and HOAs." />
         <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content="About Scoopy Doo | Asheville Pet Waste Removal" />
-        <meta property="og:description" content="Meet Scoopy Doo LLC &mdash; Asheville's locally owned father and daughter pet waste removal company." />
+        <meta property="og:description" content="Meet Scoopy Doo AVL &mdash; Asheville's locally owned and operated pet waste removal company." />
         <meta property="og:url" content={canonicalUrl} />
         <script type="application/ld+json">{JSON.stringify(generateLocalBusinessSchema())}</script>
       </Helmet>
@@ -49,7 +49,7 @@ const AboutPage = () => {
             <h1 className="text-4xl md:text-5xl font-extrabold text-foreground mb-6">
                 About Scoopy Doo &mdash; Asheville, NC Pet Waste Removal Company
               </h1>
-            <p className="text-lg md:text-xl text-muted-foreground">A father and daughter business built on showing up, doing the work right, and making Asheville yards a little cleaner every week.</p>
+            <p className="text-lg md:text-xl text-muted-foreground">A locally owned business built on showing up, doing the work right, and making Asheville yards a little cleaner every week.</p>
           </motion.div>
         </section>
 
@@ -71,8 +71,8 @@ const AboutPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
                 <h2 className="text-3xl font-bold text-foreground mb-6">Our Story</h2>
-                <p className="text-muted-foreground leading-relaxed mb-4">Scoopy Doo LLC was founded by an Asheville-area father and daughter who saw a real need in their community and decided to fill it. What started as a simple idea has grown into a service that Asheville families rely on every week.</p>
-                <p className="text-muted-foreground leading-relaxed mb-4">We run two branded service vehicles across 17+ communities in the Asheville metro area and Western North Carolina. Our team shows up in uniform, follows a systematic grid-pattern process on every yard, and never cuts corners &mdash; because this is our community too, and our name is on every truck.</p>
+                <p className="text-muted-foreground leading-relaxed mb-4">Scoopy Doo AVL is a locally owned and operated pet waste removal service, started by Asheville-area neighbors who saw a real need in their community and decided to fill it. What started as a simple idea has grown into a service Asheville families rely on every week.</p>
+                <p className="text-muted-foreground leading-relaxed mb-4">We serve communities across the Asheville metro area and Western North Carolina. Our team shows up in uniform, follows a systematic grid-pattern process on every yard, and never cuts corners &mdash; because this is our community too, and our name is on every truck.</p>
                 <p className="text-muted-foreground leading-relaxed mb-6">We built the business around a simple promise: make it easy. Online quotes. Online payment. A text when we are on the way. A photo of your secured gate when we are done. No contracts. No surprises.</p>
                 <Button asChild size="lg" className="rounded-xl px-8 font-bold">
                   <Link to="/quote">Get Your Free Quote</Link>
@@ -83,12 +83,12 @@ const AboutPage = () => {
                 <div className="rounded-2xl overflow-hidden border border-border shadow-lg aspect-[4/3] bg-muted flex items-center justify-center">
                   <img
                     src="/team-asheville-mural.jpg"
-                    alt="Scoopy Doo LLC owners in front of the Asheville Scenic City mural &mdash; local pet waste removal company serving Asheville NC"
+                    alt="Scoopy Doo AVL &mdash; locally owned pet waste removal serving Asheville, NC"
                     className="w-full h-full object-cover"
                     onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}
                   />
                   <div style={{display:'none'}} className="w-full h-full items-center justify-center text-muted-foreground text-sm p-8 text-center">
-                    <span>Father and daughter owners &mdash; Asheville, NC</span>
+                    <span>Locally owned and operated &mdash; Asheville, NC</span>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -110,8 +110,8 @@ const AboutPage = () => {
             <div className="flex justify-center gap-1 mb-4">
               {[...Array(5)].map((_, i) => <Star key={i} className="w-6 h-6 fill-yellow-400 text-yellow-400" />)}
             </div>
-            <h2 className="text-2xl font-bold text-foreground mb-2">80+ Five-Star Google Reviews</h2>
-            <p className="text-muted-foreground mb-8">Hundreds of Asheville families trust us with their yards every week. Here is what they say.</p>
+            <h2 className="text-2xl font-bold text-foreground mb-2">Five-Star Rated by Asheville Customers</h2>
+            <p className="text-muted-foreground mb-8">Asheville families trust us with their yards. Here is what they say.</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
               {[
                 { quote: "I have two big dogs and a small yard. Scoopy Doo shows up every week without fail &mdash; I literally never think about it anymore.", author: "Sarah M.", location: "West Asheville" },

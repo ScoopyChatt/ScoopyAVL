@@ -39,7 +39,7 @@ const ReviewsPage = () => {
                   See Why Asheville Trusts Us
                 </h1>
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-[65ch] mx-auto mb-8">
-                  We take pride in keeping local yards clean, safe, and ready to enjoy. Discover what hundreds of homeowners have to say about our dedicated pet waste removal service.
+                  We take pride in keeping local yards clean, safe, and ready to enjoy. Discover what Asheville homeowners have to say about our dedicated pet waste removal service.
                 </p>
                 <Button
                   asChild

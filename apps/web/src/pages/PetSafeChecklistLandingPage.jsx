@@ -127,7 +127,7 @@ const PetSafeChecklistLandingPage = () => {
             <div className="absolute inset-0 bg-white/40 dark:bg-black/20 pointer-events-none" />
             <div className="relative z-10">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 text-balance">
-                Join Hundreds of Happy Pet Owners in Asheville!
+                Join Asheville Dog Owners Who Never Scoop Again!
               </h2>
               <div className="flex flex-col items-center justify-center space-y-4">
                 <div className="flex items-center space-x-1.5 bg-white dark:bg-card px-4 py-2 rounded-full shadow-sm border border-border">
