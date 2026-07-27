@@ -8,6 +8,8 @@ import googleReviewsRouter from './google-reviews.js';
 import chatbotTranscriptRouter from './chatbot-transcript.js';
 import leadEmailRouter from './lead-email.js';
 import chatSummaryRouter from './chat-summary.js';
+import jobberOAuthRouter from './jobber-oauth.js';
+import jobberApiRouter from './jobber-api.js';
 
 const router = Router();
 
@@ -24,5 +26,7 @@ export default () => {
     router.use('/chatbot-transcript', chatbotTranscriptRouter);
     router.use('/lead-email', leadEmailRouter);
     router.use('/chat-summary', chatSummaryRouter);
+    router.use('/jobber-oauth', jobberOAuthRouter);
+    router.use('/jobber-api', jobberApiRouter);
     return router;
 };
