@@ -16,6 +16,7 @@ const CoreServicePage = React.lazy(() => import('@/pages/CoreServicePage.jsx'));
 const NearMePage = React.lazy(() => import('@/pages/NearMePage.jsx'));
 const OneTimeCleanupPage = React.lazy(() => import('@/pages/OneTimeCleanupPage.jsx'));
 const ServicesPage = React.lazy(() => import('@/pages/ServicesPage.jsx'));
+const PricingPage = React.lazy(() => import('@/pages/PricingPage.jsx'));
 const AboutPage = React.lazy(() => import('@/pages/AboutPage.jsx'));
 const FAQPage = React.lazy(() => import('@/pages/FAQPage.jsx'));
 const ComparisonPage = React.lazy(() => import('@/pages/ComparisonPage.jsx'));
@@ -110,6 +111,7 @@ function App() {
           <Route path="/one-time-cleanup" element={<OneTimeCleanupPage />} />
 
           <Route path="/services" element={<ServicesPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/comparison" element={<ComparisonPage />} />

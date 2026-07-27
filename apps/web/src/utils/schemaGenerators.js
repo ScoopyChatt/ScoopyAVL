@@ -89,6 +89,28 @@ export function generateServiceSchema(serviceName, description, url) {
   };
 }
 
+export function generatePriceRangeSchema(serviceName, lowPrice, highPrice, currency) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": serviceName,
+    "name": serviceName + " | Scoopy Doo LLC",
+    "provider": {
+      "@type": "LocalBusiness",
+      "@id": "https://scoopyavl.com/#business",
+      "name": "Scoopy Doo LLC"
+    },
+    "areaServed": { "@type": "State", "name": "North Carolina" },
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": currency || "USD",
+      "lowPrice": lowPrice,
+      "highPrice": highPrice,
+      "availability": "https://schema.org/InStock"
+    }
+  };
+}
+
 export function generateFAQPageSchema(faqData) {
   return {
     "@context": "https://schema.org",
