@@ -19,7 +19,6 @@ export const generateSitemapData = async () => {
     '/privacy-policy', 
     '/terms-of-service',
     '/spring-special',
-    '/podcast',
     '/pet-safe-checklist',
     '/dog-park-guide'
   ];

@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, ArrowRight, PlayCircle, Podcast } from 'lucide-react';
+import { Calendar, ArrowRight } from 'lucide-react';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import FloatingCTA from '@/components/FloatingCTA.jsx';
@@ -108,52 +108,6 @@ const BlogPage = () => {
         </section>
 
         <ReviewsSection />
-
-        <section className="py-12 border-b border-border bg-muted/20">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="podcast-card"
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2">
-                <div className="relative aspect-video bg-muted">
-                  <img 
-                    src="https://horizons-cdn.hostinger.com/d0188638-a120-4cbd-8c61-d1420711a271/8088ef4935a7739f1747caefac1fdcc6.jpg" 
-                    alt="Scoopy Doo Founder Brandon Carter and daughter Leighton holding branded signs in front of Asheville scenic city mural"
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                  <div className="absolute top-4 left-4 inline-flex items-center px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-sm text-white text-xs font-semibold tracking-wide uppercase border border-white/20">
-                    <Podcast className="w-3 h-3 mr-2" /> Featured Podcast
-                  </div>
-                  <div className="absolute inset-0 bg-black/10 flex items-center justify-center group pointer-events-none">
-                    <div className="w-16 h-16 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                      <PlayCircle className="w-8 h-8" />
-                    </div>
-                  </div>
-                </div>
-                <div className="p-8 md:p-10 flex flex-col justify-center">
-                  <div className="flex items-center text-sm text-muted-foreground mb-4">
-                    <Calendar className="h-4 w-4 mr-2" />
-                    May 15, 2026
-                  </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 leading-tight">
-                    <Link to="/blog/podcast-episode" className="hover:text-primary transition-colors">
-                      Scoopy Doo LLC Founder Discusses Pet Waste Management on Recent Podcast
-                    </Link>
-                  </h2>
-                  <p className="text-muted-foreground mb-8 line-clamp-3">
-                    Listen to founder Brandon Carter share insights on the hidden dangers of pet waste, maintaining a healthy yard, and how a family business is reclaiming weekends for Asheville residents.
-                  </p>
-                  <Link to="/blog/podcast-episode" className="inline-flex items-center font-semibold text-primary hover:text-primary/80 transition-colors mt-auto">
-                    Listen to Episode <ArrowRight className="h-4 w-4 ml-2" />
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
 
         <section className="py-16">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">

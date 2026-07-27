@@ -27,7 +27,7 @@ const SpringSpecialPage = () => {
     },
     {
       title: "Trusted Local Team",
-      description: "Leighton & Brandon are Asheville locals dedicated to providing reliable, top-tier service to our community.",
+      description: "We're Asheville locals dedicated to providing reliable, top-tier service to our community.",
       icon: Users,
       color: "text-primary",
       bgColor: "bg-primary/10"
@@ -117,9 +117,9 @@ const SpringSpecialPage = () => {
                   className="relative lg:ml-auto w-full max-w-lg mx-auto lg:max-w-none"
                 >
                   <div className="absolute -inset-4 bg-gradient-to-tr from-secondary/30 to-accent/30 rounded-[2.5rem] transform -rotate-3 scale-105 opacity-50 blur-xl"></div>
-                  <img 
-                    src="https://horizons-cdn.hostinger.com/d0188638-a120-4cbd-8c61-d1420711a271/b1670810727214d17b31497614887688.jpg" 
-                    alt="Leighton and Brandon - Scoopy Doo cleaning team in Asheville" 
+                  <img
+                    src="/team-uniforms.jpg"
+                    alt="Scoopy Doo AVL cleaning team in Asheville"
                     className="relative rounded-[2rem] shadow-2xl border-8 border-background object-cover w-full aspect-[4/5]"
                   />
                   
@@ -179,7 +179,7 @@ const SpringSpecialPage = () => {
 
           {/* CTA SECTION */}
           <section className="py-32 relative overflow-hidden bg-secondary text-secondary-foreground">
-            <div className="absolute inset-0 bg-[url('https://horizons-cdn.hostinger.com/d0188638-a120-4cbd-8c61-d1420711a271/b1670810727214d17b31497614887688.jpg')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
+            <div className="absolute inset-0 bg-[url('/team-uniforms.jpg')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
             <div className="absolute inset-0 bg-gradient-to-t from-secondary to-secondary/90"></div>
             
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">

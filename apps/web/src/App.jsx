@@ -41,7 +41,6 @@ const BlogPostTemplate = React.lazy(() => import('@/components/BlogPostTemplate.
 
 // Specific/Working Blog Pages (Live)
 const HowOftenCleanYard = React.lazy(() => import('@/pages/blog/HowOftenCleanYardPage.jsx'));
-const PodcastBlogPost = React.lazy(() => import('@/pages/blog/PodcastBlogPost.jsx'));
 const AshevilleHomeownersPage = React.lazy(() => import('@/pages/blog/AshevilleHomeownersPage.jsx'));
 const CommercialPetWastePage = React.lazy(() => import('@/pages/blog/CommercialPetWastePage.jsx'));
 const BlogSignalMountain = React.lazy(() => import('@/pages/blog/BlogSignalMountainPage.jsx'));
@@ -51,7 +50,6 @@ const DogParksAsheville = React.lazy(() => import('@/pages/blog/DogParksAshevill
 const PooperScooperCostAsheville = React.lazy(() => import('@/pages/blog/PooperScooperCostAsheville.jsx'));
 
 // Media / Utilities
-const PodcastPage = React.lazy(() => import('@/pages/PodcastPage.jsx'));
 const RedditOAuthCallbackPage = React.lazy(() => import('@/pages/RedditOAuthCallbackPage.jsx'));
 const QuickBooksOAuthCallbackPage = React.lazy(() => import('@/pages/QuickBooksOAuthCallbackPage.jsx'));
 
@@ -128,8 +126,6 @@ function App() {
 
           <Route path="/pet-safe-checklist" element={<PetSafeChecklistLandingPage />} />
           <Route path="/dog-park-guide" element={<DogParkGuideLandingPage />} />
-          
-          <Route path="/podcast" element={<PodcastPage />} />
 
           <Route path="/reddit-oauth-callback" element={<RedditOAuthCallbackPage />} />
           <Route path="/qb-oauth-callback" element={<QuickBooksOAuthCallbackPage />} />
@@ -141,7 +137,6 @@ function App() {
           <Route path="/blog/asheville-pet-waste-removal-homeowners" element={<AshevilleHomeownersPage />} />
           <Route path="/blog/commercial-pet-waste-removal-asheville" element={<CommercialPetWastePage />} />
           <Route path="/blog/how-often-clean-yard" element={<HowOftenCleanYard />} />
-          <Route path="/blog/podcast-blog" element={<PodcastBlogPost />} />
           <Route path="/blog/black-mountain" element={<BlogSignalMountain />} />
           <Route path="/blog/weaverville" element={<BlogSoddyDaisy />} />
           <Route path="/blog/dog-poop-cleanup-asheville-summer-heat" element={<DogPoopCleanupSummerHeat />} />

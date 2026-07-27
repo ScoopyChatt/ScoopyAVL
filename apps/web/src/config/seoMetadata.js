@@ -79,12 +79,6 @@ export const seoMetadata = {
     canonical: `${CANONICAL_BASE_URL}/spring-special`,
     ogType: "website"
   },
-  "/podcast": {
-    title: "Scoopy Doo Founder on the Podcast | Asheville, NC",
-    description: "Hear the Scoopy Doo LLC founder share the story behind Asheville's pet waste removal service in this recent podcast appearance.",
-    canonical: `${CANONICAL_BASE_URL}/podcast`,
-    ogType: "video.other"
-  },
   "/pet-safe-checklist": {
     title: "Pet-Safe Yard Checklist | Scoopy Doo Asheville",
     description: "A free pet-safe yard checklist for Asheville dog owners. Simple steps to keep your yard clean, healthy, and safe for your pets.",

@@ -13,7 +13,7 @@ export default function BenefitsPage() {
         title="Benefits of Professional Pet Waste Removal"
         description="Discover the top health benefits and time-saving advantages of hiring a professional pet waste removal service."
         date="April 5, 2026"
-        author="Brandon Carter"
+        author="Scoopy Doo AVL Team"
         content={
           <>
             <p>Many dog owners view picking up poop as just another chore. However, hiring a professional pet waste removal service offers significant advantages that go far beyond simply having a clean lawn. Here are the top benefits of outsourcing this dirty job.</p>
