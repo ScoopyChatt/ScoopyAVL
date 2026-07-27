@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,7 +9,72 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { toast } from 'sonner';
-import apiServerClient from '@/lib/apiServerClient.js';
+import { AnimatePresence, motion } from 'framer-motion';
+import { CheckCircle2, MapPin } from 'lucide-react';
+
+// No confirmed route days yet (new location, no customers as of launch) - every
+// entry has day: null. Once Tony has real routes, fill these in the same way
+// Chattanooga's SERVICE_AREA does, e.g. '28711': { area: 'Black Mountain', day: 'Tuesday' }.
+const SERVICE_AREA = {
+  '28801': { area: 'Downtown Asheville', day: null },
+  '28802': { area: 'Downtown Asheville', day: null },
+  '28803': { area: 'South Asheville / Biltmore Forest', day: null },
+  '28804': { area: 'North Asheville', day: null },
+  '28805': { area: 'East Asheville', day: null },
+  '28806': { area: 'West Asheville', day: null },
+  '28810': { area: 'Asheville', day: null },
+  '28813': { area: 'Asheville', day: null },
+  '28814': { area: 'Asheville', day: null },
+  '28815': { area: 'Asheville', day: null },
+  '28816': { area: 'West Asheville', day: null },
+  '28704': { area: 'Arden', day: null },
+  '28715': { area: 'Candler', day: null },
+  '28732': { area: 'Fletcher', day: null },
+  '28711': { area: 'Black Mountain', day: null },
+  '28778': { area: 'Swannanoa', day: null },
+  '28787': { area: 'Weaverville', day: null },
+  '28730': { area: 'Fairview', day: null },
+  '28759': { area: 'Mills River', day: null },
+  '28757': { area: 'Montreat', day: null },
+  '28701': { area: 'Alexander', day: null },
+  '28791': { area: 'Hendersonville', day: null },
+  '28792': { area: 'Hendersonville', day: null },
+};
+
+const WEBHOOK_URL =
+  import.meta.env.VITE_QUOTE_WEBHOOK_URL ||
+  'https://hook.us2.make.com/qstmqg51xqw9rdqddepjn5fraipn18gg';
+
+// TODO(Brandon): replace with the real Zapier catch-hook URL once the AVL
+// Jobber zap is built and Tony has connected his Jobber account. Until then
+// this posts to a placeholder and will silently no-op (no-cors POST) -
+// leads still land in Make/GHL via WEBHOOK_URL above either way.
+const JOBBER_ZAPIER_URL =
+  import.meta.env.VITE_JOBBER_ZAPIER_URL ||
+  'https://hooks.zapier.com/hooks/catch/REPLACE_ME/REPLACE_ME/';
+
+const PRICING = {
+  'weekly': { base: 20, extra: 2, cadence: '/ visit', note: 'weekly service' },
+  'twice-weekly': { base: 18, extra: 1, cadence: '/ visit', note: 'twice-weekly service' },
+  'biweekly': { base: 33, extra: 3, cadence: '/ visit', note: 'every-other-week service' },
+  'onetime': { base: 125, extra: 15, inc: 3, cadence: 'one-time', note: 'a one-time cleanup' },
+};
+
+const SERVICE_LABELS = {
+  'weekly': 'Weekly Pet Waste Removal',
+  'twice-weekly': 'Twice-Weekly Pet Waste Removal',
+  'biweekly': 'Bi-Weekly Pet Waste Removal',
+  'onetime': 'One-Time Yard Cleanup',
+};
+
+function computeQuote(serviceType, dogs, takeAway) {
+  const p = PRICING[serviceType];
+  const n = parseInt(dogs, 10) || 1;
+  if (!p) return { price: null };
+  const inc = p.inc || 1;
+  const price = p.base + Math.max(0, n - inc) * p.extra + (takeAway ? 5 : 0);
+  return { price, cadence: p.cadence, note: p.note, takeAway: !!takeAway };
+}
 
 const formSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -23,6 +88,17 @@ const formSchema = z.object({
 
 const QuoteForm = () => {
   const navigate = useNavigate();
+  const honeypotRef = useRef(null);
+  const [quote, setQuote] = useState(null);
+  const resultRef = useRef(null);
+  useEffect(() => {
+    if (quote) {
+      resultRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [quote]);
+  const [takeAway, setTakeAway] = useState(false);
+  const [streetAddress, setStreetAddress] = useState('');
+  const isAddressValid = streetAddress.trim().length >= 5;
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -40,43 +116,102 @@ const QuoteForm = () => {
 
   const { isValid, isSubmitting } = form.formState;
 
-  const onSubmit = async (values) => {
-    try {
-      // Ensure numberOfDogs is sent as a number if needed by the backend, 
-      // though Zapier often accepts strings. We will cast it based on standard practices.
-      const submitData = {
-        ...values,
-        numberOfDogs: parseInt(values.numberOfDogs, 10),
-      };
+  const zipValue = form.watch('serviceZipCode');
+  const isCompleteZip = (zipValue || '').length === 5;
+  const areaEntry = isCompleteZip ? SERVICE_AREA[zipValue] : undefined;
+  const matchedArea = areaEntry ? areaEntry.area : undefined;
+  const matchedDay = areaEntry ? areaEntry.day : null;
 
-      const response = await apiServerClient.fetch('/quote-webhook', {
+  const requestStart = async () => {
+    if (!isAddressValid) {
+      toast.error('Please enter your street address so we can schedule your visit.');
+      return;
+    }
+    const v = form.getValues();
+    const entry = SERVICE_AREA[v.serviceZipCode];
+    const readyPayload = {
+      full_name: v.name, email: v.email, phone: v.phone,
+      service_zip: v.serviceZipCode, service_type: v.serviceType,
+      street_address: streetAddress.trim(),
+      number_of_dogs: parseInt(v.numberOfDogs, 10),
+      service_area: entry ? entry.area : '',
+      route_day: entry && entry.day ? entry.day : '',
+      quoted_price: quote && quote.price ? quote.price : '',
+      base_price: quote && quote.price != null ? quote.price - (takeAway ? 5 : 0) : '',
+      takeaway_fee: takeAway ? 5 : 0,
+      service_label: SERVICE_LABELS[v.serviceType] || 'Custom Pet Waste Removal Service',
+      ready_to_book: true, lead_stage: 'Ready to Book', take_away: takeAway ? 'Yes (+$5/visit)' : 'No', company_website: '',
+      source: 'scoopyavl.com/quote', submitted_at: new Date().toISOString(),
+    };
+    const postJson = (url) => fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(readyPayload),
+    });
+    // Zapier catch hooks reject the application/json CORS preflight from browsers.
+    // Send form-encoded (a simple request, no preflight) so the data actually lands.
+    const postForm = (url) => fetch(url, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: new URLSearchParams(
+        Object.fromEntries(Object.entries(readyPayload).map(([k, val]) => [k, String(val)]))
+      ),
+    });
+    try {
+      await Promise.allSettled([postJson(WEBHOOK_URL), postForm(JOBBER_ZAPIER_URL)]);
+    } catch (error) { console.error(error); }
+    navigate('/thank-you');
+  };
+
+  const onSubmit = async (values) => {
+    // Service-area gate: reject out-of-area zips before submitting
+    if (!SERVICE_AREA[values.serviceZipCode]) {
+      alert("Sorry - Scoopy Doo AVL is not in your service area yet. We currently serve Asheville, NC and the surrounding area within about 30 minutes. If you think this is a mistake, please call or text us at 828-844-8060.");
+      return;
+    }
+    // Honeypot: real people never fill this. If it has a value, drop silently.
+    if (honeypotRef.current && honeypotRef.current.value) {
+      form.reset();
+      navigate('/thank-you');
+      return;
+    }
+
+    const payload = {
+      full_name: values.name,
+      email: values.email,
+      phone: values.phone,
+      service_zip: values.serviceZipCode,
+      service_type: values.serviceType,
+      number_of_dogs: parseInt(values.numberOfDogs, 10),
+      additional_notes: values.additionalNotes || '',
+      quoted_price: computeQuote(values.serviceType, values.numberOfDogs, takeAway).price,
+      lead_stage: 'New Website Lead',
+      take_away: takeAway ? 'Yes (+$5/visit)' : 'No',
+      service_area: SERVICE_AREA[values.serviceZipCode] ? SERVICE_AREA[values.serviceZipCode].area : '',
+      route_day: SERVICE_AREA[values.serviceZipCode] && SERVICE_AREA[values.serviceZipCode].day ? SERVICE_AREA[values.serviceZipCode].day : '',
+      in_service_area: !!SERVICE_AREA[values.serviceZipCode],
+      company_website: '',
+      source: 'scoopyavl.com/quote',
+      page_url: typeof window !== 'undefined' ? window.location.href : '',
+      submitted_at: new Date().toISOString(),
+    };
+
+    try {
+      const response = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(submitData)
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
-        let errorMessage = 'Failed to submit quote request';
-        try {
-          const errorData = await response.json();
-          if (errorData.error) errorMessage = errorData.error;
-        } catch (e) {
-          // If response is not JSON, fallback to generic error
-        }
-        throw new Error(errorMessage);
+        throw new Error('Request failed with status ' + response.status);
       }
-      
-      // Await successful response parsing as per requirements
-      await response.json();
-      
-      toast.success('Quote submitted successfully');
-      form.reset();
-      
-      // Redirect to thank you page after successful submission
-      navigate('/thank-you');
+
+      setQuote(computeQuote(values.serviceType, values.numberOfDogs, takeAway));
+      toast.success('Got it - here is your instant price!');
     } catch (error) {
       console.error('Submission error:', error);
-      toast.error(error.message || 'Connection failed. Please try again.');
+      toast.error('Connection failed. Please call or text us at 828-844-8060.');
     }
   };
 
@@ -84,9 +219,53 @@ const QuoteForm = () => {
     toast.error('Please fill in all required fields correctly.');
   };
 
+  if (quote) {
+    const entry = SERVICE_AREA[form.getValues('serviceZipCode')];
+    return (
+      <div className="space-y-6">
+        <div className="rounded-2xl border border-accent/30 bg-accent/10 p-6 text-center">
+          <p className="text-sm font-medium text-muted-foreground mb-1">Your instant price</p>
+          {quote.price ? (
+            <>
+              <p ref={resultRef} className="text-4xl font-bold text-foreground">{'$' + quote.price}<span className="text-lg font-medium text-muted-foreground"> {quote.cadence}</span></p>
+              <p className="text-sm text-muted-foreground mt-2">For {quote.note}{quote.takeAway ? ' with waste haul-away' : ''}{entry && entry.day ? (' - our trucks are in ' + entry.area + ' on ' + entry.day + 's') : (entry ? (' - we service ' + entry.area) : '')}.</p>
+              <p className="text-xs text-muted-foreground mt-3">Most yards start the same week. A one-time initial cleanup may apply for very overgrown yards - we will confirm before your first visit.</p>
+            </>
+          ) : (
+            <p className="text-xl font-semibold text-foreground">We will put together a custom quote for you.</p>
+          )}
+        </div>
+        <div className="text-left">
+            <label className="mb-1 block text-sm font-medium text-foreground">Service Address *</label>
+            <input
+              type="text"
+              value={streetAddress}
+              onChange={(e) => setStreetAddress(e.target.value)}
+              placeholder="123 Main St"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground"
+            />
+            <p className="mt-1 text-xs text-muted-foreground">We need your street address to schedule your first visit - it is not shared or used for anything else.</p>
+          </div>
+          <div
+            className="relative"
+            onClick={() => {
+              if (!isAddressValid) {
+                toast.error('Please enter your street address so we can schedule your visit.');
+              }
+            }}
+          >
+            <Button onClick={requestStart} disabled={!isAddressValid} className="w-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] h-12 text-base disabled:opacity-50 disabled:cursor-not-allowed">Request my start date</Button>
+          </div>
+        <button type="button" onClick={() => setQuote(null)} className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors">Back to edit my details</button>
+      </div>
+    );
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-6">
+        {/* Honeypot - hidden from humans; bots fill it and get dropped */}
+        <input ref={honeypotRef} type="text" name="company_website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
@@ -95,10 +274,10 @@ const QuoteForm = () => {
               <FormItem>
                 <FormLabel>Full Name *</FormLabel>
                 <FormControl>
-                  <Input 
-                    placeholder="Enter your full name" 
-                    className="text-foreground" 
-                    {...field} 
+                  <Input
+                    placeholder="Enter your full name"
+                    className="text-foreground"
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />
@@ -113,11 +292,11 @@ const QuoteForm = () => {
               <FormItem>
                 <FormLabel>Email Address *</FormLabel>
                 <FormControl>
-                  <Input 
-                    type="email" 
-                    placeholder="your.email@example.com" 
-                    className="text-foreground" 
-                    {...field} 
+                  <Input
+                    type="email"
+                    placeholder="your.email@example.com"
+                    className="text-foreground"
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />
@@ -132,11 +311,11 @@ const QuoteForm = () => {
               <FormItem>
                 <FormLabel>Phone Number *</FormLabel>
                 <FormControl>
-                  <Input 
-                    type="tel" 
-                    placeholder="(555) 123-4567" 
-                    className="text-foreground" 
-                    {...field} 
+                  <Input
+                    type="tel"
+                    placeholder="(555) 123-4567"
+                    className="text-foreground"
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />
@@ -151,15 +330,29 @@ const QuoteForm = () => {
               <FormItem>
                 <FormLabel>Service Zip Code *</FormLabel>
                 <FormControl>
-                  <Input 
+                  <Input
                     inputMode="numeric"
                     maxLength={5}
-                    placeholder="e.g. 28801" 
-                    className="text-foreground" 
-                    {...field} 
+                    placeholder="e.g. 28801"
+                    className="text-foreground"
+                    {...field}
                   />
                 </FormControl>
                 <FormMessage />
+                <AnimatePresence mode="wait">
+                  {isCompleteZip && matchedArea && (
+                    <motion.div key="matched" initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.2 }} className="mt-2 flex items-start gap-2 rounded-lg border border-accent/30 bg-accent/10 px-3 py-2 text-sm text-foreground">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" />
+                      <span>Great news - we service <strong>{matchedArea}</strong> ({zipValue})! Enter your info to see your price and reserve your spot.</span>
+                    </motion.div>
+                  )}
+                  {isCompleteZip && !matchedArea && (
+                    <motion.div key="unmatched" initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.2 }} className="mt-2 flex items-start gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 py-2 text-sm text-muted-foreground">
+                      <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                      <span>We serve Asheville, NC and the surrounding area within about 30 minutes. Send your details and we will confirm your service day with your quote.</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </FormItem>
             )}
           />
@@ -222,11 +415,11 @@ const QuoteForm = () => {
             <FormItem>
               <FormLabel>Additional Notes</FormLabel>
               <FormControl>
-                <Textarea 
-                  placeholder="Tell us about your yard size, gate access, or any special requirements..." 
-                  className="text-foreground resize-none" 
+                <Textarea
+                  placeholder="Tell us about your yard size, gate access, or any special requirements..."
+                  className="text-foreground resize-none"
                   rows={4}
-                  {...field} 
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
@@ -234,9 +427,14 @@ const QuoteForm = () => {
           )}
         />
 
+        <label className="flex items-start gap-3 rounded-lg border border-border bg-muted/30 p-4 cursor-pointer">
+          <input type="checkbox" checked={takeAway} onChange={(e) => setTakeAway(e.target.checked)} className="mt-1 h-4 w-4 accent-orange-500" />
+          <span className="text-sm text-foreground">Haul the waste away for me <span className="text-muted-foreground">(+$5 per visit)</span>. Otherwise we double-bag it and leave it in your bin.</span>
+        </label>
+
         {/* Wrapper div to capture clicks when button is disabled so we can show the toast */}
-        <div 
-          className="relative" 
+        <div
+          className="relative"
           onClick={() => {
             if (!isValid && !isSubmitting) {
               toast.error('Please fill in all required fields correctly.');
@@ -244,12 +442,12 @@ const QuoteForm = () => {
             }
           }}
         >
-          <Button 
-            type="submit" 
-            disabled={!isValid || isSubmitting} 
+          <Button
+            type="submit"
+            disabled={!isValid || isSubmitting}
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] h-12 text-base disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isSubmitting ? 'Submitting...' : 'Request Free Quote'}
+            {isSubmitting ? 'Getting your price...' : 'See My Price'}
           </Button>
         </div>
       </form>
