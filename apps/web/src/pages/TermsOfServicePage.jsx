@@ -23,7 +23,7 @@ const TermsOfServicePage = () => {
       content: (
         <>
           <p className="mb-4 text-muted-foreground leading-relaxed">
-            Welcome to Scoopy Chatt (doing business as "Scoopy Doo Pet Waste Removal"). By accessing our website, booking our services, or interacting with our platform, you agree to be bound by these Terms of Service.
+            Welcome to Scoopy Doo AVL, LLC (doing business as "Scoopy Doo Pet Waste Removal"). By accessing our website, booking our services, or interacting with our platform, you agree to be bound by these Terms of Service.
           </p>
           <p className="mb-4 text-muted-foreground leading-relaxed">
             Please read these terms carefully. If you do not agree with any part of these terms, you may not use our services. We reserve the right to update or modify these terms at any time, and continued use of our services constitutes acceptance of those changes.
@@ -107,7 +107,7 @@ const TermsOfServicePage = () => {
       content: (
         <>
           <p className="mb-4 text-muted-foreground leading-relaxed">
-            While we take the utmost care while on your property, Scoopy Chatt is not liable for existing property damage, unsecured gates resulting in escaped pets (though we double-check all gates upon exit), or health issues occurring in your pets.
+            While we take the utmost care while on your property, Scoopy Doo AVL is not liable for existing property damage, unsecured gates resulting in escaped pets (though we double-check all gates upon exit), or health issues occurring in your pets.
           </p>
           <p className="text-muted-foreground leading-relaxed">
             Our liability for any direct damages arising from our service shall be strictly limited to the amount paid by you for the specific service visit in question.

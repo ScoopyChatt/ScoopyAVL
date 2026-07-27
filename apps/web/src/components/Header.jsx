@@ -29,7 +29,7 @@ const Header = () => {
             <Link to="/" className="flex items-center space-x-2 transition-opacity hover:opacity-90 outline-none rounded-md focus-visible:ring-2 focus-visible:ring-primary">
               <img 
                 src="/logo-scoopy-asheville.png" 
-                alt="Scoopy Chatt pet waste removal logo" 
+                alt="Scoopy Doo AVL pet waste removal logo"
                 className="w-[120px] md:w-[150px] h-auto object-contain"
               />
             </Link>

@@ -6,7 +6,7 @@ const BlogArticle3_HealthBenefitsYardCleanup = () => {
   const meta = {
     title: "The Critical Health Benefits of Regular Yard Cleanup",
     description: "Discover why regular pet waste removal is crucial for protecting your family from bacteria, ensuring safe play areas for children, and keeping your dogs healthy.",
-    author: "Scoopy Chatt Team",
+    author: "Scoopy Doo AVL Team",
     datePublished: "2026-04-21",
     slug: "health-benefits-yard-cleanup",
     category: "Health"
@@ -23,20 +23,10 @@ const BlogArticle3_HealthBenefitsYardCleanup = () => {
       Children are particularly vulnerable to the health risks associated with a contaminated yard. Kids play low to the ground, roll in the grass, and often put their hands in their mouths. Toxocariasis, an infection transmitted from animals to humans via parasitic worms in feces, is a serious risk for young children playing in unmaintained areas. Regular, thorough cleaning ensures that your backyard remains a safe playground rather than a health hazard.
     </p>
 
-    <blockquote>
-      "As parents of two young kids and three dogs, this service is essential. We feel confident letting our children play outside barefoot, knowing the yard is actually clean."
-      <br/>&mdash; David & Lisa K. from Downtown Asheville
-    </blockquote>
-
     <h2>Pet Health Benefits</h2>
     <p>
       It's not just humans who benefit from a sanitary yard; your dogs do, too. Dogs investigate their environment with their noses and mouths. If a yard is filled with old waste, dogs are constantly exposed to reinfection from intestinal parasites. By removing the waste promptly, you break the life cycle of pests like hookworms and roundworms, keeping your pet healthier and reducing veterinary bills over time.
     </p>
-
-    <blockquote>
-      "Our vet actually recommended professional waste removal to reduce our dog's parasite exposure. Since we started, her checkups have been perfectly clear."
-      <br/>&mdash; Emily R. from Mills River
-    </blockquote>
 
     <h2>Mental Health and Property Value</h2>
     <p>

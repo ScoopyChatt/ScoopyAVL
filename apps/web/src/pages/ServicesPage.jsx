@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { CheckCircle2, AlertTriangle, Building2, Leaf, Droplets, CalendarCheck, RotateCcw, Star, Sparkles } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Building2, Leaf, Droplets, CalendarCheck, RotateCcw, Sparkles } from 'lucide-react';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import ServiceCard from '@/components/ServiceCard.jsx';
@@ -280,14 +280,13 @@ const ServicesPage = () => {
 
         {/* Lawn and environment benefits */}
         <section className="py-16 bg-primary/5 px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="flex justify-center gap-1 mb-6">
-              {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}
-            </div>
-            <blockquote className="text-xl md:text-2xl font-medium text-foreground text-center italic mb-4 max-w-3xl mx-auto">
-              "I had dead patches everywhere from years of dog waste. After six months of weekly service the grass is recovering and the kids actually use the yard again."
-            </blockquote>
-            <p className="text-center text-muted-foreground">&mdash; Hendersonville customer, weekly service since 2024</p>
+          <div className="max-w-5xl mx-auto text-center">
+            <h3 className="text-xl md:text-2xl font-bold text-foreground mb-4 max-w-3xl mx-auto">
+              A Clean Yard Starts With Consistent Service
+            </h3>
+            <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Weekly and bi-weekly visits stop dead patches before they start and keep your yard a place kids and pets can actually use. No contracts, no surprises &mdash; just a clean yard, every visit.
+            </p>
           </div>
         </section>
 

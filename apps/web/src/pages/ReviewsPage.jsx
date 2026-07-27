@@ -85,8 +85,8 @@ const ReviewsPage = () => {
                   <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary mx-auto mb-4">
                     <HeartHandshake className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">Family Owned</h3>
-                  <p className="text-muted-foreground">As a local father-daughter team, we care about the Asheville community and our reputation.</p>
+                  <h3 className="text-xl font-bold mb-2">Locally Owned</h3>
+                  <p className="text-muted-foreground">As a locally owned and operated business, we care about the Asheville community and our reputation.</p>
                 </div>
               </div>
             </div>

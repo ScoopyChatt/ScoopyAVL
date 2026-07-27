@@ -182,7 +182,7 @@ const PrivacyPolicyPage = () => {
               className="prose prose-lg dark:prose-invert max-w-none mb-16"
             >
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Welcome to Scoopy Doo (also operating as Scoopy Chatt). As Asheville's trusted pet waste removal service, we know that inviting us onto your property requires trust. Part of that trust involves being completely transparent about how we collect, use, and protect the personal information of our clients in Asheville, North Carolina, and the surrounding areas.
+                Welcome to Scoopy Doo AVL, LLC. As Asheville's trusted pet waste removal service, we know that inviting us onto your property requires trust. Part of that trust involves being completely transparent about how we collect, use, and protect the personal information of our clients in Asheville, North Carolina, and the surrounding areas.
               </p>
             </motion.div>
 

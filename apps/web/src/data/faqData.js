@@ -15,11 +15,11 @@ export const getFaqData = (location = 'Asheville') => {
         },
         {
           question: "Is there a contract or long-term commitment?",
-          answer: "No contracts, ever. Scoopy Doo service is completely flexible — you can start, pause, or cancel at any time with no cancellation fees. We keep customers by doing a great job, not by locking them in. Most clients stay with us for years simply because the service works."
+          answer: "No contracts, ever. Scoopy Doo service is completely flexible — you can start, pause, or cancel at any time with no cancellation fees. We keep customers by doing a great job, not by locking them in."
         },
         {
           question: "How much does it cost?",
-          answer: "Our pet waste removal services start at just $16 per service. Pricing varies slightly based on the number of dogs, yard size, and frequency of visits. Contact us for a quick, personalized quote!"
+          answer: "Our pet waste removal services start at just $18 per service. Pricing varies slightly based on the number of dogs, yard size, and frequency of visits. Contact us for a quick, personalized quote!"
         },
         {
           question: "How often should I have my yard cleaned?",

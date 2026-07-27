@@ -59,12 +59,12 @@ const PetSafeChecklistLandingPage = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="flex flex-col space-y-8"
             >
-              {/* Scoopy Chatt Logo Graphic */}
+              {/* Scoopy Doo AVL Logo Graphic */}
               <div className="relative rounded-3xl overflow-hidden shadow-lg border border-border/60 bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center p-12 aspect-[4/3]">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,hsl(var(--primary)/0.1)_0,transparent_100%)] pointer-events-none" />
-                <img 
-                  src="https://horizons-cdn.hostinger.com/d0188638-a120-4cbd-8c61-d1420711a271/7f889d94bae15b826df9c1daf461a7b9.png" 
-                  alt="Scoopy Chatt Logo" 
+                <img
+                  src="https://horizons-cdn.hostinger.com/d0188638-a120-4cbd-8c61-d1420711a271/7f889d94bae15b826df9c1daf461a7b9.png"
+                  alt="Scoopy Doo AVL Logo"
                   className="w-full max-w-[260px] md:max-w-[300px] h-auto object-contain relative z-10 drop-shadow-sm transition-transform duration-700 hover:scale-105"
                 />
               </div>
@@ -131,12 +131,10 @@ const PetSafeChecklistLandingPage = () => {
               </h2>
               <div className="flex flex-col items-center justify-center space-y-4">
                 <div className="flex items-center space-x-1.5 bg-white dark:bg-card px-4 py-2 rounded-full shadow-sm border border-border">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star key={star} className="w-6 h-6 fill-[#F59E0B] text-[#F59E0B]" />
-                  ))}
+                  <Star className="w-6 h-6 fill-[#F59E0B] text-[#F59E0B]" />
                 </div>
                 <p className="text-lg font-semibold text-foreground/80">
-                  85+ Five-Star Reviews on Google
+                  Locally Owned &amp; Operated in Asheville
                 </p>
               </div>
             </div>

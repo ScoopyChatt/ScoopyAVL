@@ -11,7 +11,7 @@ const PooperScooperCostAsheville = () => {
     <>
       <Helmet>
         <title>How Much Does Pooper Scooper Service Cost in Asheville? | Scoopy Doo</title>
-        <meta name="description" content="Scoopy Doo weekly service starts at $16 per visit for one dog. See 2026 pricing for weekly, bi-weekly, and one-time pet waste removal in Asheville NC." />
+        <meta name="description" content="Scoopy Doo weekly service starts at $20 per visit for one dog. See 2026 pricing for weekly, bi-weekly, and one-time pet waste removal in Asheville NC." />
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
       <Header />
@@ -22,8 +22,8 @@ const PooperScooperCostAsheville = () => {
           </h1>
 
           <p className="mb-4">
-            Scoopy Doo weekly service starts at <strong>$16 per visit</strong> for one dog in Asheville.
-            Bi-weekly service starts at $20 per visit. One-time yard cleanups start at $75.
+            Scoopy Doo weekly service starts at <strong>$20 per visit</strong> for one dog in Asheville.
+            Bi-weekly service starts at $33 per visit. One-time yard cleanups start at $85.
             Pricing is based on yard size and number of dogs.
             Every quote is free at{' '}
             <a href="/quoterequest" className="text-green-700 underline">scoopyavl.com/quoterequest</a>.
@@ -43,17 +43,17 @@ const PooperScooperCostAsheville = () => {
               <tbody>
                 <tr>
                   <td className="p-3 border">Weekly</td>
-                  <td className="p-3 border">$16 per visit</td>
+                  <td className="p-3 border">$20 per visit</td>
                   <td className="p-3 border">Most homes with 1-2 dogs</td>
                 </tr>
                 <tr className="bg-gray-50">
                   <td className="p-3 border">Bi-Weekly</td>
-                  <td className="p-3 border">$20 per visit</td>
+                  <td className="p-3 border">$33 per visit</td>
                   <td className="p-3 border">Smaller yards or fewer dogs</td>
                 </tr>
                 <tr>
                   <td className="p-3 border">One-Time Cleanup</td>
-                  <td className="p-3 border">Starting at $75</td>
+                  <td className="p-3 border">Starting at $85</td>
                   <td className="p-3 border">Spring cleaning, before a party, before listing a home</td>
                 </tr>
               </tbody>
@@ -82,11 +82,11 @@ const PooperScooperCostAsheville = () => {
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">How Does the Cost Compare?</h2>
           <p className="mb-4">
-            Scoopy Doo weekly service at $16 per visit (1 dog) is among the lowest rates in the
-            Asheville area. ChattaPoo starts at $21 per visit for weekly service. Other local
-            providers require a quote without listing rates online. Scoopy Doo also covers more
-            territory than most competitors, serving Western North Carolina cities including Mills River,
-            Leicester, Mars Hill, and Biltmore Forest at the same rates as North Carolina locations.
+            Scoopy Doo weekly service at $20 per visit (1 dog) is competitive with other local
+            providers in the Asheville area, most of which require a custom quote without
+            listing rates online. Scoopy Doo also covers more territory than most competitors,
+            serving Western North Carolina cities including Mills River, Leicester, Mars Hill,
+            and Biltmore Forest at the same rates as North Carolina locations.
           </p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">Frequently Asked Questions</h2>
@@ -116,7 +116,7 @@ const PooperScooperCostAsheville = () => {
 
           <div className="mt-10 p-6 bg-green-50 rounded-lg border border-green-200">
             <p className="font-semibold text-lg mb-2">Get a free quote today</p>
-            <p className="mb-4">Most Asheville customers start within 2 to 5 days. Prices start at $16 per visit. No contracts.</p>
+            <p className="mb-4">Most Asheville customers start within 2 to 5 days. Prices start at $20 per visit. No contracts.</p>
             <a
               href="/quoterequest"
               className="inline-block bg-green-700 text-white px-6 py-3 rounded font-semibold hover:bg-green-800 transition-colors"

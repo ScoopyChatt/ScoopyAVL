@@ -13,7 +13,7 @@ import SEOHead from '@/components/SEOHead.jsx';
 
 const YardCleanupPage = () => {
   const faqs = [
-    { question: "How much does a one-time yard cleanup cost in Asheville?", answer: "One-time dog waste yard cleanups start at $75 and are quoted based on your yard size and how much waste has accumulated. You will get an exact price before we begin." },
+    { question: "How much does a one-time yard cleanup cost in Asheville?", answer: "One-time dog waste yard cleanups start at $85 and are quoted based on your yard size and how much waste has accumulated. You will get an exact price before we begin." },
     { question: "My yard is really bad. Is that a problem?", answer: "Not at all. Heavily overdue yards are exactly what one-time cleanups are for. We grid-walk the whole space and get it back to a clean baseline in a single visit." },
     { question: "Do I have to sign up for recurring service?", answer: "No. The cleanup is fully standalone. If you would like to keep the results, ongoing weekly or bi-weekly service is one click away, with no contracts." },
     { question: "How long does a cleanup take?", answer: "It depends on yard size and buildup, but most one-time cleanups are completed in a single same-day visit." },
@@ -102,7 +102,7 @@ const YardCleanupPage = () => {
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">One-Time Cleanup Pricing</h2>
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                One-time yard cleanups start at $75, depending on yard size and how much waste has accumulated. Want to keep it clean? Ongoing service starts at just $20 per weekly visit for your first dog. Get an exact quote online in minutes.
+                One-time yard cleanups start at $85, depending on yard size and how much waste has accumulated. Want to keep it clean? Ongoing service starts at just $20 per weekly visit for your first dog. Get an exact quote online in minutes.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 h-14 px-8 text-lg rounded-xl shadow-lg">

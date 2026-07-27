@@ -13,7 +13,7 @@ import SEOHead from '@/components/SEOHead.jsx';
 
 const DogPoopRemovalPage = () => {
   const faqs = [
-    { question: "How much does dog poop removal cost in Asheville?", answer: "Weekly dog poop removal starts at $20 per visit for your first dog, with twice-weekly service from $16 per visit and bi-weekly from $28. One-time cleanups start at $75. Each additional dog is a small add-on. You will see an exact price before you commit." },
+    { question: "How much does dog poop removal cost in Asheville?", answer: "Weekly dog poop removal starts at $20 per visit for your first dog, with twice-weekly service from $18 per visit and bi-weekly from $33. One-time cleanups start at $85. Each additional dog is a small add-on. You will see an exact price before you commit." },
     { question: "How often should I schedule dog poop removal?", answer: "Most one and two dog homes do best with weekly visits, which keeps bacteria and odor in check and protects your lawn. Busy or multi-dog yards often prefer twice-weekly service, while smaller dogs or larger lots can work well bi-weekly." },
     { question: "Do I need to be home for service?", answer: "No. As long as we can safely access your yard, you do not need to be there. We send an on-the-way text before every visit and a photo of your secured gate when we finish." },
     { question: "What if my yard has not been cleaned in a while?", answer: "No problem. We start with a one-time initial cleanup to get your yard back to a clean baseline, then keep it that way on your regular schedule." },
@@ -102,7 +102,7 @@ const DogPoopRemovalPage = () => {
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">Simple, Transparent Pricing</h2>
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                Weekly dog poop removal starts at just $20 per visit for your first dog. Prefer more frequent service? Twice-weekly visits start at $16 each. On a budget or have a smaller dog? Bi-weekly service starts at $28. Every plan includes our detailed grid-walk, eco-friendly disposal, and the 24-hour re-clean guarantee.
+                Weekly dog poop removal starts at just $20 per visit for your first dog. Prefer more frequent service? Twice-weekly visits start at $18 each. On a budget or have a smaller dog? Bi-weekly service starts at $33. Every plan includes our detailed grid-walk, eco-friendly disposal, and the 24-hour re-clean guarantee.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 h-14 px-8 text-lg rounded-xl shadow-lg">

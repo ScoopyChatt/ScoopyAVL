@@ -10,7 +10,7 @@ export const generateLocalBusinessSchema = () => {
     "@type": ["LocalBusiness", "ProfessionalService"],
     "@id": "https://scoopyavl.com/#business",
     "name": "Scoopy Doo LLC",
-    "alternateName": "Scoopy Chatt",
+    "alternateName": "Scoopy Doo AVL",
     "url": "https://scoopyavl.com",
     "telephone": "+18288448060",
     "email": "info@scoopyavl.com",

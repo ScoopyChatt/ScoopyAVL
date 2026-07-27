@@ -14,7 +14,7 @@ const Footer = () => {
           <div className="space-y-4">
             <img 
               src="/logo-scoopy-asheville.png" 
-              alt="Scoopy Chatt - Professional Pooper Scooper Service Logo" 
+              alt="Scoopy Doo AVL - Professional Pooper Scooper Service Logo"
               className="w-32 h-auto bg-white/10 rounded-lg p-2" 
             />
             <p className="text-sm text-slate-400 leading-relaxed">

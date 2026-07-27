@@ -41,7 +41,7 @@ const BlogArticle6_LawnHealthAndPetWaste = () => {
 
     <h2>The Scoopy Doo Solution</h2>
     <p>
-      At Scoopy Doo (Scoopy Chatt), we understand the investment you've made in your landscaping. Our professional pet waste removal service is designed to protect that investment. By visiting your property weekly or bi-weekly, we ensure that acidic waste is removed promptly, giving your grass the chance to thrive. Don't let pet waste ruin your outdoor oasis&mdash;let our team handle the cleanup so you can enjoy a healthy, vibrant yard all season long.
+      At Scoopy Doo, we understand the investment you've made in your landscaping. Our professional pet waste removal service is designed to protect that investment. By visiting your property weekly or bi-weekly, we ensure that acidic waste is removed promptly, giving your grass the chance to thrive. Don't let pet waste ruin your outdoor oasis&mdash;let our team handle the cleanup so you can enjoy a healthy, vibrant yard all season long.
     </p>
   `;
 

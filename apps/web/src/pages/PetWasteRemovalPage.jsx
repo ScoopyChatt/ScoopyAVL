@@ -102,7 +102,7 @@ const PetWasteRemovalPage = () => {
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">Transparent Pricing for Homes & Businesses</h2>
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                Residential pet waste removal starts at $20 per weekly visit for your first dog, with easy add-ons for additional pets and twice-weekly service from $16 per visit. Multi-family, HOA, and commercial plans are quoted to your property size and station count. Request a tailored estimate today.
+                Residential pet waste removal starts at $20 per weekly visit for your first dog, with easy add-ons for additional pets and twice-weekly service from $18 per visit. Multi-family, HOA, and commercial plans are quoted to your property size and station count. Request a tailored estimate today.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 h-14 px-8 text-lg rounded-xl shadow-lg">

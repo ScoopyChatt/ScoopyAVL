@@ -13,8 +13,8 @@ const services = [
     local: true,
     area: "Asheville + 13 NC suburbs + Mills River, Leicester, Mars Hill, Biltmore Forest NC",
     frequency: "Weekly, bi-weekly, one-time",
-    price: "$16/visit",
-    notable: "7-day availability; on-the-way texts standard; gate photo after every visit standard; waste hauled off property; no contracts; local father-daughter team",
+    price: "$18/visit",
+    notable: "7-day availability; on-the-way texts standard; gate photo after every visit standard; waste hauled off property; no contracts; locally owned and operated",
   },
   {
     name: "PooTagic",
@@ -66,7 +66,7 @@ const services = [
 const descriptions = [
   {
     name: "Scoopy Doo",
-    text: "Scoopy Doo is a locally owned father-daughter team and the only provider on this list with confirmed service across both North Carolina suburbs and Western North Carolina Catoosa and Haywood County communities. On-the-way texts and gate photo confirmation are standard on every visit, not add-ons. Waste is hauled fully off the property. Service runs 7 days a week with no contracts.",
+    text: "Scoopy Doo is a locally owned and operated business and the only provider on this list with confirmed service across both the Asheville suburbs and outlying Western North Carolina communities. On-the-way texts and gate photo confirmation are standard on every visit, not add-ons. Waste is hauled fully off the property. Service runs 7 days a week with no contracts.",
   },
   {
     name: "PooTagic",

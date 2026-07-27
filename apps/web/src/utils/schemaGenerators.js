@@ -6,7 +6,7 @@ export function generateLocalBusinessSchema() {
     "@type": ["LocalBusiness", "ProfessionalService"],
     "@id": "https://scoopyavl.com/#business",
     "name": "Scoopy Doo LLC",
-    "alternateName": "Scoopy Chatt",
+    "alternateName": "Scoopy Doo AVL",
     "description": "Professional dog poop removal and pet waste cleanup service in Asheville, NC and surrounding areas. Weekly, bi-weekly, and one-time service for residential and commercial properties.",
     "url": "https://scoopyavl.com",
     "telephone": "+18288448060",

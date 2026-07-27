@@ -102,7 +102,7 @@ const DogPoopScoopingPage = () => {
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">Straightforward Scooping Prices</h2>
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                Weekly scooping starts at $20 per visit for your first dog, with twice-weekly service from $16 and bi-weekly from $28. Each additional dog is a small add-on. Get your exact price online in about two minutes.
+                Weekly scooping starts at $20 per visit for your first dog, with twice-weekly service from $18 and bi-weekly from $33. Each additional dog is a small add-on. Get your exact price online in about two minutes.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 h-14 px-8 text-lg rounded-xl shadow-lg">

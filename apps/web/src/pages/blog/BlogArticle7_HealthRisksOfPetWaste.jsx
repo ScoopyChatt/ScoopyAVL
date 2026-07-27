@@ -49,7 +49,7 @@ const BlogArticle7_HealthRisksOfPetWaste = () => {
       Weekly removal is the minimum recommended by veterinary and lawn care professionals. In Asheville's heat and humidity, bacteria in unremoved waste doubles roughly every 4 hours above 80&deg;F, and fly populations around fresh deposits can triple within 48 hours. Weekly professional service keeps pathogen levels low enough to eliminate measurable contamination risk for your family and pets.
     </p>
     <p>
-      Scoopy Doo's weekly service starts at $16 per visit for one dog in Asheville. Our technicians grid-walk your entire yard, remove all waste from the property, and sanitize equipment between every yard to prevent cross-contamination between homes.
+      Scoopy Doo's weekly service starts at $20 per visit for one dog in Asheville. Our technicians grid-walk your entire yard, remove all waste from the property, and sanitize equipment between every yard to prevent cross-contamination between homes.
     </p>
   `;
 

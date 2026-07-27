@@ -6,7 +6,7 @@ const BlogArticle2_SeasonalPetCareTips = () => {
   const meta = {
     title: "Seasonal Pet Care Guide for Asheville Residents",
     description: "From summer heat to winter freezes, learn how to protect your pet and maintain a clean, safe yard in the Greater Asheville area year-round.",
-    author: "Scoopy Chatt Team",
+    author: "Scoopy Doo AVL Team",
     datePublished: "2026-04-18",
     slug: "seasonal-pet-care-tips",
     category: "Pet Care"
@@ -22,11 +22,6 @@ const BlogArticle2_SeasonalPetCareTips = () => {
     <p>
       North Carolina summers are notoriously hot and humid. When dog waste bakes in the July sun, the odor can become unbearable, rendering your backyard unusable for barbecues and family gatherings. Flies and other pests are also drawn to yard waste in the summer heat. Keeping the yard completely clear of waste is essential for pest control. Additionally, always ensure your dogs have access to fresh water and deep shade, and avoid walking them on hot asphalt during peak afternoon temperatures.
     </p>
-
-    <blockquote>
-      "Summer was overwhelming with the heat and trying to keep up with yard maintenance. Having Scoopy Chatt handle the waste removal gave us peace of mind, and we could actually enjoy our patio without the smell."
-      <br/>&mdash; Michelle T. from Hendersonville
-    </blockquote>
 
     <h2>Fall: Preparation for Cooler Months</h2>
     <p>

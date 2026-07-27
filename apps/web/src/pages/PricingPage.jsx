@@ -10,13 +10,13 @@ import CTAButton from '@/components/CTAButton.jsx';
 import { generatePriceRangeSchema } from '@/utils/schemaGenerators.js';
 
 const PricingPage = () => {
-  const priceRangeSchema = generatePriceRangeSchema("Dog Poop Removal Service", "16", "150", "USD");
+  const priceRangeSchema = generatePriceRangeSchema("Dog Poop Removal Service", "18", "150", "USD");
 
   const pricingTiers = [
     {
       name: "2X Weekly Service",
       description: "Twice weekly professional cleaning for homes that need more frequent maintenance.",
-      price: "16",
+      price: "18",
       frequency: "per visit / 1st dog",
       benefits: ["Cleaned twice per week", "Maximum yard cleanliness", "Text alert when en route", "Gates always secured"]
     },
@@ -31,14 +31,14 @@ const PricingPage = () => {
     {
       name: "Bi-Weekly Service",
       description: "For small dogs or large yards.",
-      price: "28",
+      price: "33",
       frequency: "per visit / 1st dog",
       benefits: ["Cleaned every other week", "Budget-friendly option", "Detailed grid walk", "Gates always secured"]
     },
     {
       name: "One-Time Cleanup",
       description: "Deep clean for events or seasonal refresh.",
-      price: "75",
+      price: "85",
       frequency: "base starting price",
       benefits: ["Comprehensive deep clean", "Removal of all accumulated waste", "Before event prep", "No ongoing commitment"]
     }

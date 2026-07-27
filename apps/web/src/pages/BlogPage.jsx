@@ -35,7 +35,7 @@ const BlogPage = () => {
       slug: '/blog/diy-vs-professional'
     },
     {
-      title: 'Real Results: Scoopy Chatt Customer Success Stories',
+      title: 'Real Results: Scoopy Doo Customer Success Stories',
       excerpt: 'Read how professional pet waste removal solved real problems for families, busy professionals, and pet owners across the Asheville area.',
       date: 'April 24, 2026',
       slug: '/blog/customer-success-stories'
@@ -72,13 +72,13 @@ const BlogPage = () => {
     },
     {
       title: 'Pet Waste Removal in Black Mountain',
-      excerpt: 'Learn why Scoopy Chatt is the preferred pet waste removal service for residents of Black Mountain, NC.',
+      excerpt: 'Learn why Scoopy Doo is the preferred pet waste removal service for residents of Black Mountain, NC.',
       date: 'March 28, 2026',
       slug: '/blog/black-mountain'
     },
     {
       title: 'Pet Waste Removal in Weaverville',
-      excerpt: 'Discover reliable and affordable pet waste removal services in Weaverville, NC with Scoopy Chatt.',
+      excerpt: 'Discover reliable and affordable pet waste removal services in Weaverville, NC with Scoopy Doo.',
       date: 'March 20, 2026',
       slug: '/blog/weaverville'
     }
@@ -98,7 +98,7 @@ const BlogPage = () => {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
               <h1 className="text-4xl md:text-5xl font-bold mb-6 text-balance tracking-tight">
-                Scoopy Chatt Blog
+                Scoopy Doo Blog
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
                 Tips, guides, and news about keeping your yard clean, safe, and pet-friendly.
