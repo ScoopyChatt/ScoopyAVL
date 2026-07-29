@@ -90,7 +90,7 @@ const SpringSpecialPage = () => {
                       </Link>
                     </Button>
                     <Button asChild variant="outline" size="lg" className="h-16 px-8 text-lg rounded-2xl border-2 hover:bg-muted transition-all duration-300">
-                      <a href="tel:828-844-8060" className="flex items-center">
+                      <a href="tel:828-844-8060" onClick={() => window.fbq && window.fbq('track', 'Contact')} className="flex items-center">
                         <Phone className="mr-3 h-5 w-5 text-primary" />
                         828-844-8060
                       </a>
@@ -203,7 +203,7 @@ const SpringSpecialPage = () => {
                     </Link>
                   </Button>
                   <p className="text-secondary-foreground/80 font-medium text-lg">
-                    or call <a href="tel:828-844-8060" className="underline hover:text-background transition-colors">828-844-8060</a>
+                    or call <a href="tel:828-844-8060" onClick={() => window.fbq && window.fbq('track', 'Contact')} className="underline hover:text-background transition-colors">828-844-8060</a>
                   </p>
                 </div>
               </motion.div>

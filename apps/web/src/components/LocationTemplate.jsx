@@ -122,7 +122,7 @@ const LocationTemplate = ({ city: propCity }) => {
                     <Link to="/quote">Get a Free Quote</Link>
                   </Button>
                   <Button asChild variant="outline" size="lg" className="bg-transparent border-slate-700 text-white hover:bg-slate-800 hover:text-white h-14 px-8 text-lg rounded-xl transition-all active:scale-[0.98]">
-                    <a href="tel:828-844-8060">Call (828) 844-8060</a>
+                    <a href="tel:828-844-8060" onClick={() => window.fbq && window.fbq('track', 'Contact')}>Call (828) 844-8060</a>
                   </Button>
                 </div>
               </motion.div>
