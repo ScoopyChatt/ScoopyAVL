@@ -43,7 +43,7 @@ const ThankYouPage = () => {
                 <div className="flex flex-col items-center text-center p-6 bg-muted/50 rounded-2xl">
                   <Phone className="w-6 h-6 text-primary mb-4" />
                   <h3 className="font-semibold text-foreground mb-2">Phone</h3>
-                  <a href="tel:828-844-8060" className="text-muted-foreground hover:text-primary transition-colors duration-200">
+                  <a href="tel:828-844-8060" onClick={() => window.fbq && window.fbq('track', 'Contact')} className="text-muted-foreground hover:text-primary transition-colors duration-200">
                     828-844-8060
                   </a>
                 </div>
