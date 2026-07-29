@@ -160,6 +160,7 @@ const QuoteForm = () => {
     try {
       await Promise.allSettled([postJson(WEBHOOK_URL), postForm(JOBBER_ZAPIER_URL)]);
     } catch (error) { console.error(error); }
+    if (window && window.fbq) window.fbq('track', 'Schedule');
     navigate('/thank-you');
   };
 
@@ -208,6 +209,7 @@ const QuoteForm = () => {
       }
 
       setQuote(computeQuote(values.serviceType, values.numberOfDogs, takeAway));
+      if (window && window.fbq) window.fbq('track', 'Lead');
       toast.success('Got it - here is your instant price!');
     } catch (error) {
       console.error('Submission error:', error);
