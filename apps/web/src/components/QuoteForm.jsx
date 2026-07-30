@@ -71,7 +71,6 @@ function computeQuote(serviceType, dogs, takeAway) {
 const formSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
-  phone: z.string().min(10, 'Please enter a valid phone number'),
   serviceZipCode: z.string().regex(/^\d{5}$/, 'Must be a valid 5-digit zip code'),
   serviceType: z.string().min(1, 'Please select a service type'),
   numberOfDogs: z.string().min(1, 'Please select the number of dogs'),
@@ -98,7 +97,6 @@ const QuoteForm = () => {
     defaultValues: {
       name: '',
       email: '',
-      phone: '',
       serviceZipCode: '',
       serviceType: '',
       numberOfDogs: '',
@@ -122,7 +120,7 @@ const QuoteForm = () => {
     const v = form.getValues();
     const entry = SERVICE_AREA[v.serviceZipCode];
     const readyPayload = {
-      full_name: v.name, email: v.email, phone: v.phone,
+      full_name: v.name, email: v.email,
       service_zip: v.serviceZipCode, service_type: v.serviceType,
       street_address: streetAddress.trim(),
       number_of_dogs: parseInt(v.numberOfDogs, 10),
@@ -162,7 +160,6 @@ const QuoteForm = () => {
     const payload = {
       full_name: values.name,
       email: values.email,
-      phone: values.phone,
       service_zip: values.serviceZipCode,
       service_type: values.serviceType,
       number_of_dogs: parseInt(values.numberOfDogs, 10),
@@ -279,25 +276,6 @@ const QuoteForm = () => {
                   <Input
                     type="email"
                     placeholder="your.email@example.com"
-                    className="text-foreground"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Phone Number *</FormLabel>
-                <FormControl>
-                  <Input
-                    type="tel"
-                    placeholder="(555) 123-4567"
                     className="text-foreground"
                     {...field}
                   />
