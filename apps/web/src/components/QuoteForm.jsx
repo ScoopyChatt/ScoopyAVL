@@ -45,14 +45,6 @@ const WEBHOOK_URL =
   import.meta.env.VITE_QUOTE_WEBHOOK_URL ||
   'https://hook.us2.make.com/qstmqg51xqw9rdqddepjn5fraipn18gg';
 
-// TODO(Brandon): replace with the real Zapier catch-hook URL once the AVL
-// Jobber zap is built and Tony has connected his Jobber account. Until then
-// this posts to a placeholder and will silently no-op (no-cors POST) -
-// leads still land in Make/GHL via WEBHOOK_URL above either way.
-const JOBBER_ZAPIER_URL =
-  import.meta.env.VITE_JOBBER_ZAPIER_URL ||
-  'https://hooks.zapier.com/hooks/catch/REPLACE_ME/REPLACE_ME/';
-
 const PRICING = {
   'weekly': { base: 20, extra: 2, cadence: '/ visit', note: 'weekly service' },
   'twice-weekly': { base: 18, extra: 1, cadence: '/ visit', note: 'twice-weekly service' },
@@ -143,22 +135,12 @@ const QuoteForm = () => {
       ready_to_book: true, lead_stage: 'Ready to Book', take_away: takeAway ? 'Yes (+$5/visit)' : 'No', company_website: '',
       source: 'scoopyavl.com/quote', submitted_at: new Date().toISOString(),
     };
-    const postJson = (url) => fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(readyPayload),
-    });
-    // Zapier catch hooks reject the application/json CORS preflight from browsers.
-    // Send form-encoded (a simple request, no preflight) so the data actually lands.
-    const postForm = (url) => fetch(url, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: new URLSearchParams(
-        Object.fromEntries(Object.entries(readyPayload).map(([k, val]) => [k, String(val)]))
-      ),
-    });
     try {
-      await Promise.allSettled([postJson(WEBHOOK_URL), postForm(JOBBER_ZAPIER_URL)]);
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(readyPayload),
+      });
     } catch (error) { console.error(error); }
     if (window && window.fbq) window.fbq('track', 'Schedule');
     navigate('/thank-you');

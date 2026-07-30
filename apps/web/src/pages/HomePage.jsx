@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { ArrowRight, Shield, CheckCircle2, Leaf, ClipboardCheck, ExternalLink } from 'lucide-react';
+import { ArrowRight, Shield, CheckCircle2, Leaf, ClipboardCheck, ExternalLink, ClipboardList, CreditCard, Camera } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
@@ -30,6 +30,26 @@ const HomePage = () => {
     title: 'One-Time Cleanup',
     description: 'Deep cleaning pooper scooper service for special occasions or seasonal needs.',
     benefits: ['Comprehensive cleanup', 'Same-day availability', 'No commitment required', 'Perfect for events']
+  }];
+
+  const howItWorksSteps = [{
+    number: '01',
+    icon: ClipboardList,
+    title: 'Get Your Free Quote',
+    desc: 'Enter your zip code and number of dogs and see your price instantly, right on this site. No phone tag.',
+    color: 'bg-blue-500/10 text-blue-600'
+  }, {
+    number: '02',
+    icon: CreditCard,
+    title: 'Pick a Plan & Book',
+    desc: 'Choose weekly, bi-weekly, or one-time service and request your start date. No contracts, cancel anytime.',
+    color: 'bg-green-500/10 text-green-600'
+  }, {
+    number: '03',
+    icon: Camera,
+    title: 'We Scoop, You Relax',
+    desc: 'We text before every visit and send a gate photo when we are done, so you always know your yard is handled.',
+    color: 'bg-purple-500/10 text-purple-600'
   }];
 
   const canonicalUrl = getCanonicalUrl('/');
@@ -147,6 +167,34 @@ const HomePage = () => {
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-primary" /> Gate photo sent when done</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-primary" /> Residential, commercial & HOA service</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-primary" /> Fully insured & equipment sanitized</span>
+              </div>
+            </div>
+          </section>
+
+          <section className="py-20 bg-background border-b border-border/50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">How It Works</h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Three steps and your yard is off your to-do list for good.</p>
+              </motion.div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+                {howItWorksSteps.map((step, index) => (
+                  <motion.div key={step.number} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: index * 0.1 }} className="bg-card rounded-2xl border border-border/50 p-6 text-center shadow-sm">
+                    <div className={`w-14 h-14 rounded-xl ${step.color} flex items-center justify-center mx-auto mb-4`}>
+                      <step.icon className="w-7 h-7" />
+                    </div>
+                    <div className="text-xs font-bold text-muted-foreground tracking-widest mb-2">STEP {step.number}</div>
+                    <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
+                  </motion.div>
+                ))}
+              </div>
+              <div className="text-center">
+                <Button asChild variant="outline" size="lg" className="transition-all duration-200 active:scale-[0.98] h-12 px-8 rounded-xl bg-background">
+                  <Link to="/how-it-works" className="flex items-center">
+                    See the full process <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </div>
             </div>
           </section>
