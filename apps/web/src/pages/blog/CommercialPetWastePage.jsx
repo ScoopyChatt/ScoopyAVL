@@ -123,7 +123,7 @@ const CommercialPetWastePage = () => {
                 <Link to="/quote">Request Commercial Quote</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="bg-transparent border-secondary-foreground/20 text-white hover:bg-white/10 h-14 px-8 text-lg rounded-xl">
-                <a href="tel:828-844-8060" onClick={() => window.fbq && window.fbq('track', 'Contact')}>Call (828) 844-8060</a>
+                <a href="tel:828-830-0779" onClick={() => window.fbq && window.fbq('track', 'Contact')}>Call (828) 830-0779</a>
               </Button>
             </div>
             <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm font-medium text-secondary-foreground/70">

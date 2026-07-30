@@ -14,7 +14,7 @@ export const CANONICAL_BASE_URL = 'https://www.scoopyavl.com';
 export const seoConfig = {
   businessName: 'Scoopy Doo',
   legalName: 'Scoopy Doo Asheville LLC', // TODO: confirm exact registered LLC name
-  phone: '828-844-8060',
+  phone: '828-830-0779',
   email: 'info@scoopyavl.com',
   address: {
     streetAddress: 'Asheville',

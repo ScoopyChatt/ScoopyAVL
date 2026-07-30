@@ -300,7 +300,7 @@ const ServicesPage = () => {
                 <Link to="/quote">Get My Free Quote</Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="rounded-xl px-10 h-14 text-base font-bold border-white/40 text-white hover:bg-white/10">
-                <a href="tel:828-844-8060" onClick={() => window.fbq && window.fbq('track', 'Contact')}>Call (828) 844-8060</a>
+                <a href="tel:828-830-0779" onClick={() => window.fbq && window.fbq('track', 'Contact')}>Call (828) 830-0779</a>
               </Button>
             </div>
           </div>

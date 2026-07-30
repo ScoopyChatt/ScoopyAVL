@@ -74,8 +74,8 @@ const QuoteRequestPage = () => {
                       </div>
                       <div>
                         <p className="font-medium mb-1">Call or Text</p>
-                        <a href="tel:828-844-8060" onClick={() => window.fbq && window.fbq('track', 'Contact')} className="text-sm font-semibold text-primary hover:text-primary/80 transition-colors duration-200">
-                          828-844-8060
+                        <a href="tel:828-830-0779" onClick={() => window.fbq && window.fbq('track', 'Contact')} className="text-sm font-semibold text-primary hover:text-primary/80 transition-colors duration-200">
+                          828-830-0779
                         </a>
                       </div>
                     </div>

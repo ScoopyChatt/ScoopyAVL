@@ -9,7 +9,7 @@ export function generateLocalBusinessSchema() {
     "alternateName": "Scoopy Doo AVL",
     "description": "Professional dog poop removal and pet waste cleanup service in Asheville, NC and surrounding areas. Weekly, bi-weekly, and one-time service for residential and commercial properties.",
     "url": "https://scoopyavl.com",
-    "telephone": "+18288448060",
+    "telephone": "+18288300779",
     "email": "info@scoopyavl.com",
     "image": "https://horizons-cdn.hostinger.com/d0188638-a120-4cbd-8c61-d1420711a271/7f889d94bae15b826df9c1daf461a7b9.png",
     "logo": "https://horizons-cdn.hostinger.com/d0188638-a120-4cbd-8c61-d1420711a271/7f889d94bae15b826df9c1daf461a7b9.png",

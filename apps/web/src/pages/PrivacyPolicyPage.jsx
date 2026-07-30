@@ -74,7 +74,7 @@ const PrivacyPolicyPage = () => {
 
           <p><strong className="text-foreground">No third-party sharing of mobile information:</strong> We do not sell, rent, or share your mobile phone number or SMS opt-in data with third parties or affiliates for their own marketing purposes. Mobile information collected through our SMS program will not be shared with any third party for marketing or promotional purposes.</p>
 
-          <p>For help with our text messaging program, reply <strong>HELP</strong> to any message or contact us at <a href="tel:828-844-8060" className="text-primary hover:underline">(828) 844-8060</a> or <a href="mailto:info@scoopyavl.com" className="text-primary hover:underline">info@scoopyavl.com</a>.</p>
+          <p>For help with our text messaging program, reply <strong>HELP</strong> to any message or contact us at <a href="tel:828-830-0779" className="text-primary hover:underline">(828) 830-0779</a> or <a href="mailto:info@scoopyavl.com" className="text-primary hover:underline">info@scoopyavl.com</a>.</p>
         </div>
       )
     },
@@ -223,9 +223,9 @@ const PrivacyPolicyPage = () => {
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-lg mx-auto">
-                <a href="tel:828-844-8060" className="flex flex-col items-center p-6 bg-muted/50 rounded-xl hover:bg-primary/5 hover:text-primary transition-colors group">
+                <a href="tel:828-830-0779" className="flex flex-col items-center p-6 bg-muted/50 rounded-xl hover:bg-primary/5 hover:text-primary transition-colors group">
                   <Phone className="w-8 h-8 text-primary mb-3 group-hover:scale-110 transition-transform" />
-                  <span className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">828-844-8060</span>
+                  <span className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">828-830-0779</span>
                   <span className="text-sm text-muted-foreground mt-1">Call or Text</span>
                 </a>
 

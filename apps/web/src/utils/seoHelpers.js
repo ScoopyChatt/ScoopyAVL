@@ -12,7 +12,7 @@ export const generateLocalBusinessSchema = () => {
     "name": "Scoopy Doo LLC",
     "alternateName": "Scoopy Doo AVL",
     "url": "https://scoopyavl.com",
-    "telephone": "+18288448060",
+    "telephone": "+18288300779",
     "email": "info@scoopyavl.com",
     "priceRange": "$",
     "image": "https://horizons-cdn.hostinger.com/d0188638-a120-4cbd-8c61-d1420711a271/7f889d94bae15b826df9c1daf461a7b9.png",

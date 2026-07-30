@@ -149,7 +149,7 @@ const QuoteForm = () => {
   const onSubmit = async (values) => {
     // Service-area gate: reject out-of-area zips before submitting
     if (!SERVICE_AREA[values.serviceZipCode]) {
-      alert("Sorry - Scoopy Doo AVL is not in your service area yet. We currently serve Asheville, NC and the surrounding area within about 30 minutes. If you think this is a mistake, please call or text us at 828-844-8060.");
+      alert("Sorry - Scoopy Doo AVL is not in your service area yet. We currently serve Asheville, NC and the surrounding area within about 30 minutes. If you think this is a mistake, please call or text us at 828-830-0779.");
       return;
     }
     // Honeypot: real people never fill this. If it has a value, drop silently.
@@ -195,7 +195,7 @@ const QuoteForm = () => {
       toast.success('Got it - here is your instant price!');
     } catch (error) {
       console.error('Submission error:', error);
-      toast.error('Connection failed. Please call or text us at 828-844-8060.');
+      toast.error('Connection failed. Please call or text us at 828-830-0779.');
     }
   };
 

@@ -152,7 +152,7 @@ const TermsOfServicePage = () => {
           {/* Help Instructions */}
           <p className="mb-4 text-muted-foreground leading-relaxed">
             <strong className="text-foreground">Need Help?</strong> If you experience any issues with the messaging program, reply with the keyword <strong className="text-foreground">HELPO</strong> for assistance. You can also reach our support team directly at{" "}
-            <a href="tel:828-844-8060" className="text-primary hover:underline font-medium">(828) 844-8060</a>
+            <a href="tel:828-830-0779" className="text-primary hover:underline font-medium">(828) 830-0779</a>
             {" "}or{" "}
             <a href="mailto:info@scoopyavl.com" className="text-primary hover:underline font-medium">info@scoopyavl.com</a>.
           </p>
@@ -274,13 +274,13 @@ const TermsOfServicePage = () => {
                   If you have any questions or concerns regarding these terms, please contact our support team.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <a href="tel:828-844-8060" className="bg-background rounded-xl p-4 flex items-center space-x-3 border border-border shadow-sm hover:border-primary/40 transition-colors group">
+                  <a href="tel:828-830-0779" className="bg-background rounded-xl p-4 flex items-center space-x-3 border border-border shadow-sm hover:border-primary/40 transition-colors group">
                     <div className="bg-primary/10 p-2 rounded-lg">
                       <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
                     </div>
                     <div>
                       <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Phone / Text</p>
-                      <p className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">828-844-8060</p>
+                      <p className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">828-830-0779</p>
                     </div>
                   </a>
                   <a href="mailto:info@scoopyavl.com" className="bg-background rounded-xl p-4 flex items-center space-x-3 border border-border shadow-sm hover:border-primary/40 transition-colors group">

@@ -14,7 +14,7 @@
 
 **Brand:** Scoopy Doo AVL — pet waste removal, Asheville NC
 **Email:** info@scoopyavl.com
-**Phone:** 828-844-8060
+**Phone:** 828-830-0779
 **Live site:** https://www.scoopyavl.com
 **GitHub repo:** https://github.com/ScoopyChatt/ScoopyAVL  (exists — separate from the Chattanooga repo)
 **GitHub token:** provided per session — never commit to the repo

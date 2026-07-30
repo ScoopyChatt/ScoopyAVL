@@ -36,7 +36,7 @@ const Header = () => {
             
             {/* Mobile Actions */}
             <div className="flex lg:hidden items-center space-x-3">
-              <a href="tel:828-844-8060" onClick={() => window.fbq && window.fbq('track', 'Contact')} className="text-primary hover:text-primary/80 transition-colors p-2">
+              <a href="tel:828-830-0779" onClick={() => window.fbq && window.fbq('track', 'Contact')} className="text-primary hover:text-primary/80 transition-colors p-2">
                 <Phone className="h-5 w-5" />
               </a>
               <Button asChild size="sm" className="bg-primary text-primary-foreground font-bold shadow-md h-9">
@@ -63,12 +63,12 @@ const Header = () => {
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center space-x-4">
             <a
-              href="tel:828-844-8060"
+              href="tel:828-830-0779"
               onClick={() => window.fbq && window.fbq('track', 'Contact')}
               className="flex items-center space-x-2 px-3 py-2 text-sm font-bold text-foreground hover:text-primary transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
             >
               <Phone className="h-4 w-4 text-primary" />
-              <span>828-844-8060</span>
+              <span>828-830-0779</span>
             </a>
             <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 active:scale-[0.98] h-12 px-6 rounded-xl font-bold shadow-md">
               <Link to="/quote">Get Free Quote</Link>
