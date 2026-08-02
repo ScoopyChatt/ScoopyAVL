@@ -77,7 +77,7 @@ const formSchema = z.object({
   additionalNotes: z.string().optional(),
 });
 
-const QuoteForm = () => {
+const QuoteForm = ({ source = 'scoopyavl.com/quote' }) => {
   const navigate = useNavigate();
   const honeypotRef = useRef(null);
   const [quote, setQuote] = useState(null);
@@ -131,7 +131,7 @@ const QuoteForm = () => {
       takeaway_fee: takeAway ? 5 : 0,
       service_label: SERVICE_LABELS[v.serviceType] || 'Custom Pet Waste Removal Service',
       ready_to_book: true, lead_stage: 'Ready to Book', take_away: takeAway ? 'Yes (+$5/visit)' : 'No', company_website: '',
-      source: 'scoopyavl.com/quote', submitted_at: new Date().toISOString(),
+      source, submitted_at: new Date().toISOString(),
     };
     try {
       await fetch(WEBHOOK_URL, {
@@ -171,7 +171,7 @@ const QuoteForm = () => {
       route_day: SERVICE_AREA[values.serviceZipCode] && SERVICE_AREA[values.serviceZipCode].day ? SERVICE_AREA[values.serviceZipCode].day : '',
       in_service_area: !!SERVICE_AREA[values.serviceZipCode],
       company_website: '',
-      source: 'scoopyavl.com/quote',
+      source,
       page_url: typeof window !== 'undefined' ? window.location.href : '',
       submitted_at: new Date().toISOString(),
     };
