@@ -23,6 +23,7 @@ const ComparisonPage = React.lazy(() => import('@/pages/ComparisonPage.jsx'));
 const QuoteRequestPage = React.lazy(() => import('@/pages/QuoteRequestPage.jsx'));
 const ThankYouPage = React.lazy(() => import('@/pages/ThankYouPage.jsx'));
 const SpringSpecialPage = React.lazy(() => import('@/pages/SpringSpecialPage.jsx'));
+const FirstScoopFreePage = React.lazy(() => import('@/pages/FirstScoopFreePage.jsx'));
 const PrivacyPolicyPage = React.lazy(() => import('@/pages/PrivacyPolicyPage.jsx'));
 const TermsOfServicePage = React.lazy(() => import('@/pages/TermsOfServicePage.jsx'));
 const PetSafeChecklistLandingPage = React.lazy(() => import('@/pages/PetSafeChecklistLandingPage.jsx'));
@@ -118,6 +119,7 @@ function App() {
           <Route path="/quote" element={<QuoteRequestPage />} />
           <Route path="/thank-you" element={<ThankYouPage />} />
           <Route path="/spring-special" element={<SpringSpecialPage />} />
+          <Route path="/1st-scoop-free" element={<FirstScoopFreePage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms-of-service" element={<TermsOfServicePage />} />
           
