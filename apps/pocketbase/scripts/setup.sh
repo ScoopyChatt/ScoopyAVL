@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+: "${PB_SUPERUSER_EMAIL:?PB_SUPERUSER_EMAIL is not set}"
+: "${PB_SUPERUSER_PASSWORD:?PB_SUPERUSER_PASSWORD is not set}"
+
 # Download PocketBase
 curl -fsSL https://github.com/pocketbase/pocketbase/releases/download/v0.38.0/pocketbase_0.38.0_linux_amd64.zip -o /tmp/pb.zip
 unzip -o -q /tmp/pb.zip pocketbase
@@ -13,12 +16,12 @@ PB_PID=$!
 sleep 5
 
 # Create/update superuser
-./pocketbase superuser upsert brandonwesleycarter@gmail.com '052512Leighton!!!' || true
+./pocketbase superuser upsert "$PB_SUPERUSER_EMAIL" "$PB_SUPERUSER_PASSWORD" || true
 
 # Get auth token
 TOKEN=$(curl -s -X POST http://localhost:8090/api/collections/_superusers/auth-with-password \
   -H 'Content-Type: application/json' \
-  -d '{"identity":"brandonwesleycarter@gmail.com","password":"052512Leighton!!!"}' | python3 -c "import sys,json; print(json.load(sys.stdin).get('token',''))" 2>/dev/null)
+  -d "{\"identity\":\"$PB_SUPERUSER_EMAIL\",\"password\":\"$PB_SUPERUSER_PASSWORD\"}" | python3 -c "import sys,json; print(json.load(sys.stdin).get('token',''))" 2>/dev/null)
 
 # Create collections if they don't exist
 create_collection() {
