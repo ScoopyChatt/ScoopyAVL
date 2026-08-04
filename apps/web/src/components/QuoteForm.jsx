@@ -41,6 +41,52 @@ const SERVICE_AREA = {
   '28792': { area: 'Hendersonville', day: null },
 };
 
+// Restricted by HTTP referrer to scoopyavl.com and www.scoopyavl.com only, so it
+// is safe to ship in the bundle - same pattern as ScoopyChatt's QuoteForm.
+const GOOGLE_PLACES_API_KEY =
+  import.meta.env.VITE_GOOGLE_PLACES_API_KEY || 'process.env.VITE_GOOGLE_PLACES_API_KEY';
+
+// Center of the Asheville, NC service area - used to bias autocomplete suggestions.
+const SERVICE_AREA_CENTER = { latitude: 35.5951, longitude: -82.5515 };
+
+// Map a service zip to the city Google will append to a formatted address. Asheville
+// zips (Downtown/South/North/East/West Asheville or plain Asheville) resolve to
+// "Asheville"; every other town uses its own area name as the city.
+function cityForZip(zip) {
+  const entry = SERVICE_AREA[zip];
+  if (!entry || !entry.area) return null;
+  const area = entry.area;
+  if (area === 'Asheville' || /^(Downtown|South|North|East|West)\b/.test(area)) {
+    return 'Asheville';
+  }
+  return area;
+}
+
+// Strip a trailing zip, trailing NC/GA state abbreviation, or trailing city name
+// off whatever the customer typed or pasted, leaving just the street portion.
+function sanitizeStreetAddress(raw, zip) {
+  if (!raw) return '';
+  let s = String(raw).trim();
+  // Drop a trailing country if a full formatted address was pasted
+  s = s.replace(/,?\s*(USA|United States)\.?$/i, '').trim();
+  // Strip trailing zip code (this zip specifically, then any 5-digit zip)
+  if (zip) {
+    s = s.replace(new RegExp(',?\\s*' + zip + '(?:-\\d{4})?$'), '').trim();
+  }
+  s = s.replace(/,?\s*\d{5}(?:-\d{4})?$/, '').trim();
+  // Strip trailing NC or GA state abbreviation
+  s = s.replace(/,?\s*(NC|GA|N\.C\.|G\.A\.)$/i, '').trim();
+  // Strip trailing city name for this zip
+  const city = cityForZip(zip);
+  if (city) {
+    const escaped = city.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    s = s.replace(new RegExp(',?\\s*' + escaped + '$', 'i'), '').trim();
+  }
+  // Remove any trailing comma left behind
+  s = s.replace(/,\s*$/, '').trim();
+  return s;
+}
+
 const WEBHOOK_URL =
   import.meta.env.VITE_QUOTE_WEBHOOK_URL ||
   'https://hook.us2.make.com/qstmqg51xqw9rdqddepjn5fraipn18gg';
@@ -90,7 +136,11 @@ const QuoteForm = ({ source = 'scoopyavl.com/quote' }) => {
   }, [quote]);
   const [takeAway, setTakeAway] = useState(false);
   const [streetAddress, setStreetAddress] = useState('');
-  const isAddressValid = streetAddress.trim().length >= 5;
+  const [addressSuggestions, setAddressSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [suggestionsLoading, setSuggestionsLoading] = useState(false);
+  const addressWrapRef = useRef(null);
+  const skipFetchRef = useRef(false);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -114,6 +164,72 @@ const QuoteForm = ({ source = 'scoopyavl.com/quote' }) => {
   const matchedArea = areaEntry ? areaEntry.area : undefined;
   const matchedDay = areaEntry ? areaEntry.day : null;
 
+  const sanitizedStreetAddress = sanitizeStreetAddress(streetAddress, zipValue);
+  const isAddressValid = sanitizedStreetAddress.trim().length >= 5;
+
+  // Debounced Google Places Autocomplete, biased to the Asheville service area.
+  useEffect(() => {
+    if (skipFetchRef.current) {
+      skipFetchRef.current = false;
+      return;
+    }
+    const query = streetAddress.trim();
+    if (query.length < 3) {
+      setAddressSuggestions([]);
+      setSuggestionsLoading(false);
+      return;
+    }
+    let active = true;
+    setSuggestionsLoading(true);
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch('https://places.googleapis.com/v1/places:autocomplete', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Goog-Api-Key': GOOGLE_PLACES_API_KEY,
+          },
+          body: JSON.stringify({
+            input: query,
+            includedRegionCodes: ['us'],
+            locationBias: {
+              circle: {
+                center: SERVICE_AREA_CENTER,
+                radius: 50000,
+              },
+            },
+          }),
+        });
+        const data = await res.json();
+        if (!active) return;
+        const list = Array.isArray(data.suggestions)
+          ? data.suggestions.filter((s) => s.placePrediction)
+          : [];
+        setAddressSuggestions(list);
+        setShowSuggestions(true);
+      } catch (error) {
+        if (active) setAddressSuggestions([]);
+      } finally {
+        if (active) setSuggestionsLoading(false);
+      }
+    }, 300);
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, [streetAddress]);
+
+  // Close the suggestions dropdown when clicking outside of it.
+  useEffect(() => {
+    const handler = (e) => {
+      if (addressWrapRef.current && !addressWrapRef.current.contains(e.target)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
   const requestStart = async () => {
     if (!isAddressValid) {
       toast.error('Please enter your street address so we can schedule your visit.');
@@ -124,7 +240,7 @@ const QuoteForm = ({ source = 'scoopyavl.com/quote' }) => {
     const readyPayload = {
       full_name: v.name, email: v.email, phone: v.phone,
       service_zip: v.serviceZipCode, service_type: v.serviceType,
-      street_address: streetAddress.trim(),
+      street_address: sanitizedStreetAddress.trim(),
       number_of_dogs: parseInt(v.numberOfDogs, 10),
       service_area: entry ? entry.area : '',
       route_day: entry && entry.day ? entry.day : '',
@@ -221,13 +337,46 @@ const QuoteForm = ({ source = 'scoopyavl.com/quote' }) => {
         </div>
         <div className="text-left">
             <label className="mb-1 block text-sm font-medium text-foreground">Service Address *</label>
-            <input
-              type="text"
-              value={streetAddress}
-              onChange={(e) => setStreetAddress(e.target.value)}
-              placeholder="123 Main St"
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground"
-            />
+            <div className="relative" ref={addressWrapRef}>
+              <input
+                type="text"
+                value={streetAddress}
+                onChange={(e) => { setStreetAddress(e.target.value); setShowSuggestions(true); }}
+                onFocus={() => { if (addressSuggestions.length > 0) setShowSuggestions(true); }}
+                placeholder="123 Main St"
+                autoComplete="off"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground"
+              />
+              {showSuggestions && (suggestionsLoading || addressSuggestions.length > 0) && (
+                <ul className="absolute z-20 mt-1 w-full overflow-hidden rounded-md border border-input bg-background shadow-lg">
+                  {suggestionsLoading && addressSuggestions.length === 0 && (
+                    <li className="px-3 py-2 text-sm text-muted-foreground">Searching addresses...</li>
+                  )}
+                  {addressSuggestions.map((s) => {
+                    const pred = s.placePrediction;
+                    const main = (pred.structuredFormat && pred.structuredFormat.mainText && pred.structuredFormat.mainText.text) || (pred.text && pred.text.text) || '';
+                    const secondary = (pred.structuredFormat && pred.structuredFormat.secondaryText && pred.structuredFormat.secondaryText.text) || '';
+                    return (
+                      <li key={pred.placeId || (pred.text && pred.text.text)}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            skipFetchRef.current = true;
+                            setStreetAddress((pred.text && pred.text.text) || main);
+                            setAddressSuggestions([]);
+                            setShowSuggestions(false);
+                          }}
+                          className="flex w-full items-start gap-2 px-3 py-2 text-left text-sm text-foreground hover:bg-muted transition-colors"
+                        >
+                          <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                          <span><span className="font-medium">{main}</span>{secondary ? <span className="text-muted-foreground">{', ' + secondary}</span> : null}</span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
             <p className="mt-1 text-xs text-muted-foreground">We need your street address to schedule your first visit - it is not shared or used for anything else.</p>
           </div>
           <div
