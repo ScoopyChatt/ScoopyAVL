@@ -73,14 +73,51 @@ desc: "You don't need to be home."
 
 ## Adding a New Page — Checklist
 
-Do ALL of these or the page will be missing SEO/nav/sitemap:
+A page has to be registered in several places. Miss one and the failure is usually
+silent: the page works when you click it locally and is broken for crawlers.
 
-1. Create `apps/web/src/pages/YourPage.jsx`
-2. Add lazy import + Route to `apps/web/src/App.jsx`
-3. Add nav link to `apps/web/src/components/Header.jsx` if needed
-4. Add entry to `apps/web/src/config/seoMetadata.js`
-5. Add to routes object in `apps/web/tools/inject-seo.cjs`
-6. Add URL to `apps/web/public/sitemap.xml`
+**Always:**
+
+1. Create the component — `apps/web/src/pages/YourPage.jsx`, or
+   `apps/web/src/pages/blog/YourPost.jsx` for a blog post.
+2. `apps/web/src/App.jsx` — lazy import **and** `<Route>`. Two separate edits.
+3. `apps/web/tools/route-manifest.cjs` — add the slug to `PAGES`, `SERVICE_AREAS`, or
+   `BLOG_POSTS`. This is the source of truth: `generate-sitemap.cjs`, `inject-seo.cjs`
+   and `verify-routes.cjs` all read it, so the sitemap follows automatically.
+4. `middleware.js` (repo root) — same list, same slug. **The one that gets missed.**
+   The middleware 404s anything outside its allowlist, so without this the React route
+   works in a browser while the edge serves Googlebot a 404. Invisible locally.
+5. `apps/web/tools/inject-seo.cjs` — `routes` object, `['<title>', '<meta description>']`.
+   Skip it and the page inherits the homepage title tag.
+6. `apps/web/tools/create-static-pages.cjs` — the crawlable prerendered body, for pages
+   that need one. This is a React SPA with no SSR, so a crawler otherwise sees an empty
+   shell. Entries are single-line objects: delete a whole entry including its comma, or
+   you leave an array hole that crashes the build.
+
+**When it applies:**
+
+- `apps/web/src/components/Header.jsx` — nav link, for top-level pages.
+- `apps/web/src/pages/BlogListPage.jsx` — for blog posts, or the post exists but
+  nothing links to it.
+- `apps/web/src/config/seoMetadata.js` — only for pages using `<SEOHead path="..." />`.
+- `middleware.js` `STATIC_FILES` — when you add a file to `apps/web/public/`. Static
+  URLs are gated by exact path, so an unlisted file answers 404 at the edge.
+
+**Then verify — do not skip this:**
+
+```
+npm install --prefix apps/web && npm run build --prefix apps/web \
+  && node apps/web/tools/inject-seo.cjs \
+  && node apps/web/tools/generate-sitemap.cjs \
+  && node apps/web/tools/create-static-pages.cjs \
+  && node apps/web/tools/verify-routes.cjs
+```
+
+`verify-routes.cjs` cross-checks the manifest against App.jsx, middleware.js and
+`public/`, and names the offending URL. It is warn-only, so read its output.
+
+There is no `apps/web/public/sitemap.xml`. The sitemap is generated into `dist` by
+`generate-sitemap.cjs` from the route manifest; editing a static file would do nothing.
 
 ---
 
@@ -91,6 +128,13 @@ React SPA with no SSR. Per-page SEO via two layers:
 2. Runtime: react-helmet-async updates tags for in-app navigation.
 
 `inject-seo.cjs` must be updated every time a new page is added, or that page inherits the homepage title tag.
+
+3. Edge: `middleware.js` answers a real 404 for any URL not in its allowlist. The SPA
+   rewrite in `vercel.json` (`/(.*)` -> `/index.html`) otherwise makes *every* URL on the
+   domain return 200 with the app shell, which Google files as a soft 404 and re-crawls
+   indefinitely. The Chattanooga site accumulated ~105k of those before it was added.
+   The allowlist covers static files by exact path too, so a missing image 404s instead
+   of returning the app shell.
 
 ---
 

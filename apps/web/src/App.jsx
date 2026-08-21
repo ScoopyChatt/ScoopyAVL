@@ -39,7 +39,6 @@ const LocationTemplate = React.lazy(() => import('@/components/LocationTemplate.
 
 // Blogs
 const BlogListPage = React.lazy(() => import('@/pages/BlogListPage.jsx'));
-const BlogPostTemplate = React.lazy(() => import('@/components/BlogPostTemplate.jsx'));
 
 // Specific/Working Blog Pages (Live)
 const HowOftenCleanYard = React.lazy(() => import('@/pages/blog/HowOftenCleanYardPage.jsx'));
@@ -50,6 +49,19 @@ const BlogSoddyDaisy = React.lazy(() => import('@/pages/blog/BlogSoddyDaisyPage.
 const DogPoopCleanupSummerHeat = React.lazy(() => import('@/pages/blog/DogPoopCleanupSummerHeatAsheville.jsx'));
 const DogParksAsheville = React.lazy(() => import('@/pages/blog/DogParksAshevillePage.jsx'));
 const PooperScooperCostAsheville = React.lazy(() => import('@/pages/blog/PooperScooperCostAsheville.jsx'));
+const BestPooperScooperServicesAsheville = React.lazy(() => import('@/pages/blog/BestPooperScooperServicesAsheville.jsx'));
+const HowOftenScoopDogPoopAsheville = React.lazy(() => import('@/pages/blog/HowOftenScoopDogPoopAsheville.jsx'));
+const IsDogPoopHurtingYourAshevilleYard = React.lazy(() => import('@/pages/blog/IsDogPoopHurtingYourAshevilleYard.jsx'));
+const IsDogWasteBadForLawn = React.lazy(() => import('@/pages/blog/IsDogWasteBadForLawn.jsx'));
+const SpringPetCareChecklist = React.lazy(() => import('@/pages/blog/SpringPetCareChecklist.jsx'));
+const ProfessionalWasteRemovalBenefits = React.lazy(() => import('@/pages/blog/BlogArticle1_ProfessionalWasteRemovalBenefits.jsx'));
+const SeasonalPetCareTips = React.lazy(() => import('@/pages/blog/BlogArticle2_SeasonalPetCareTips.jsx'));
+const HealthBenefitsYardCleanup = React.lazy(() => import('@/pages/blog/BlogArticle3_HealthBenefitsYardCleanup.jsx'));
+const CustomerSuccessStories = React.lazy(() => import('@/pages/blog/BlogArticle4_CustomerSuccessStories.jsx'));
+const DIYVsProfessional = React.lazy(() => import('@/pages/blog/BlogArticle5_DIYVsProfessional.jsx'));
+const LawnHealthAndPetWaste = React.lazy(() => import('@/pages/blog/BlogArticle6_LawnHealthAndPetWaste.jsx'));
+const HealthRisksOfPetWaste = React.lazy(() => import('@/pages/blog/BlogArticle7_HealthRisksOfPetWaste.jsx'));
+const PetWasteManagementGuide = React.lazy(() => import('@/pages/blog/BlogArticle8_PetWasteManagementGuide.jsx'));
 
 // Media / Utilities
 const RedditOAuthCallbackPage = React.lazy(() => import('@/pages/RedditOAuthCallbackPage.jsx'));
@@ -147,7 +159,19 @@ function App() {
           <Route path="/blog/best-dog-parks-asheville-nc" element={<DogParksAsheville />} />
           
           <Route path="/blog/pooper-scooper-cost-asheville" element={<PooperScooperCostAsheville />} />
-            <Route path="/blog/:slug" element={<BlogPostTemplate />} />
+          <Route path="/blog/best-pooper-scooper-services-asheville" element={<BestPooperScooperServicesAsheville />} />
+          <Route path="/blog/how-often-scoop-dog-poop-asheville" element={<HowOftenScoopDogPoopAsheville />} />
+          <Route path="/blog/is-dog-poop-hurting-your-asheville-yard" element={<IsDogPoopHurtingYourAshevilleYard />} />
+          <Route path="/blog/is-dog-waste-bad-for-lawn" element={<IsDogWasteBadForLawn />} />
+          <Route path="/blog/spring-pet-care-checklist" element={<SpringPetCareChecklist />} />
+          <Route path="/blog/professional-waste-removal-benefits" element={<ProfessionalWasteRemovalBenefits />} />
+          <Route path="/blog/seasonal-pet-care-tips" element={<SeasonalPetCareTips />} />
+          <Route path="/blog/health-benefits-yard-cleanup" element={<HealthBenefitsYardCleanup />} />
+          <Route path="/blog/customer-success-stories" element={<CustomerSuccessStories />} />
+          <Route path="/blog/diy-vs-professional" element={<DIYVsProfessional />} />
+          <Route path="/blog/lawn-health-and-pet-waste" element={<LawnHealthAndPetWaste />} />
+          <Route path="/blog/health-risks-of-pet-waste" element={<HealthRisksOfPetWaste />} />
+          <Route path="/blog/pet-waste-management-guide" element={<PetWasteManagementGuide />} />
 
           <Route path="*" element={
             <>

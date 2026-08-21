@@ -107,25 +107,20 @@ const routes = {
   '/blog/asheville-pet-waste-removal-homeowners': ['Pet Waste Removal Guide for Asheville Homeowners | Scoopy Doo', 'A complete guide for Asheville homeowners on pet waste management - health risks, lawn damage, waterway protection, and professional service.'],
   '/blog/commercial-pet-waste-removal-asheville': ['Commercial Pet Waste Removal in Asheville, NC | Scoopy Doo', 'Professional pet waste removal for apartments, HOAs, and businesses in Asheville. Flexible scheduling, no contracts.'],
   '/blog/how-often-clean-yard': ['How Often Should You Clean Your Yard of Dog Waste? | Scoopy Doo', 'Weekly is the gold standard. Learn the right cleanup frequency based on your dog count, yard size, and Asheville season.'],
-  '/blog/podcast-blog': ['Scoopy Doo on the Podcast | The Asheville Pet Waste Removal Story', 'Hear the Scoopy Doo LLC founder discuss starting a pet waste removal business in Asheville, NC.'],
   '/blog/black-mountain': ['Pet Waste Removal Tips for Black Mountain, NC | Scoopy Doo Blog', 'Scoopy Doo serves Black Mountain with thorough yard cleanup. We handle larger lots and wooded terrain every week.'],
   '/blog/dog-poop-cleanup-asheville-summer-heat': ['Dog Poop Cleanup in Asheville During Hot, Humid Weather | Scoopy Doo', 'Summer heat and humidity make dog waste more dangerous. Learn why Asheville yards need regular cleanup during the hot months and how Scoopy Doo can help.'],
+  '/1st-scoop-free': ['Your 1st Scoop is FREE | Dog Poop Removal in Asheville, NC', 'Sign up for your first month of dog poop removal in Asheville and your first scoop is free. Weekly, bi-weekly, and one-time service. No contracts, cancel anytime.'],
+  '/blog/best-dog-parks-asheville-nc': ['7 Best Dog Parks in Asheville, NC (2026 Guide) | Scoopy Doo', 'Discover the 7 best dog parks in Asheville, NC for 2026 - off-leash areas, addresses, hours, amenities, and tips for keeping your home yard just as clean.'],
+  '/blog/pooper-scooper-cost-asheville': ['How Much Does Pooper Scooper Service Cost in Asheville? | Scoopy Doo', 'Scoopy Doo weekly service starts at $20 per visit for one dog. See 2026 pricing for weekly, bi-weekly, and one-time pet waste removal in Asheville NC.'],
   '/blog/weaverville': ['Pet Waste Removal in Weaverville, NC | Scoopy Doo Blog', 'Scoopy Doo serves Weaverville and Beaver Lake area homeowners. Waterfront cleanup protects the lake and your family.'],
 };
 
-const gaLocations = new Set(['mills-river','biltmore-forest','biltmore-forest','mills-river']);
-const locationPages = [
-  'asheville','arden','fletcher','black-mountain','hendersonville','fairview',
-  'weaverville','brevard','candler','swannanoa','west-asheville','downtown',
-  'woodfin','black-mountain',
-  'mills-river','biltmore-forest','biltmore-forest','mills-river'
-];
-locationPages.forEach(function(loc) {
+const { SERVICE_AREAS } = require('./route-manifest.cjs');
+SERVICE_AREAS.forEach(function(loc) {
   var city = loc.split('-').map(function(w){return w[0].toUpperCase()+w.slice(1);}).join(' ');
-  var state = gaLocations.has(loc) ? 'NC' : 'NC';
   routes['/service/' + loc] = [
-    'Dog Poop Removal ' + city + ' ' + state + ' | Scoopy Doo',
-    'Professional pet waste removal in ' + city + ', ' + state + '. Weekly & bi-weekly pooper scooper service. Get your free quote today.'
+    'Dog Poop Removal ' + city + ' NC | Scoopy Doo',
+    'Professional pet waste removal in ' + city + ', NC. Weekly & bi-weekly pooper scooper service. Get your free quote today.'
   ];
 });
 

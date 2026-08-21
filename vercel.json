@@ -131,6 +131,6 @@
       ]
     }
   ],
-  "buildCommand": "npm install --prefix apps/web && npm run build --prefix apps/web && node apps/web/tools/inject-seo.cjs && node apps/web/tools/generate-sitemap.cjs && node apps/web/tools/create-static-pages.cjs",
+  "buildCommand": "npm install --prefix apps/web && npm run build --prefix apps/web && node apps/web/tools/inject-seo.cjs && node apps/web/tools/generate-sitemap.cjs && node apps/web/tools/create-static-pages.cjs && node apps/web/tools/verify-routes.cjs",
   "outputDirectory": "dist/apps/web"
 }
