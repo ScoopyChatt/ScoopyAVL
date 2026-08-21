@@ -272,7 +272,11 @@ const QuoteForm = ({ source = 'scoopyavl.com/quote' }) => {
     try {
       await Promise.allSettled([postJson(WEBHOOK_URL), postForm(JOBBER_ZAPIER_URL)]);
     } catch (error) { console.error(error); }
-    if (window && window.fbq) window.fbq('track', 'Schedule');
+    // Final conversion step: Meta needs Lead here to attribute the ad click.
+    if (window && window.fbq) {
+      window.fbq('track', 'Lead');
+      window.fbq('track', 'Schedule');
+    }
     navigate('/thank-you');
   };
 
@@ -321,7 +325,9 @@ const QuoteForm = ({ source = 'scoopyavl.com/quote' }) => {
       }
 
       setQuote(computeQuote(values.serviceType, values.numberOfDogs, takeAway));
-      if (window && window.fbq) window.fbq('track', 'Lead');
+      // Full contact info given and a real price shown - strong intent, but not
+      // the conversion. Lead fires on the final step in requestStart().
+      if (window && window.fbq) window.fbq('track', 'InitiateCheckout');
       toast.success('Got it - here is your instant price!');
     } catch (error) {
       console.error('Submission error:', error);
