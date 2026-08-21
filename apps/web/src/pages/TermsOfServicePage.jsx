@@ -38,10 +38,10 @@ const TermsOfServicePage = () => {
       content: (
         <>
           <p className="mb-4 text-muted-foreground leading-relaxed">
-            Scoopy Doo AVL specializes in residential and commercial pet waste removal. Pricing is calculated based on an average property area of 1/8 to 1/4 of an acre, with additional charges applicable for larger yards. It is our responsibility to notify a Customer before servicing if their yard is large enough to require an additional charge. This agreement does not give us the right to retroactively charge an additional fee for a yard larger than defined here without first notifying the Customer.
+            Scoopy Doo AVL specializes in residential and commercial pet waste removal. Your rate is based on the number of dogs and the size of your yard, quoted against an average property of 1/8 to 1/4 of an acre. Larger yards are priced higher, and we tell you that up front, before your first visit. We will never add a charge to your account retroactively, and there are no fuel surcharges, seasonal fees, or hidden charges of any kind.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            New customers have their initial cleaning fee ($125) waived so long as they remain an active customer for at least four normal priced service visits following any introductory offer. Customers who cancel service before completing four normal priced visits will have an early termination fee of $125 charged to their account.
+            There is no contract and no minimum number of visits. You can start, pause, or cancel service at any time, and there is no cancellation fee, termination fee, or setup fee for doing so. You are only ever billed for visits we have actually scheduled with you.
           </p>
         </>
       )
@@ -52,7 +52,7 @@ const TermsOfServicePage = () => {
       icon: <AlertCircle className="w-6 h-6 text-primary" />,
       content: (
         <p className="text-muted-foreground leading-relaxed">
-          Gates must be accessible on your scheduled service day. Inaccessible areas due to locked, blocked, or frozen gates, or the presence of an unfriendly or aggressive dog left outside, may result in the exclusion of cleaning services for that visit, with charges still applicable as scheduled.
+          Gates need to be accessible on your scheduled service day. If we arrive and the gate is locked, blocked, or frozen, or a dog is outside who is not comfortable with us, we will text you from the property and skip that area rather than risk it. We will do our best to get back to you that week. There is no lockout fee or trip charge for a visit we could not complete.
         </p>
       )
     },
@@ -72,7 +72,7 @@ const TermsOfServicePage = () => {
       icon: <Clock className="w-6 h-6 text-primary" />,
       content: (
         <p className="text-muted-foreground leading-relaxed">
-          We operate during a wide range of weather conditions, except in cases of severe thunderstorms, high winds, extreme temperatures, flooding, or excessive snowfall. Recurring service runs on a monthly subscription basis, and we do not offer refunds for a visit skipped due to weather. In that case, service is resumed the following week without refund. To protect the condition of your yard, we may also skip service during especially muddy conditions and resume during drier periods. If urgent cleaning is needed before your next scheduled visit, contact us, though we cannot guarantee immediate accommodation.
+          We work through a wide range of weather, stopping only for severe thunderstorms, high winds, extreme temperatures, flooding, or heavy snow. To protect your yard we may also skip especially muddy conditions and resume once things dry out. When a visit is skipped for weather, we pick back up the following week and clear whatever accumulated in the meantime at no additional charge, so nothing is lost on your end. If you need something cleaned up before your next scheduled visit, just ask and we will fit you in where we can.
         </p>
       )
     },
@@ -82,7 +82,7 @@ const TermsOfServicePage = () => {
       icon: <CreditCard className="w-6 h-6 text-primary" />,
       content: (
         <p className="text-muted-foreground leading-relaxed">
-          Billing occurs prior to each service, with payment due upon receipt of the invoice. Failure to remit payment within 5 days will result in service suspension and a late payment fee equivalent to one week of service. Accounts overdue beyond this period will be forwarded to collections. One-time cleanings require a deposit, with the remaining balance due immediately upon completion of service. Payment by credit card, debit card, or ACH is required.
+          Billing happens before each service, with payment due when you receive the invoice. If an invoice goes unpaid we will simply pause service until it is settled, and pick back up as soon as it is. There is no late fee. One-time cleanups are billed with the balance due on completion. We accept credit card, debit card, and ACH.
         </p>
       )
     },
@@ -92,7 +92,7 @@ const TermsOfServicePage = () => {
       icon: <CalendarX2 className="w-6 h-6 text-primary" />,
       content: (
         <p className="text-muted-foreground leading-relaxed">
-          Scoopy Doo AVL does not operate on Memorial Day, the 4th of July, Labor Day, Thanksgiving Day, Christmas Day, or New Year's Day. Any service scheduled on one of these holidays will be postponed to the following week without a refund.
+          Scoopy Doo AVL does not run on Memorial Day, the 4th of July, Labor Day, Thanksgiving Day, Christmas Day, or New Year's Day. If your service day lands on one of those, we move it to the following week and clear the extra buildup at no additional charge.
         </p>
       )
     },
