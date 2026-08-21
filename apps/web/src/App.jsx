@@ -67,6 +67,7 @@ const DIYVsProfessional = React.lazy(() => import('@/pages/blog/BlogArticle5_DIY
 const LawnHealthAndPetWaste = React.lazy(() => import('@/pages/blog/BlogArticle6_LawnHealthAndPetWaste.jsx'));
 const HealthRisksOfPetWaste = React.lazy(() => import('@/pages/blog/BlogArticle7_HealthRisksOfPetWaste.jsx'));
 const PetWasteManagementGuide = React.lazy(() => import('@/pages/blog/BlogArticle8_PetWasteManagementGuide.jsx'));
+const BenefitsPage = React.lazy(() => import('@/pages/blog/BenefitsPage.jsx'));
 
 // Media / Utilities
 const RedditOAuthCallbackPage = React.lazy(() => import('@/pages/RedditOAuthCallbackPage.jsx'));
@@ -180,6 +181,7 @@ function App() {
           <Route path="/blog/lawn-health-and-pet-waste" element={<LawnHealthAndPetWaste />} />
           <Route path="/blog/health-risks-of-pet-waste" element={<HealthRisksOfPetWaste />} />
           <Route path="/blog/pet-waste-management-guide" element={<PetWasteManagementGuide />} />
+          <Route path="/blog/benefits" element={<BenefitsPage />} />
 
           <Route path="*" element={
             <>

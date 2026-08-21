@@ -99,7 +99,7 @@ const PRICING = {
   'weekly': { base: 20, extra: 2, cadence: '/ visit', note: 'weekly service' },
   'twice-weekly': { base: 18, extra: 1, cadence: '/ visit', note: 'twice-weekly service' },
   'biweekly': { base: 33, extra: 3, cadence: '/ visit', note: 'every-other-week service' },
-  'onetime': { base: 125, extra: 15, inc: 3, cadence: 'one-time', note: 'a one-time cleanup' },
+  'onetime': { base: 85, extra: 15, inc: 3, cadence: 'one-time', note: 'a one-time cleanup' },
 };
 
 const SERVICE_LABELS = {

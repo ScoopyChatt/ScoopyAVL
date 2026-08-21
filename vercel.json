@@ -29,11 +29,6 @@
       "permanent": true
     },
     {
-      "source": "/pricing",
-      "destination": "/quote",
-      "permanent": true
-    },
-    {
       "source": "/about-us",
       "destination": "/about",
       "permanent": true

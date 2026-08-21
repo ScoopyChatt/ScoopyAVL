@@ -47,6 +47,7 @@ const PAGES = [
 
 const BLOG_POSTS = [
   'asheville-pet-waste-removal-homeowners',
+  'benefits',
   'best-dog-parks-asheville-nc',
   'best-pooper-scooper-services-asheville',
   'black-mountain',

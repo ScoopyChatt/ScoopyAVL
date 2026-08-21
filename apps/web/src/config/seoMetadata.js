@@ -25,6 +25,12 @@ export const seoMetadata = {
     canonical: `${CANONICAL_BASE_URL}/pet-waste-station-installation-asheville`,
     ogType: "website"
   },
+  "/pricing": {
+    title: "Dog Poop Removal Pricing in Asheville, NC | Scoopy Doo",
+    description: "Simple, transparent pricing for weekly, twice-weekly, bi-weekly, and one-time dog poop removal in Asheville, NC. Weekly from $20 per visit. No contracts, no hidden fees.",
+    canonical: `${CANONICAL_BASE_URL}/pricing`,
+    ogType: "website"
+  },
   "/services": {
     title: "Pet Waste Removal Services in Asheville, NC | Scoopy Doo",
     description: "Weekly, bi-weekly & one-time dog poop removal, yard cleanup, and pet waste services in Asheville. See what Scoopy Doo offers and book today.",

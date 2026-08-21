@@ -56,7 +56,7 @@ const services = [
     name: "Call of Doody",
     url: "https://www.call-of-doody.org",
     local: true,
-    area: "Asheville NC + Dalton, Mills River, Tunnel Hill NC",
+    area: "Asheville NC + Mills River, Fletcher, Weaverville NC",
     frequency: "Weekly, bi-weekly, monthly",
     price: "$18/visit weekly",
     notable: "Family-owned; text/email confirmation standard; gate photo on request; 24-hr make-it-right guarantee; licensed and insured",
@@ -86,7 +86,7 @@ const descriptions = [
   },
   {
     name: "Call of Doody",
-    text: "Call of Doody is a family-owned operation run by Mindie and Davy Hunt, serving Asheville and several Western North Carolina communities including Dalton and Mills River. Pricing is published transparently on their site. Text and email confirmations are standard; gate photos are available on request. They offer a 24-hour make-it-right guarantee and are licensed and insured.",
+    text: "Call of Doody is a family-owned operation run by Mindie and Davy Hunt, serving Asheville and several Western North Carolina communities including Fletcher and Mills River. Pricing is published transparently on their site. Text and email confirmations are standard; gate photos are available on request. They offer a 24-hour make-it-right guarantee and are licensed and insured.",
   },
 ];
 
