@@ -1,5 +1,5 @@
 
-import React, { useEffect, Suspense } from 'react';
+import React, { useEffect, useRef, Suspense } from 'react';
 import { Route, Routes, BrowserRouter as Router, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Toaster } from '@/components/ui/sonner';
@@ -62,8 +62,15 @@ import HowItWorksPage from '@/pages/HowItWorksPage.jsx';
 const RouteTracker = () => {
   const location = useLocation();
   const { trackPageView } = usePixel();
+  // index.html already fires PageView for the initial load. Without this guard
+  // the first page of every session was counted twice.
+  const firstLoad = useRef(true);
 
   useEffect(() => {
+    if (firstLoad.current) {
+      firstLoad.current = false;
+      return;
+    }
     trackPageView();
   }, [location, trackPageView]);
 

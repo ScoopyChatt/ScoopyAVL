@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { toast } from 'sonner';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CheckCircle2, MapPin } from 'lucide-react';
+import { newEventId, getFbp, getFbc, trackPixel } from '@/lib/metaPixel.js';
 
 // No confirmed route days yet (new location, no customers as of launch) - every
 // entry has day: null. Once Tony has real routes, fill these in the same way
@@ -241,6 +242,8 @@ const QuoteForm = ({ source = 'scoopyavl.com/quote' }) => {
     }
     const v = form.getValues();
     const entry = SERVICE_AREA[v.serviceZipCode];
+    // Shared with the server-side copy of this Lead so Meta dedupes the pair.
+    const leadEventId = newEventId();
     const readyPayload = {
       full_name: v.name, email: v.email, phone: v.phone,
       service_zip: v.serviceZipCode, service_type: v.serviceType,
@@ -254,6 +257,8 @@ const QuoteForm = ({ source = 'scoopyavl.com/quote' }) => {
       service_label: SERVICE_LABELS[v.serviceType] || 'Custom Pet Waste Removal Service',
       ready_to_book: true, lead_stage: 'Ready to Book', take_away: takeAway ? 'Yes (+$5/visit)' : 'No', company_website: '',
       source, submitted_at: new Date().toISOString(),
+      page_url: typeof window !== 'undefined' ? window.location.href : '',
+      event_id: leadEventId, event_name: 'Lead', fbp: getFbp(), fbc: getFbc(),
     };
     // Zapier catch hooks reject the JSON CORS preflight from browsers, so the
     // Jobber hook is posted as no-cors form-encoded data instead of JSON.
@@ -273,10 +278,9 @@ const QuoteForm = ({ source = 'scoopyavl.com/quote' }) => {
       await Promise.allSettled([postJson(WEBHOOK_URL), postForm(JOBBER_ZAPIER_URL)]);
     } catch (error) { console.error(error); }
     // Final conversion step: Meta needs Lead here to attribute the ad click.
-    if (window && window.fbq) {
-      window.fbq('track', 'Lead');
-      window.fbq('track', 'Schedule');
-    }
+    const leadValue = quote && quote.price ? quote.price : undefined;
+    trackPixel('Lead', leadValue ? { value: leadValue, currency: 'USD' } : {}, leadEventId);
+    trackPixel('Schedule', {}, newEventId());
     navigate('/thank-you');
   };
 
@@ -293,6 +297,7 @@ const QuoteForm = ({ source = 'scoopyavl.com/quote' }) => {
       return;
     }
 
+    const quoteEventId = newEventId();
     const payload = {
       full_name: values.name,
       email: values.email,
@@ -311,6 +316,7 @@ const QuoteForm = ({ source = 'scoopyavl.com/quote' }) => {
       source,
       page_url: typeof window !== 'undefined' ? window.location.href : '',
       submitted_at: new Date().toISOString(),
+      event_id: quoteEventId, event_name: 'InitiateCheckout', fbp: getFbp(), fbc: getFbc(),
     };
 
     try {
@@ -324,10 +330,15 @@ const QuoteForm = ({ source = 'scoopyavl.com/quote' }) => {
         throw new Error('Request failed with status ' + response.status);
       }
 
-      setQuote(computeQuote(values.serviceType, values.numberOfDogs, takeAway));
+      const priced = computeQuote(values.serviceType, values.numberOfDogs, takeAway);
+      setQuote(priced);
       // Full contact info given and a real price shown - strong intent, but not
       // the conversion. Lead fires on the final step in requestStart().
-      if (window && window.fbq) window.fbq('track', 'InitiateCheckout');
+      trackPixel(
+        'InitiateCheckout',
+        priced.price ? { value: priced.price, currency: 'USD' } : {},
+        quoteEventId
+      );
       toast.success('Got it - here is your instant price!');
     } catch (error) {
       console.error('Submission error:', error);
