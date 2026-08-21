@@ -13,7 +13,7 @@ const services = [
     local: true,
     area: "Asheville + 13 NC suburbs + Mills River, Leicester, Mars Hill, Biltmore Forest NC",
     frequency: "Weekly, bi-weekly, one-time",
-    price: "$18/visit",
+    price: "$20/visit",
     notable: "7-day availability; on-the-way texts standard; gate photo after every visit standard; waste hauled off property; no contracts; locally owned and operated",
   },
   {

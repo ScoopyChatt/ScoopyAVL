@@ -7,6 +7,24 @@ export const seoMetadata = {
     canonical: `${CANONICAL_BASE_URL}/`,
     ogType: "website"
   },
+  "/hoa-pet-waste-removal-asheville": {
+    title: "HOA Pet Waste Removal in Asheville, NC | Scoopy Doo",
+    description: "Common-area pet waste removal for Asheville HOAs and condo associations. Stations installed and restocked, photo proof every visit, insured, no contract.",
+    canonical: `${CANONICAL_BASE_URL}/hoa-pet-waste-removal-asheville`,
+    ogType: "website"
+  },
+  "/apartment-dog-park-cleaning-asheville": {
+    title: "Apartment Dog Park Cleaning in Asheville, NC | Scoopy Doo",
+    description: "Dog run, pet relief area, and courtyard cleaning for Asheville apartment communities. Twice-weekly through daily schedules, stations serviced, no contract.",
+    canonical: `${CANONICAL_BASE_URL}/apartment-dog-park-cleaning-asheville`,
+    ogType: "website"
+  },
+  "/pet-waste-station-installation-asheville": {
+    title: "Pet Waste Station Installation in Asheville, NC | Scoopy Doo",
+    description: "Pet waste station installation and restocking for Asheville HOAs and apartments. Bags kept stocked, bins emptied, waste hauled off property.",
+    canonical: `${CANONICAL_BASE_URL}/pet-waste-station-installation-asheville`,
+    ogType: "website"
+  },
   "/services": {
     title: "Pet Waste Removal Services in Asheville, NC | Scoopy Doo",
     description: "Weekly, bi-weekly & one-time dog poop removal, yard cleanup, and pet waste services in Asheville. See what Scoopy Doo offers and book today.",

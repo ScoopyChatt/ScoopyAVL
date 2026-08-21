@@ -16,6 +16,11 @@
 **Email:** info@scoopyavl.com
 **Phone:** 828-830-0779
 **Live site:** https://www.scoopyavl.com
+**Pricing source of truth:** `apps/web/src/components/QuoteForm.jsx` (`base` values) —
+weekly $20/visit, twice-weekly $18, every-other-week $33, one-time from $125. Marketing
+copy currently advertises one-time from $85; the form and the copy disagree and Brandon
+needs to reconcile them. Prices are duplicated into `inject-seo.cjs` and
+`create-static-pages.cjs`, which had all drifted to Chattanooga rates — grep before editing.
 **GitHub repo:** https://github.com/ScoopyChatt/ScoopyAVL  (exists — separate from the Chattanooga repo)
 **GitHub token:** provided per session — never commit to the repo
 **Owner name + About story:** UNVERIFIED placeholder — confirm with Brandon
@@ -160,7 +165,11 @@ Located at `/how-it-works`. Differentiators to emphasize:
 
 ## SEO TODO (Priority Order)
 
-1. Build/verify commercial pages: HOA pet waste, apartment dog park, pet waste station
+1. ~~Build commercial pages: HOA pet waste, apartment dog park, pet waste station~~ — done.
+   Live at `/hoa-pet-waste-removal-asheville`, `/apartment-dog-park-cleaning-asheville`,
+   `/pet-waste-station-installation-asheville`. All three quote per property rather than
+   naming a commercial rate; if you set fixed community pricing, update all three plus
+   their `create-static-pages.cjs` bodies.
 2. More Asheville local-intent blog posts
 3. Verify scoopyavl.com domain at resend.com/domains so lead emails send
 4. Set up + connect Google Business Profile for Asheville, link www.scoopyavl.com

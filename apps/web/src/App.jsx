@@ -37,6 +37,11 @@ const ServiceAreasPage = React.lazy(() => import('@/pages/ServiceAreasPage.jsx')
 // Location Template for dynamic routing
 const LocationTemplate = React.lazy(() => import('@/components/LocationTemplate.jsx'));
 
+// Commercial / community pages
+const HOAPetWasteRemovalPage = React.lazy(() => import('@/pages/HOAPetWasteRemovalPage.jsx'));
+const ApartmentDogParkPage = React.lazy(() => import('@/pages/ApartmentDogParkPage.jsx'));
+const PetWasteStationPage = React.lazy(() => import('@/pages/PetWasteStationPage.jsx'));
+
 // Blogs
 const BlogListPage = React.lazy(() => import('@/pages/BlogListPage.jsx'));
 
@@ -138,6 +143,9 @@ function App() {
           <Route path="/dog-poop-removal-asheville" element={<DogPoopRemovalPage />} />
           <Route path="/pet-waste-removal-asheville" element={<PetWasteRemovalPage />} />
           <Route path="/dog-poop-scooping-asheville" element={<DogPoopScoopingPage />} />
+          <Route path="/hoa-pet-waste-removal-asheville" element={<HOAPetWasteRemovalPage />} />
+          <Route path="/apartment-dog-park-cleaning-asheville" element={<ApartmentDogParkPage />} />
+          <Route path="/pet-waste-station-installation-asheville" element={<PetWasteStationPage />} />
           <Route path="/yard-cleanup-asheville" element={<YardCleanupPage />} />
 
           <Route path="/pet-safe-checklist" element={<PetSafeChecklistLandingPage />} />

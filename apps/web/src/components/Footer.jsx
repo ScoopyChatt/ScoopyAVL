@@ -73,7 +73,9 @@ const Footer = () => {
               <li><Link to="/services" className="hover:text-primary transition-colors text-sm">Dog Poop Removal</Link></li>
               <li><Link to="/services" className="hover:text-primary transition-colors text-sm">Pet Waste Removal</Link></li>
               <li><Link to="/one-time-cleanup" className="hover:text-primary transition-colors text-sm">One-Time Poop Pick Up Service</Link></li>
-              <li><Link to="/services" className="hover:text-primary transition-colors text-sm">Commercial Pet Waste Management</Link></li>
+              <li><Link to="/hoa-pet-waste-removal-asheville" className="hover:text-primary transition-colors text-sm">HOA Pet Waste Removal</Link></li>
+              <li><Link to="/apartment-dog-park-cleaning-asheville" className="hover:text-primary transition-colors text-sm">Apartment Dog Park Cleaning</Link></li>
+              <li><Link to="/pet-waste-station-installation-asheville" className="hover:text-primary transition-colors text-sm">Pet Waste Station Installation</Link></li>
             </ul>
           </div>
 
