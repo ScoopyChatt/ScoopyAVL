@@ -14,7 +14,7 @@
 
 **Brand:** Scoopy Doo AVL — pet waste removal, Asheville NC
 **Email:** info@scoopyavl.com
-**Phone:** 828-830-0779
+**Phone:** 828-844-8060
 **Live site:** https://www.scoopyavl.com
 **Pricing source of truth:** `apps/web/src/components/QuoteForm.jsx` (`base` values) —
 weekly $20/visit, twice-weekly $18, every-other-week $33, one-time from $125. Marketing

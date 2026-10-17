@@ -7,7 +7,7 @@ import QuoteForm from '@/components/QuoteForm.jsx';
 import ReviewsSection from '@/components/ReviewsSection.jsx';
 import { getCanonicalUrl } from '@/utils/seoHelpers.js';
 
-const PHONE = '828-830-0779';
+const PHONE = '828-844-8060';
 const SOURCE = 'scoopyavl.com/1st-scoop-free';
 
 const SERVICE_AREAS = [
