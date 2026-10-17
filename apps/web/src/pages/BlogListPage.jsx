@@ -5,8 +5,10 @@ import Header from '@/components/Header.jsx';
 import Footer from '@/components/Footer.jsx';
 import SEOHead from '@/components/SEOHead.jsx';
 import { CANONICAL_BASE_URL } from '@/config/seoConfig.js';
+import { geoPosts } from '@/data/geoPosts.js';
 
 const allPosts = [
+  ...geoPosts.map((p) => ({ slug: '/blog/' + p.slug, title: p.title, desc: p.excerpt, date: p.dateLabel, cat: p.category })),
     { slug: '/blog/dog-poop-cleanup-asheville-summer-heat', title: 'Why Asheville Yards Need Regular Dog Poop Cleanup During Hot, Humid Weather', desc: 'Summer heat and humidity make dog waste smell worse, grow bacteria faster, and attract flies. Here is why Asheville dog owners need to stay on top of yard cleanup in summer.', date: 'Jun 2026', cat: 'Yard Tips' },
   { slug: '/blog/how-often-scoop-dog-poop-asheville', title: 'How Often Should You Scoop Dog Poop in Asheville?', desc: 'Most vets and yard experts say at least once a week. Here\'s why &mdash; and how Scoopy Doo makes it effortless.', date: 'Jun 2026', cat: 'Yard Tips' },
   { slug: '/blog/is-dog-poop-hurting-your-asheville-yard', title: 'Is Dog Poop Hurting Your Asheville Yard?', desc: 'Dog poop doesn\'t just smell bad &mdash; it kills grass, spreads parasites, and pollutes local water.', date: 'Jun 2026', cat: 'Lawn Health' },

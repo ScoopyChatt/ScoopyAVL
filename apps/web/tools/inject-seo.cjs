@@ -1,75 +1,94 @@
 #!/usr/bin/env node
+// Post-build step 1 of 3: writes dist/<route>/index.html for every route with its own
+// <title>, meta description, canonical and og tags, the LocalBusiness JSON-LD, and a
+// plain-HTML body inside <div id="root"> for crawlers that do not run JavaScript.
+//
+// That body is the FALLBACK. tools/prerender.mjs runs last and replaces it with the
+// real rendered page; this text is only what ships if prerendering a route fails.
+// Facts (towns, prices, visit steps) come from src/data/business.js so they match the site.
 const fs = require('fs');
 const path = require('path');
+const { setRoot, setHead, setJsonLd, importSrc } = require('./html-helpers.cjs');
 
-try {
+async function main() {
 const BASE = 'https://www.scoopyavl.com';
 const distDir = path.join(process.cwd(), 'dist', 'apps', 'web');
 const templatePath = path.join(distDir, 'index.html');
 
 if (!fs.existsSync(templatePath)) {
   console.log('SEO inject: dist/apps/web/index.html not found, skipping (build cache active)');
-  process.exit(0);
+  return;
 }
 
 const template = fs.readFileSync(templatePath, 'utf-8');
+const { businessSchema, SERVICE_AREA_TEXT, PRICE_TEXT, VISIT_STEPS, PROMISES } = await importSrc('data/business.js');
+const { locations } = await importSrc('data/locations.js');
+const { geoPosts } = await importSrc('data/geoPosts.js');
 
-const BODY_CLOSE = '<' + '/body>';
-const DIV_CLOSE = '<' + '/div>';
+const esc = (s) => String(s).replace(/&(?!(?:[a-z]+|#\d+);)/g, '&amp;').replace(/</g, '&lt;');
+const li = (items) => '<ul>' + items.map((i) => '<li>' + esc(i) + '</li>').join('') + '</ul>';
+const visitHtml = '<h2>What happens on every visit</h2>' + li(VISIT_STEPS);
+const quoteLine = '<p>See your exact price and book online at <a href="/quote">scoopyavl.com/quote</a>, or text 828-844-8060.</p>';
 
-// Static content blocks for key non-location pages
+// Fallback bodies for pages that create-static-pages.cjs does not cover.
 const SC = {
-  '/services': "<h1>Pet Waste Removal Services in Asheville, NC</h1><p>Scoopy Doo offers professional pet waste removal for homes, businesses, and HOAs in Asheville NC and Western North Carolina. All services include on-the-way texts and gate photo confirmation. No contracts required.</p><h2>Weekly Dog Poop Removal</h2><p>Most popular service. A technician visits once per week, removes all dog waste, texts on the way, and sends a gate photo after each visit. Pricing based on yard size and number of dogs. Free quote at scoopyavl.com/quote.</p><h2>Bi-Weekly Pooper Scooper Service</h2><p>Every two weeks. Ideal for smaller yards or fewer dogs.</p><h2>One-Time Yard Cleanup</h2><p>Single deep-clean visit. Perfect for spring cleanup, before a party, or as a first visit.</p><h2>Commercial Pet Waste Removal</h2><p>Regular scheduled service for apartment complexes, dog parks, and businesses in Asheville and Western North Carolina.</p><h2>HOA Common Area Cleanup</h2><p>Scheduled pet waste removal for shared green spaces and common areas throughout the Asheville metro area.</p>",
-  '/faq': "<h1>Frequently Asked Questions About Dog Poop Removal in Asheville</h1><h2>How much does dog poop removal cost in Asheville?</h2><p>Scoopy Doo weekly service starts at $20 per visit for one dog. Bi-weekly service starts at $33 per visit. One-time yard cleanups start at $85. All pricing is based on yard size and number of dogs -- every quote is free and personalized at scoopyavl.com/quoterequest. There are no contracts.</p><h2>Does Scoopy Doo serve Western North Carolina?</h2><p>Yes. Scoopy Doo serves Mills River, Leicester, Mars Hill, and Biltmore Forest NC in addition to Asheville, Arden, Fletcher, Black Mountain, Hendersonville, Fairview, Weaverville, Brevard, Woodfin, and Town Mountain NC. Western North Carolina customers pay the same rates as North Carolina locations.</p><h2>What happens on each visit?</h2><p>You receive a text when your technician is on the way. The technician searches the entire yard in a grid pattern. All waste is double-bagged and hauled fully off your property. After every visit you receive a gate photo confirmation so you know the yard is clean and the gate is secured.</p><h2>Is there a contract?</h2><p>No contracts, ever. You can start, pause, or cancel service at any time. There are no cancellation fees or minimum commitments.</p><h2>How often should I have my yard cleaned?</h2><p>Weekly is the gold standard for homes with one or two dogs and prevents waste from building up and damaging grass. Bi-weekly works well for smaller yards or single-dog households. One-time cleanups are ideal for spring cleaning, before a party, or before listing a home for sale.</p><h2>Do I need to be home during service?</h2><p>No. Most Scoopy Doo customers are not home during service. Just make sure gate access is available. You will receive an on-the-way text and a gate photo confirming the visit is complete.</p><h2>How quickly can service start?</h2><p>Most new customers start within 2 to 5 days of requesting a quote. Request a free quote at scoopyavl.com/quoterequest and Scoopy Doo responds the same day.</p><h2>Do you charge extra for multiple dogs?</h2><p>Yes, there is a small additional fee per extra dog to account for the additional waste and time. Your free quote will include the exact price for your yard size and dog count.</p><h2>Are you insured?</h2><p>Yes. Scoopy Doo is fully insured on every visit.</p><h2>What is a one-time cleanup?</h2><p>A one-time deep-clean visit removes all accumulated waste. It is ideal for spring cleaning, before a party, before listing a home, or as a first visit before starting regular service. One-time cleanups start at $85 and can be booked at scoopyavl.com/one-time-cleanup.</p>",
-  '/service-areas': "<h1>Pet Waste Removal Service Areas - Asheville NC and Western North Carolina</h1><p>Scoopy Doo serves Asheville, NC and the surrounding metro area including Western North Carolina communities. We run regular routes throughout the region and most new customers can start within 2-5 days of a free quote.</p><h2>North Carolina Service Areas</h2><ul><li>Asheville, NC</li><li>Arden, NC</li><li>Fletcher, NC</li><li>Black Mountain, NC</li><li>Town Mountain, NC</li><li>Weaverville, NC</li><li>Hendersonville, NC</li><li>Fairview, NC</li><li>Woodfin, NC</li><li>Swannanoa, NC</li><li>Candler, NC</li><li>Brevard, NC</li><li>West Asheville (Asheville), NC</li><li>Downtown Asheville, NC</li></ul><h2>Western North Carolina Service Areas</h2><ul><li>Mills River, NC</li><li>Leicester, NC</li><li>Mars Hill, NC</li><li>Biltmore Forest, NC</li></ul><p>All Western North Carolina locations are served at the same rates as North Carolina. No extra fees for crossing the state line.</p>",
-  '/how-it-works': "<h1>How Scoopy Doo Pet Waste Removal Works</h1><p>Scoopy Doo makes professional dog poop removal simple. Request a free quote, we respond the same day, and most new customers start within 2-5 days.</p><h2>Step 1: Get a Free Quote</h2><p>Request a quote at scoopyavl.com/quoterequest. Tell us your yard size, number of dogs, and preferred service frequency. We respond the same day with exact pricing.</p><h2>Step 2: We Come to You</h2><p>On your scheduled day, you receive a text when your technician is on the way. No need to be home. Just make sure we have gate access.</p><h2>Step 3: Complete Yard Cleanup</h2><p>The technician searches the entire yard using a grid-pattern approach to make sure nothing is missed. All waste is double-bagged and hauled away from the property entirely.</p><h2>Step 4: Gate Photo Confirmation</h2><p>After every visit, your gate is secured and a photo is sent to confirm the job is done. You know your yard is clean without having to check yourself.</p>",
-  '/about': "<h1>About Scoopy Doo Pet Waste Removal - Asheville, NC</h1><p>Scoopy Doo LLC is a locally owned pet waste removal company serving Asheville, NC and Western North Carolina. We are committed to reliable, professional service with real accountability - on-the-way texts, gate photo confirmation, and waste hauled fully off your property every visit.</p><p>We serve residential homes, HOA communities, apartment complexes, and commercial properties throughout the Asheville metro area and the surrounding Western North Carolina region. No contracts, ever.</p>",
-  '/near-me': "<h1>Pooper Scooper Service Near Me - Asheville NC and Western North Carolina</h1><p>Scoopy Doo is the locally owned pooper scooper service serving Asheville, NC and surrounding areas including Western North Carolina. We run regular routes throughout the region and offer weekly, bi-weekly, and one-time dog waste removal with no contracts required.</p><p>Service areas include Asheville, Arden, Fletcher, Black Mountain, Town Mountain, Weaverville, Hendersonville, Fairview, Woodfin, Swannanoa, Candler, Brevard NC, Mills River NC, Leicester NC, Mars Hill NC, and Biltmore Forest NC. Request a free quote at scoopyavl.com/quoterequest.</p>",
-  '/one-time-cleanup': "<h1>One-Time Dog Poop Cleanup in Asheville, NC</h1><p>Scoopy Doo offers one-time yard cleanup visits for Asheville and Western North Carolina homeowners. Perfect for spring cleaning, before a party, after a long winter, or as a first visit before starting recurring service.</p><p>The one-time cleanup includes a complete grid-pattern search of your entire yard, double-bagged waste removal fully off the property, and a gate photo confirmation when done. Request your one-time cleanup at scoopyavl.com/one-time-cleanup.</p>",
-  '/comparison': "<h1>Pet Waste Removal Services in Asheville, NC: 2026 Comparison</h1><p>Several pet waste removal providers serve the Asheville NC and Western North Carolina area. The table below compares them by service area, frequency options, published pricing, and notable features. Where pricing is not published on the provider website, the cell is marked Not listed.</p><h2>Asheville Pet Waste Removal Comparison</h2><table><thead><tr><th>Service</th><th>Service Area</th><th>Frequency Options</th><th>Starting Price</th><th>Notable</th></tr></thead><tbody><tr><td>Scoopy Doo</td><td>Asheville plus 13 NC suburbs; Mills River, Leicester, Mars Hill, Biltmore Forest NC</td><td>Weekly, twice-weekly, bi-weekly, one-time</td><td>$20/visit weekly (1 dog)</td><td>7-day availability; on-the-way text every visit; gate photo after every visit; waste hauled off property; no contracts; locally owned</td></tr><tr><td>PooTagic</td><td>Asheville plus suburbs; Mills River, Leicester, Mars Hill NC</td><td>Not listed</td><td>Quote required</td><td>Local family-owned; eco-friendly practices; Poo-Fume sanitizing add-on</td></tr><tr><td>Cooper&rsquo;s Scoopers</td><td>Asheville, Arden, Black Mountain, Swannanoa plus rural NC areas</td><td>Weekly, bi-weekly, one-time</td><td>Not listed</td><td>Franchise chain; deodorizing add-on available</td></tr><tr><td>Doo Doo Blues</td><td>Asheville NC (Western North Carolina not listed)</td><td>Weekly, bi-weekly</td><td>Starting $9.99</td><td>First cleaning free; national franchise; no contracts; sanitizes before each yard</td></tr><tr><td>Scoop Smart</td><td>Asheville NC and Western North Carolina</td><td>Weekly, twice-weekly, bi-weekly, monthly</td><td>Not listed</td><td>Locally owned; no contracts; background-checked staff; flexible scheduling</td></tr><tr><td>Call of Doody</td><td>Asheville NC; Mills River, Fletcher, Weaverville NC</td><td>Weekly, bi-weekly, monthly</td><td>$18/visit weekly</td><td>Family-owned; text or email confirmation; gate photo on request; 24-hour make-it-right guarantee; licensed and insured</td></tr></tbody></table><h2>About Scoopy Doo</h2><p>Scoopy Doo is a locally owned pet waste removal company serving Asheville NC and Western North Carolina. Every visit includes an on-the-way text and a gate photo confirmation, and all waste is hauled completely off the property. Service is available 7 days a week with no long-term contracts required. Free quotes at scoopyavl.com/quoterequest.</p>"
+  '/services': '<h1>Pet Waste Removal Services in Asheville, NC</h1>' +
+    '<p>Scoopy Doo AVL is a locally owned dog poop removal service for homes, HOAs, and apartment communities in ' + SERVICE_AREA_TEXT + '. ' + PRICE_TEXT + '</p>' +
+    '<h2>Weekly dog poop removal</h2><p>The most popular plan: one visit a week, $20 per visit for one dog.</p>' +
+    '<h2>Twice-weekly service</h2><p>$18 per visit, for multi-dog homes and small yards that fill up fast.</p>' +
+    '<h2>Every-other-week service</h2><p>$33 per visit, for one dog and a smaller yard.</p>' +
+    '<h2>One-time yard cleanup</h2><p>From $85, for a yard that has gone weeks or months without cleanup, before a party, or before listing a home.</p>' +
+    '<h2>HOA, apartment, and pet waste station service</h2><p>Common-area cleanup, dog park cleaning, and pet waste station installation and restocking, quoted per property.</p>' +
+    visitHtml + li(PROMISES) + quoteLine,
+  '/service-areas': '<h1>Pet Waste Removal Service Areas Around Asheville, NC</h1>' +
+    '<p>Scoopy Doo AVL serves ' + SERVICE_AREA_TEXT + ', across Buncombe, Henderson, and Transylvania counties.</p><ul>' +
+    locations.map((l) => '<li><a href="/service/' + l.slug + '">Dog poop removal in ' + esc(l.name) + '</a></li>').join('') + '</ul>' + quoteLine,
+  '/how-it-works': '<h1>How Scoopy Doo AVL Pet Waste Removal Works</h1>' +
+    '<p>Scoopy Doo AVL is 100% online: you get a quote and pay online, with no phone calls required, and there is no contract.</p>' +
+    '<h2>1. Get your price online</h2><p>Enter your address, number of dogs, and how often you want service at scoopyavl.com/quote. ' + PRICE_TEXT + '</p>' +
+    '<h2>2. On-the-way text</h2><p>You get a text before every visit. You do not need to be home; just make sure the gate can be opened.</p>' +
+    '<h2>3. Full-yard cleanup</h2><p>The technician walks the whole yard in a grid pattern, bags every pile, and hauls it off your property.</p>' +
+    '<h2>4. Gate photo</h2><p>When the visit is done the gate is latched and a photo of it is texted to you.</p>' + quoteLine,
+  '/about': '<h1>About Scoopy Doo AVL</h1>' +
+    '<p>Scoopy Doo AVL is a locally owned pet waste removal company in Asheville, NC, serving ' + SERVICE_AREA_TEXT + '.</p>' +
+    visitHtml + li(PROMISES) + quoteLine,
+  '/near-me': '<h1>Pooper Scooper Service Near Me in Asheville, NC</h1>' +
+    '<p>Scoopy Doo AVL is the locally owned pooper scooper service for ' + SERVICE_AREA_TEXT + '. ' + PRICE_TEXT + '</p>' +
+    visitHtml + quoteLine,
+  '/one-time-cleanup': '<h1>One-Time Dog Poop Cleanup in Asheville, NC</h1>' +
+    '<p>A one-time cleanup from Scoopy Doo AVL starts at $85 and clears a yard that has gone weeks or months without cleanup. It is popular in early spring, before a party, before listing a home, and as the first visit before weekly service.</p>' +
+    visitHtml + quoteLine,
+  '/pricing': '<h1>Dog Poop Removal Pricing in Asheville, NC</h1><p>' + PRICE_TEXT + '</p>' +
+    '<table><thead><tr><th>Plan</th><th>Price (1 dog)</th></tr></thead><tbody>' +
+    '<tr><td>Weekly</td><td>$20 per visit</td></tr><tr><td>Twice weekly</td><td>$18 per visit</td></tr>' +
+    '<tr><td>Every other week</td><td>$33 per visit</td></tr><tr><td>One-time cleanup</td><td>From $85</td></tr></tbody></table>' +
+    li(PROMISES) + quoteLine,
 };
 
-// Location data for static content generation
-const LOC = {
-  "asheville":      { name:"Asheville, NC",     desc:"Asheville is booming with new families, new neighborhoods, and a whole lot of dogs. Scoopy Doo is the local pet waste removal company keeping Asheville yards clean, safe, and ready for play, running regular routes throughout the city.", hoods:["North Shore","West Asheville","St. Elmo","Southside","Normal Park","Beaucatcher Mountain","Brainerd","East Lake"],
-  '/comparison': ['Pet Waste Removal Services Compared &mdash; Asheville NC 2026 | Scoopy Doo', 'Side-by-side comparison of Asheville pet waste removal services: Scoopy Doo, PooTagic, Doo Doo Blues, Scoop Smart, and more. Updated June 2026.', 'https://www.scoopyavl.com/comparison'], faqs:[["Do you service all Asheville neighborhoods?","Yes. We run regular routes across Asheville including North Shore, West Asheville, Beaucatcher Mountain, St. Elmo, Normal Park, Brainerd, Southside, and more."],["How does the gate photo work?","After every visit we secure your gate and send a photo confirmation. You always know your yard was cleaned and your gate is closed."],["Do you remove the waste from the property?","Yes. All waste is double-bagged and hauled away from your property entirely. It does not go in your trash can or stay by the gate."]] },
-  "arden":           { name:"Arden, NC",           desc:"Arden is one of Asheville's most established suburban communities with sprawling yards and lots of dogs. Scoopy Doo uses a systematic grid-pattern approach to find and remove all waste, even in wooded lots and near tree lines along Beaver Lake.",  hoods:["Middle Valley","Harrison","Town Creek","Shallowford Road","Curtain Pole Road","Wolftever Creek"], faqs:[["Do you service wooded yards in Arden?","Absolutely. Our technicians use a systematic grid-pattern approach that covers your entire yard, including wooded sections and areas near tree lines."],["Do you remove the waste or leave bags at the gate?","We double-bag all waste and haul it away entirely. It is never left by your gate or in your trash can."],["Is there a contract?","No contracts, ever. You can start, pause, or cancel service at any time."]] },
-  "fletcher":         { name:"Fletcher, NC",          desc:"Fletcher is a tight-knit city inside greater Asheville where neighbors know each other and community standards matter. Scoopy Doo serves Fletcher homeowners with reliable weekly pet waste removal, on-the-way texts, and gate photo confirmation after every visit.", hoods:["Fletcher proper","Dayton Pike area","Black Mountain Road corridor","Ashland Terrace","Scenic View area"], faqs:[["Do you service all of Fletcher?","Yes. We service all Fletcher neighborhoods including areas along Dayton Pike, Black Mountain Road, and surrounding residential streets."],["How often should I have service?","For one or two dogs, weekly service is the most popular option. It prevents waste from accumulating and keeps your yard clean and odor-free."],["Is your service reliable in winter?","Yes. We provide year-round service in Fletcher regardless of weather. We show up rain, cold, or shine."]] },
-  "black-mountain":  { name:"Black Mountain, NC",   desc:"Black Mountain properties have beautiful terrain and that same terrain makes pet waste cleanup genuinely difficult. Scoopy Doo is experienced with Black Mountain yards - wooded lots, steep grades, and extensive ground cover - and uses a thorough grid-pattern approach to find and remove everything.", hoods:["Black Mountain proper","Waldens Ridge","Signal Crest","James Boulevard corridor","Taft Highway area"], faqs:[["Do you service large or steeply graded properties?","Yes. Our technicians are experienced with Black Mountain terrain including wooded sections, sloped yards, and large properties."],["Do you remove waste from the property?","Yes. We remove all waste from the property entirely and haul it away in our vehicle. We never leave bags at your gate."],["Is service available year-round?","Yes. We provide year-round service on Black Mountain regardless of weather conditions."]] },
-  "hendersonville":         { name:"Hendersonville, NC",          desc:"Hendersonville is one of the fastest-growing communities in the Asheville region with master-planned neighborhoods, active HOAs, and high standards for community appearance. Scoopy Doo helps Hendersonville families and HOA boards keep shared spaces and private yards consistently clean.", hoods:["Cambridge Square","Hamilton on Hunter","Snow Hill","Georgetown area","Windstone"], faqs:[["Do you serve HOAs and subdivisions in Hendersonville?","Yes. We service HOA common areas, green spaces, and dog-walking paths in Hendersonville subdivisions. We can work directly with HOA boards on scheduling and invoicing."],["Can Hendersonville service help avoid HOA violations?","Absolutely. Consistent professional cleanup is the most reliable way to stay compliant with HOA pet waste rules."],["Do you service Georgetown and Snow Hill areas?","Yes. We cover all major Hendersonville neighborhoods including Cambridge Square, Hamilton on Hunter, Snow Hill, Georgetown, and surrounding areas."]] },
-  "fairview":    { name:"Fairview, NC",     desc:"Fairview is one of Asheville's busiest suburban corridors - full of growing families, newer subdivisions, and busy schedules that leave no time for yard cleanup. Scoopy Doo keeps Fairview yards consistently clean with on-the-way texts and gate photo confirmation every visit.", hoods:["Gunbarrel Road area","Hendersonville-Georgetown Road","Camp Jordan vicinity","Jenkins Road corridor","Fairview Road subdivisions"], faqs:[["Do you service the subdivisions along Gunbarrel Road?","Yes. We have regular routes throughout Fairview including neighborhoods along Gunbarrel Road, Hendersonville-Georgetown Road, Jenkins Road, and surrounding areas."],["How do I get started?","Request a free quote online. We respond the same day and most new Fairview customers can start within 2-5 days."],["Do you handle overgrown yard cleanups?","Yes. If your yard has not been cleaned in a while, we offer one-time deep-clean visits to start fresh before setting up recurring service."]] },
-  "weaverville":      { name:"Weaverville, NC",       desc:"Weaverville stretches along beautiful Beaver Lake with a mix of lakefront homes and inland neighborhoods. Scoopy Doo provides consistent reliable pet waste pickup that keeps your yard clean and the lake healthy, serving Weaverville with regular routes and on-the-way texts every visit.", hoods:["Weaverville proper","Sequoyah Drive area","Beaver Lake shoreline","Dayton Pike corridor","Zion Hill Road area","Falling Water area"], faqs:[["Do you service lakefront properties in Weaverville?","Yes. We service lakefront and lake-view properties throughout Weaverville. Waterfront properties are one of the most important places to have consistent pet waste removal because of runoff."],["How does dog waste affect Beaver Lake?","Dog waste contains bacteria and pathogens that wash into the lake during rain. Regular professional cleanup significantly reduces contamination that reaches the water from your property."],["Can you service docks or lakeside areas?","Yes. We can clean yard areas leading to docks and waterfront access points, the areas closest to the water where cleanup matters most."]] },
-  "woodfin":       { name:"Woodfin, NC",         desc:"Woodfin sits on the North Carolina-Georgia border with a proud residential community that takes care of its neighborhoods. Scoopy Doo runs regular routes through Woodfin, keeping yards clean for families who want more time for the things they actually enjoy.", hoods:["Mills River Road area","Cloud Springs Road","McBrien Road area","Bennett Road corridor","Spring Creek area"], faqs:[["Do you service Woodfin neighborhoods near the Georgia line?","Yes. Woodfin is well within our service area. We run regular routes throughout Woodfin including neighborhoods near the Georgia border."],["Can I get a one-time cleanup before starting regular service?","Yes. Many new customers start with a one-time deep clean to get the yard back to baseline, then move to weekly service."],["Do you sanitize your equipment between yards?","Yes, always. We sanitize all scooping tools between every yard to prevent the spread of bacteria and parasites."]] },
-  "black-mountain": { name:"Town Mountain, NC",  desc:"Town Mountain is one of the most distinctive communities in the region with historic homes, sweeping properties, and terrain that makes DIY pet waste cleanup a real challenge. Scoopy Doo navigates the terrain carefully to deliver a thorough cleanup every visit.", hoods:["Town Mountain proper","Sunset Drive corridor","Ochs Highway area","Scenic Highway section","Bragg Avenue area"], faqs:[["Do you service Town Mountain properties?","Yes. We service Town Mountain properties including homes along Sunset Drive, Ochs Highway, Scenic Highway, and throughout the community."],["Can you handle terraced or steeply graded yards?","Yes. Our technicians are careful and thorough on terraced and sloped properties. We take the time to cover difficult terrain."],["How do you access gated properties?","Many Town Mountain clients provide a gate code at sign-up. We use it for every visit, close the gate after cleaning, and send a photo confirmation."]] },
-  "mills-river":         { name:"Mills River, NC",           desc:"Mills River is the heart of Henderson County about 15 miles south of Asheville. Scoopy Doo proudly serves Mills River homeowners with professional pet waste removal, regular Western North Carolina routes, and no extra fees for Georgia locations.", hoods:["Mills River proper","Henderson County subdivisions","Graysville Road area","Cloud Springs Road","Battlefield Parkway corridor"], faqs:[["Do you service Mills River, NC?","Yes. Mills River is one of our core service areas. We run regular routes throughout Mills River and Henderson County and do not charge extra for Western North Carolina locations."],["Is there any extra charge for Georgia locations?","No. Our pricing for Mills River is the same as our North Carolina locations, based on yard size and number of dogs."],["How quickly can you start service?","Most Mills River customers can be added to a route within 2-5 days of requesting a quote."]] },
-  "biltmore-forest":        { name:"Leicester, NC",          desc:"Leicester sits right on the North Carolina-Georgia border moments from Asheville with established residential neighborhoods and a community that takes care of its properties. Scoopy Doo runs regular Western North Carolina routes and serves Leicester homeowners with reliable professional service.", hoods:["Leicester proper","McFarland Avenue area","Bent Creek Avenue corridor","Alabama Avenue area","Western North Carolina border neighborhoods"], faqs:[["Do you service Leicester, NC?","Yes. Leicester is within our Western North Carolina service area. We run regular routes and do not charge additional fees for Georgia locations."],["Do you service homes with multiple large dogs?","Absolutely. Multi-dog households are some of our best customers. Our pricing scales reasonably for additional dogs and we cover the full yard every visit."],["Do you remove the waste from the property?","Yes. We double-bag all waste and haul it away entirely. It does not go in your trash can or stay by your gate."]] },
-  "mills-river":  { name:"Mars Hill, NC",   desc:"Mars Hill is one of the fastest-growing cities in Western North Carolina with new subdivisions, active HOAs, and families who want their neighborhoods to look great. Scoopy Doo serves Mars Hill with professional weekly and bi-weekly pet waste removal and HOA common area service.", hoods:["Mars Hill proper","Battlefield Parkway corridor","Barnhardt Road area","Bent Creek Battlefield vicinity","LaFayette Road area","Parker Drive corridor"], faqs:[["Do you service Mars Hill, NC?","Yes. Mars Hill is within our regular Western North Carolina service area. We run established routes and do not charge extra for Henderson County locations."],["Do you work with HOAs in Mars Hill?","Yes. We service HOA common areas, dog-walking paths, and pet waste stations throughout Mars Hill."],["Do you service newer Mars Hill subdivisions?","Yes. We actively service newer developments along Battlefield Parkway, Barnhardt Road, LaFayette Road, and other growing corridors."]] },
-  "brevard":        { name:"Brevard, NC",          desc:"Brevard is the heart of Madison County and one of the fastest-growing cities in the region. Scoopy Doo serves Brevard families with professional pet waste removal - on-the-way texts, gate photo confirmation, and waste hauled fully off your property every visit. Regular Madison County routes with no extra fees.", hoods:["Brevard proper","Lee University area","North Brevard","White Oak area","Blythe Ferry Road corridor","Westside"], faqs:[["Do you service Brevard, NC?","Yes. Brevard is within our service area. We run routes throughout Brevard and Madison County and do not charge extra for distance from Asheville."],["How quickly can I start service?","Most Brevard customers can be added to a route within 2-5 days of requesting a quote. We respond the same day."],["Do you haul the waste away?","Yes. We haul all waste fully off your property, double-bagged and removed in our vehicle. It does not go in your trash can or stay by the gate."]] },
-  "candler":           { name:"Candler, NC",             desc:"Candler is one of Buncombe County's fast-growing communities with newer residential developments and larger lots. Scoopy Doo handles the whole yard every visit using a grid-pattern approach, making professional cleanup especially valuable for larger properties with multiple dogs.", hoods:["Candler Pike corridor","Standifer Gap Road area","Buncombe County rural east","Harrison vicinity","East Hamilton corridor"], faqs:[["Do you service Candler, NC?","Yes. Candler is within our East Buncombe County service area. We run regular routes and can typically start new customers within 2-5 days."],["Do you offer pricing for multiple dogs?","Yes. Our pricing scales affordably for households with multiple dogs. Request a free quote for your exact pricing."],["Can you handle larger lots?","Absolutely. We service a range of property sizes including larger lots typical in the Candler area and use a grid approach to cover every section."]] },
-  "swannanoa":      { name:"Swannanoa, NC",        desc:"Swannanoa is a small community-focused city east of Asheville with well-maintained neighborhoods and high standards for appearance. Scoopy Doo serves Swannanoa families with reliable weekly and bi-weekly pet waste removal with consistent scheduling and no hidden fees.", hoods:["Swannanoa proper","Southern Adventist University area","McDonald Road corridor","Candler Pike vicinity","East Hamilton corridor"], faqs:[["Do you service Swannanoa, NC?","Yes. Swannanoa is within our East Buncombe County service area. We run regular routes and do not charge extra for East Buncombe County locations."],["Are there any hidden fees?","No hidden fees. Our pricing is based on yard size and number of dogs. No fuel surcharges, no seasonal fees."],["How consistent is the schedule?","You are assigned a regular day and we show up on that day every week or bi-weekly. You get an on-the-way text before each visit."]] },
-  "west-asheville":    { name:"West Asheville, NC",      desc:"West Asheville is one of Asheville's most vibrant historic neighborhoods with tree-lined streets, revitalized bungalows, and neighbors who care about their blocks. Scoopy Doo runs regular Asheville routes through West Asheville, providing reliable urban yard cleanup.", hoods:["West Asheville proper","McCallie Avenue corridor","Third Street area","Dodds Avenue vicinity","Glass Street area","Orchard Knob nearby"], faqs:[["Do you service small urban yards in West Asheville?","Yes. We service yards of all sizes including the smaller urban lots typical in West Asheville. Smaller yards often mean waste is more concentrated and more important to keep clean consistently."],["How often should I have service?","For most West Asheville households with one or two dogs, weekly service is the best choice. Smaller yards fill up quickly and weekly pickup keeps odor and accumulation under control."],["Is West Asheville within the Asheville service area?","Yes. West Asheville is one of our established Asheville neighborhoods. We run regular city routes and West Asheville is well within our coverage area."]] },
-  "biltmore-forest":       { name:"Biltmore Forest, NC",         desc:"Biltmore Forest is a Haywood County community in the hills of Western North Carolina with a mix of rural homesteads and established residential neighborhoods. Scoopy Doo serves Biltmore Forest as part of our Western North Carolina coverage with no extra Haywood County fees.", hoods:["Biltmore Forest proper","US-27 corridor","Haywood County residential","Lookout Valley vicinity","Cloud Springs Road area"], faqs:[["Do you service Biltmore Forest, NC?","Yes. Biltmore Forest is within our Western North Carolina service coverage. We do not charge extra fees for Haywood County locations. Pricing is based on yard size and number of dogs."],["Do you sanitize your equipment between yards?","Yes, always. We sanitize all tools and footwear between every single yard to prevent the spread of bacteria and parasites."],["Can you handle larger rural properties?","Yes. We service a range of property sizes including larger rural lots and use a grid-pattern approach to make sure nothing is missed."]] },
-  "downtown":         { name:"Downtown Asheville, NC", desc:"Downtown Asheville is one of the most walkable dog-friendly urban environments in North Carolina. Scoopy Doo provides professional pet waste removal for downtown homes, condos with private outdoor spaces, and townhomes throughout the core and adjacent neighborhoods.", hoods:["Downtown proper","Bluff View","Southside","MLK District","North Shore","Riverfront area"], faqs:[["Do you service downtown Asheville homes and condos?","Yes. We service private yards, townhome outdoor spaces, and residential properties throughout downtown Asheville and adjacent neighborhoods including Southside, Bluff View, and the MLK District."],["Why does pet waste matter near the French Broad River?","Storm drains in downtown Asheville connect directly to the French Broad River. Dog waste washes into the water during rain, contributing bacteria and pathogens that affect water quality."],["How often should downtown properties be cleaned?","Weekly service is most popular for downtown properties. Compact yards with dogs fill up quickly and weekly pickup keeps the space pleasant year-round."]] }
-};
-
-function makeLocContent(slug) {
-  var d = LOC[slug];
-  if (!d) return "";
-  var h = "<h1>Dog Poop Removal in " + d.name + " | Scoopy Doo Pet Waste Removal</h1>";
-  h += "<p>" + d.desc + "</p>";
-  h += "<h2>Neighborhoods We Serve in " + d.name + "</h2><ul>";
-  d.hoods.forEach(function(n){ h += "<li>" + n + "</li>"; });
-  h += "</ul>";
-  h += "<h2>Frequently Asked Questions</h2>";
-  d.faqs.forEach(function(f){ h += "<h3>" + f[0] + "</h3><p>" + f[1] + "</p>"; });
-  h += "<p>Get a free quote at scoopyavl.com/quoterequest. We respond the same day.</p>";
-  return h;
+function locationBody(l) {
+  let h = '<h1>Dog Poop Removal in ' + esc(l.name) + '</h1>';
+  h += '<p>' + esc(l.serviceDescription) + '</p>';
+  if (l.localContext) h += '<p>' + esc(l.localContext) + '</p>';
+  if (l.neighborhoods && l.neighborhoods.length) h += '<h2>Neighborhoods we serve in ' + esc(l.name) + '</h2>' + li(l.neighborhoods);
+  if (l.benefits && l.benefits.length) h += '<h2>What you get</h2>' + li(l.benefits);
+  h += '<h2>Pricing</h2><p>' + PRICE_TEXT + '</p>';
+  if (l.faqItems && l.faqItems.length) {
+    h += '<h2>Frequently asked questions</h2>';
+    l.faqItems.forEach((f) => { h += '<h3>' + esc(f.question) + '</h3><p>' + esc(f.answer) + '</p>'; });
+  }
+  return h + quoteLine;
 }
 
-// FAQPage schema for /faq route
-const SCHEMA = {
-  '/faq': '<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does dog poop removal cost in Asheville?","acceptedAnswer":{"@type":"Answer","text":"Scoopy Doo pricing depends on yard size and number of dogs. Every quote is free and personalized at scoopyavl.com/quoterequest. There are no long-term contracts."}},{"@type":"Question","name":"How often does Scoopy Doo come to clean?","acceptedAnswer":{"@type":"Answer","text":"Weekly and bi-weekly service is available. Weekly is the most popular option for one or two dogs. One-time cleanups are also available."}},{"@type":"Question","name":"Does Scoopy Doo serve Western North Carolina?","acceptedAnswer":{"@type":"Answer","text":"Yes. Scoopy Doo serves Mills River, Leicester, Mars Hill, and Biltmore Forest in Catoosa and Walker counties Georgia, at the same rates as North Carolina locations."}},{"@type":"Question","name":"What happens during a pet waste removal visit?","acceptedAnswer":{"@type":"Answer","text":"You receive a text when the technician is on the way. The technician cleans the entire yard, secures the gate, and sends a photo confirmation. Waste is double-bagged and hauled fully off the property."}},{"@type":"Question","name":"Is there a contract for Scoopy Doo service?","acceptedAnswer":{"@type":"Answer","text":"No contracts, ever. You can start, pause, or cancel service at any time with no cancellation fees."}},{"@type":"Question","name":"Does Scoopy Doo sanitize equipment between yards?","acceptedAnswer":{"@type":"Answer","text":"Yes. All scooping tools and footwear are sanitized between every yard to prevent the spread of bacteria and parasites."}},{"@type":"Question","name":"Does Scoopy Doo remove waste from the property?","acceptedAnswer":{"@type":"Answer","text":"Yes. Waste is double-bagged and hauled away from the property entirely. It does not go in the trash can or stay by the gate."}},{"@type":"Question","name":"How do I get started with Scoopy Doo?","acceptedAnswer":{"@type":"Answer","text":"Request a free quote at scoopyavl.com/quoterequest. Most new customers can start within 2-5 days."}}]}</script>'
-};
+function postBody(p) {
+  let h = '<article><h1>' + esc(p.title) + '</h1>' + p.intro.map((t) => '<p>' + esc(t) + '</p>').join('');
+  p.sections.forEach((s) => {
+    h += '<h2>' + esc(s.h2) + '</h2>' + s.paras.map((t) => '<p>' + esc(t) + '</p>').join('');
+    if (s.list) h += li(s.list);
+  });
+  h += '<h2>Frequently asked questions</h2>';
+  p.faqs.forEach((f) => { h += '<h3>' + esc(f.q) + '</h3><p>' + esc(f.a) + '</p>'; });
+  return h + quoteLine + '</article>';
+}
 
 const routes = {
   '/': ['Dog Poop Removal & Pooper Scooper Service | Asheville NC', 'Professional dog poop removal & pooper scooper service in Asheville, NC. Reliable weekly pet waste cleanup. Get your free quote from Scoopy Doo today.'],
@@ -81,7 +100,7 @@ const routes = {
   '/pet-waste-removal-asheville': ['Pet Waste Removal in Asheville, NC | Scoopy Doo', 'Expert pet waste removal in Asheville, NC for homes, HOAs & businesses. Request a free quote.'],
   '/dog-poop-scooping-asheville': ['Dog Poop Scooping Service in Asheville, NC | Scoopy Doo', 'Reliable dog poop scooping in Asheville, NC. Weekly and bi-weekly pooper scooper service.'],
   '/yard-cleanup-asheville': ['Yard Cleanup for Pet Owners in Asheville, NC | Scoopy Doo', 'Complete yard cleanup for pet owners in Asheville, NC. Book a one-time or recurring cleanup.'],
-  '/service-areas': ['Service Areas | Pet Waste Removal Around Asheville, NC', 'Scoopy Doo serves Asheville and surrounding areas. See the neighborhoods we cover.'],
+  '/service-areas': ['Service Areas | Pet Waste Removal Around Asheville, NC', 'Scoopy Doo serves Asheville, Arden, Fletcher, Hendersonville, Black Mountain, Weaverville, Fairview, Candler, Swannanoa, Woodfin, Mills River, Biltmore Forest, and Brevard, NC.'],
   '/about': ['About Scoopy Doo | Asheville Pet Waste Removal', "Meet Scoopy Doo LLC, Asheville's locally owned pet waste removal company."],
   '/faq': ['Pet Waste Removal FAQs | Scoopy Doo Asheville', 'Answers to common questions about dog poop removal in Asheville: pricing, scheduling, and more.'],
   '/quote': ['Get a Free Pet Waste Removal Quote | Asheville, NC', 'Get a fast, free quote for dog poop removal in Asheville, NC.'],
@@ -120,51 +139,35 @@ const routes = {
   '/blog/weaverville': ['Pet Waste Removal in Weaverville, NC | Scoopy Doo Blog', 'Scoopy Doo serves Weaverville and Beaver Lake area homeowners. Waterfront cleanup protects the lake and your family.'],
 };
 
-const { SERVICE_AREAS } = require('./route-manifest.cjs');
-SERVICE_AREAS.forEach(function(loc) {
-  var city = loc.split('-').map(function(w){return w[0].toUpperCase()+w.slice(1);}).join(' ');
-  routes['/service/' + loc] = [
-    'Dog Poop Removal ' + city + ' NC | Scoopy Doo',
-    'Professional pet waste removal in ' + city + ', NC. Weekly & bi-weekly pooper scooper service. Get your free quote today.'
-  ];
+const bodies = Object.assign({}, SC);
+
+locations.forEach(function(l) {
+  routes['/service/' + l.slug] = [l.seoTitle, l.seoDescription];
+  bodies['/service/' + l.slug] = locationBody(l);
 });
 
-function injectMeta(html, title, desc, canonical, staticHtml, schemaHtml) {
-  var result = html
-    .replace(/<title>[^<]*<\/title>/, '<title>' + title + '<\/title>')
-    .replace(/(<meta name="description" content=")[^"]*(")/,'$1' + desc + '$2')
-    .replace(/(<link rel="canonical" href=")[^"]*(")/,'$1' + canonical + '$2')
-    .replace(/(<meta property="og:title" content=")[^"]*(")/,'$1' + title + '$2')
-    .replace(/(<meta property="og:description" content=")[^"]*(")/,'$1' + desc + '$2')
-    .replace(/(<meta property="og:url" content=")[^"]*(")/,'$1' + canonical + '$2')
-    .replace(/(<meta name="twitter:title" content=")[^"]*(")/,'$1' + title + '$2')
-    .replace(/(<meta name="twitter:description" content=")[^"]*(")/,'$1' + desc + '$2');
-  if (staticHtml) {
-    result = result.replace(BODY_CLOSE, '<div id="scoopy-content" style="display:none" aria-hidden="true">' + staticHtml + DIV_CLOSE + BODY_CLOSE);
-  }
-  if (schemaHtml) {
-    result = result.replace('</head>', schemaHtml + '</head>');
-  }
-  return result;
-}
+geoPosts.forEach(function(p) {
+  routes['/blog/' + p.slug] = [p.metaTitle, p.description];
+  bodies['/blog/' + p.slug] = postBody(p);
+});
 
-var count = 0;
-for (var route in routes) {
-  var parts = routes[route];
-  var title = parts[0];
-  var desc = parts[1];
-  var canonical = BASE + route;
-  var locSlug = route.startsWith('/service/') ? route.replace('/service/', '') : null;
-  var staticHtml = SC[route] || (locSlug ? makeLocContent(locSlug) : '');
-  var schemaHtml = SCHEMA[route] || '';
-  var html = injectMeta(template, title, desc, canonical, staticHtml, schemaHtml);
-  var dirPath = path.join(distDir, route);
+const business = businessSchema();
+let count = 0;
+for (const route in routes) {
+  const [title, desc] = routes[route];
+  const canonical = BASE + route;
+  let html = setHead(template, { title, desc, canonical });
+  html = setJsonLd(html, 'business', business);
+  if (bodies[route]) html = setRoot(html, bodies[route]);
+  const dirPath = path.join(distDir, route);
   fs.mkdirSync(dirPath, { recursive: true });
   fs.writeFileSync(path.join(dirPath, 'index.html'), html);
   count++;
 }
 console.log('SEO inject complete: ' + count + ' pages.');
-} catch(e) {
+}
+
+main().catch(function(e) {
   console.error('SEO inject warning:', e.message);
   process.exit(0);
-}
+});

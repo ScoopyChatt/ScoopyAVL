@@ -67,7 +67,7 @@ const faqs = [
   { q: 'Can I pay online?', a: "Yes &mdash; everything is handled online. You request a quote, receive pricing by email, and pay securely online before service begins. No checks, no cash, no awkward in-person payment." },
   { q: 'Is there a contract?', a: "No contracts, ever. You can pause, change, or cancel your service at any time." },
   { q: 'What if it rains on my service day?', a: "We show up rain or shine. Weather does not cancel your service &mdash; rainy days are actually when cleanup matters most, since runoff carries bacteria across your lawn." },
-  { q: 'Do you service my neighborhood?', a: "We cover all of Asheville and surrounding areas: Arden, Hendersonville, Fairview, Black Mountain, Fletcher, Weaverville, Mills River, Brevard, West Asheville, Candler, Swannanoa, Mars Hill, Leicester, and more." },
+  { q: 'Do you service my neighborhood?', a: "We cover all of Asheville and surrounding areas: Arden, Hendersonville, Fairview, Black Mountain, Fletcher, Weaverville, Mills River, Brevard, West Asheville, Candler, Swannanoa, Woodfin, and Biltmore Forest." },
 ];
 
 const FAQItem = ({ q, a }) => {

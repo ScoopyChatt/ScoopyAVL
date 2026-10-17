@@ -11,7 +11,7 @@ export const getFaqData = (location = 'Asheville') => {
         },
         {
           question: "Does Scoopy Doo serve Western North Carolina?",
-          answer: "Yes. Scoopy Doo serves Mills River, Leicester, Mars Hill, Biltmore Forest, and the surrounding Buncombe and Henderson County communities. All Western North Carolina locations are covered at the same rates, with no extra fees. We run regular routes across the area, and most new customers can start within 2-5 days."
+          answer: "Yes. Scoopy Doo serves Asheville, West Asheville, Arden, Fletcher, Hendersonville, Black Mountain, Weaverville, Fairview, Candler, Swannanoa, Woodfin, Mills River, Biltmore Forest, and Brevard, NC, across Buncombe, Henderson, and Transylvania counties, at the same published rates everywhere. We run regular routes across the area, and most new customers can start within 2-5 days."
         },
         {
           question: "Is there a contract or long-term commitment?",
@@ -115,10 +115,6 @@ export const getFaqData = (location = 'Asheville') => {
         {
           question: "What do your customers say about your service?",
           answer: `Our customers are our biggest advocates, and their feedback speaks volumes about our reliability and the quality of our work. Clients routinely praise Scoopy Doo LLC for our consistent communication, the dramatic improvement in their yard's usability, and our friendly, professional technicians. Many reviews highlight how our service has literally changed their weekly routines, completely removing the stress and arguments associated with dog chores. We frequently hear from customers who tell us they wish they had hired us years ago because of how effortless and life-changing the service is. We take immense pride in our reputation across the ${baseLocation} area and work tirelessly every single day to ensure every client feels valued and satisfied.`
-        },
-        {
-          question: "How many 5-star reviews do you have?",
-          answer: `Scoopy Doo LLC has proudly earned dozens of verified 5-star reviews from thrilled pet owners throughout the greater ${baseLocation} area. These reviews reflect our unwavering commitment to showing up on time, doing an incredibly thorough job, and treating our clients' pets and properties with the utmost respect. We don't just aim to pick up dog waste; we aim to deliver an exceptional customer experience from the moment you request a quote to the weekly completion notifications. Our growing wall of 5-star reviews is a testament to our position as the most trusted, reliable, and professional pet waste removal service in the region. We invite you to read them and see why your neighbors trust us!`
         }
       ]
     }

@@ -26,7 +26,7 @@ const PooperScooperCostAsheville = () => {
             Bi-weekly service starts at $33 per visit. One-time yard cleanups start at $85.
             Pricing is based on yard size and number of dogs.
             Every quote is free at{' '}
-            <a href="/quoterequest" className="text-green-700 underline">scoopyavl.com/quoterequest</a>.
+            <a href="/quote" className="text-green-700 underline">scoopyavl.com/quote</a>.
             No contracts required.
           </p>
 
@@ -82,11 +82,11 @@ const PooperScooperCostAsheville = () => {
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">How Does the Cost Compare?</h2>
           <p className="mb-4">
-            Scoopy Doo weekly service at $20 per visit (1 dog) is competitive with other local
-            providers in the Asheville area, most of which require a custom quote without
-            listing rates online. Scoopy Doo also covers more territory than most competitors,
-            serving Western North Carolina cities including Mills River, Leicester, Mars Hill,
-            and Biltmore Forest at the same rates as North Carolina locations.
+            Scoopy Doo publishes its prices online: $20 per visit for weekly service with one dog.
+            Of the other companies with an Asheville location, Doo Doo Blues advertises service
+            starting at $9.99 without saying whether that is per visit or per month, and DoodyCalls
+            gives prices by quote only. See the full side-by-side on
+            our <a href="/comparison" className="text-green-700 underline">comparison page</a>.
           </p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">Frequently Asked Questions</h2>
@@ -103,22 +103,22 @@ const PooperScooperCostAsheville = () => {
           <h3 className="text-xl font-medium mt-6 mb-2">How do I get a quote?</h3>
           <p className="mb-4">
             Request a free quote at{' '}
-            <a href="/quoterequest" className="text-green-700 underline">scoopyavl.com/quoterequest</a>.
+            <a href="/quote" className="text-green-700 underline">scoopyavl.com/quote</a>.
             Scoopy Doo responds the same day and most new customers start within 2 to 5 days.
           </p>
 
           <h3 className="text-xl font-medium mt-6 mb-2">Does Scoopy Doo serve areas outside Asheville?</h3>
           <p className="mb-4">
             Yes. Scoopy Doo serves Arden, Fletcher, Black Mountain, Hendersonville, Fairview,
-            Weaverville, Brevard, Woodfin, and Swannanoa NC, plus Mills River, Leicester,
-            Mars Hill, and Biltmore Forest NC at the same rates as North Carolina.
+            Weaverville, Brevard, Woodfin, Swannanoa, Candler, Mills River, and Biltmore Forest NC,
+            all at the same published rates.
           </p>
 
           <div className="mt-10 p-6 bg-green-50 rounded-lg border border-green-200">
             <p className="font-semibold text-lg mb-2">Get a free quote today</p>
             <p className="mb-4">Most Asheville customers start within 2 to 5 days. Prices start at $20 per visit. No contracts.</p>
             <a
-              href="/quoterequest"
+              href="/quote"
               className="inline-block bg-green-700 text-white px-6 py-3 rounded font-semibold hover:bg-green-800 transition-colors"
             >
               Request a Free Quote

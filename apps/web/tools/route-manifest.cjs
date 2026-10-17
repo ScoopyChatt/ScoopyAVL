@@ -66,6 +66,7 @@ const BLOG_POSTS = [
   'customer-success-stories',
   'diy-vs-professional',
   'dog-poop-cleanup-asheville-summer-heat',
+  'fall-winter-dog-poop-cleanup-asheville',
   'health-benefits-yard-cleanup',
   'health-risks-of-pet-waste',
   'how-often-clean-yard',
@@ -78,7 +79,9 @@ const BLOG_POSTS = [
   'professional-waste-removal-benefits',
   'seasonal-pet-care-tips',
   'spring-pet-care-checklist',
+  'vacation-rental-pet-waste-cleanup-asheville',
   'weaverville',
+  'what-does-a-pooper-scooper-service-do-asheville',
 ];
 
 module.exports = { PAGES, SERVICE_AREAS, BLOG_POSTS };
