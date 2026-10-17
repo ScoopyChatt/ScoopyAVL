@@ -36,7 +36,7 @@ Brevard has a page but its zip (28712) is not in the quote form's `SERVICE_AREA`
 - **Host:** Vercel (auto-deploys on push to main)
 - **Root:** `apps/web/`
 - **Node version:** set in Vercel dashboard (do NOT add nodeVersion to vercel.json — invalid property, breaks builds)
-- **Build command in vercel.json:** `npm install --prefix apps/web && npm run build --prefix apps/web && node apps/web/tools/inject-seo.cjs && node apps/web/tools/generate-sitemap.cjs && node apps/web/tools/create-static-pages.cjs && node apps/web/tools/prerender.mjs && node apps/web/tools/verify-routes.cjs`
+- **Build command in vercel.json:** `npm install --prefix apps/web && npm run build --prefix apps/web && npm run postbuild:web` — the post-build steps (inject-seo, sitemap, create-static-pages, prerender, verify-routes) live in the root `package.json` script `postbuild:web`, because Vercel rejects a `buildCommand` over 256 characters
 - `npm run build` also builds a server bundle (`vite.ssr.config.js` -> `apps/web/.ssr/`, gitignored) that `prerender.mjs` uses
 - **Output dir:** `dist/apps/web`
 - **Path alias:** `@` = `apps/web/src/`
