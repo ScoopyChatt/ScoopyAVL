@@ -281,6 +281,11 @@ const QuoteForm = ({ source = 'scoopyavl.com/quote' }) => {
     const leadValue = quote && quote.price ? quote.price : undefined;
     trackPixel('Lead', leadValue ? { value: leadValue, currency: 'USD' } : {}, leadEventId);
     trackPixel('Schedule', {}, newEventId());
+    // Google Ads conversion: GTM-P7C595MM fires "Google Ads - Quote Form Submit" on this event.
+    if (typeof window !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'quote_form_submit', value: leadValue || 25, currency: 'USD' });
+    }
     navigate('/thank-you');
   };
 
