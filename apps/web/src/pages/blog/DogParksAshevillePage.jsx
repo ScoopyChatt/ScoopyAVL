@@ -473,7 +473,7 @@ const DogParksAshevillePage = () => {
                 </Button>
               </div>
               <p className="text-sm text-slate-500 mt-6">
-                Serving Asheville, Arden, Fletcher, Fairview, Hendersonville, Mills River, Leicester, and more.
+                Serving Asheville, Arden, Fletcher, Fairview, Hendersonville, Mills River, Weaverville, and more.
               </p>
             </motion.div>
           </div>

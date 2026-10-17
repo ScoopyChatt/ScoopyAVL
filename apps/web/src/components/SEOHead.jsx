@@ -3,7 +3,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { seoMetadata, getBlogPostMetadata } from '@/config/seoMetadata.js';
 import { CANONICAL_BASE_URL } from '@/config/seoConfig.js';
-import { generateLocalBusinessSchema, generateArticleSchema, generateFAQPageSchema } from '@/utils/schemaGenerators.js';
+import { generateArticleSchema, generateFAQPageSchema } from '@/utils/schemaGenerators.js';
 
 const SEOHead = ({ 
   path,
@@ -37,11 +37,7 @@ const SEOHead = ({
   const inputSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
   const schemasToRender = [...inputSchemas];
 
-  // Auto-inject schemas based on props/path
-  const hasLocalBiz = schemasToRender.some(s => s['@type'] === 'LocalBusiness');
-  if (!hasLocalBiz) {
-    schemasToRender.push(generateLocalBusinessSchema());
-  }
+  // The LocalBusiness entity is already in every page's static <head> (tools/inject-seo.cjs).
 
   if (articleMetadata) {
     const hasArticle = schemasToRender.some(s => s['@type'] === 'BlogPosting' || s['@type'] === 'Article');

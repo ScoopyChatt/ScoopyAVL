@@ -294,7 +294,7 @@ const ServicesPage = () => {
         <section className="py-20 px-4 bg-primary text-primary-foreground text-center">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Ready to Reclaim Your Yard?</h2>
-            <p className="text-lg opacity-90 mb-8">Get a free quote in under 2 minutes. We serve all of Asheville and surrounding areas including Arden, Hendersonville, Fairview, Black Mountain, Fletcher, Woodfin, Weaverville, Mills River, Mars Hill, Leicester, and Swannanoa.</p>
+            <p className="text-lg opacity-90 mb-8">Get a free quote in under 2 minutes. We serve all of Asheville and surrounding areas including Arden, Hendersonville, Fairview, Black Mountain, Fletcher, Woodfin, Weaverville, Mills River, Candler, Swannanoa, Biltmore Forest, and Brevard.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" variant="secondary" className="rounded-xl px-10 h-14 text-base font-bold">
                 <Link to="/quote">Get My Free Quote</Link>

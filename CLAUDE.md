@@ -6,7 +6,7 @@
 
 # CLAUDE.md — Scoopy Doo AVL Website Project
 
-> Last updated: 2026-07-13. Read this at the start of every session.
+> Last updated: 2026-10-17. Read this at the start of every session.
 
 ---
 
@@ -17,10 +17,13 @@
 **Phone:** 828-844-8060
 **Live site:** https://www.scoopyavl.com
 **Pricing source of truth:** `apps/web/src/components/QuoteForm.jsx` (`base` values) —
-weekly $20/visit, twice-weekly $18, every-other-week $33, one-time from $125. Marketing
-copy currently advertises one-time from $85; the form and the copy disagree and Brandon
-needs to reconcile them. Prices are duplicated into `inject-seo.cjs` and
-`create-static-pages.cjs`, which had all drifted to Chattanooga rates — grep before editing.
+weekly $20/visit, twice-weekly $18, every-other-week $33, one-time from $85. The same
+numbers live in `apps/web/src/data/business.js`, which feeds the JSON-LD, llms.txt and
+the crawler fallback bodies. Older pages still hard-code prices in their copy — grep before editing.
+**Service area (what the site claims):** the 15 `/service/<slug>` pages, listed in
+`SERVICE_TOWNS` in `data/business.js`. Leicester and Mars Hill were removed in Oct 2026:
+they came from the Chattanooga clone and the quote form's zip list does not cover them.
+Brevard has a page but its zip (28712) is not in the quote form's `SERVICE_AREA` — Brandon to confirm.
 **GitHub repo:** https://github.com/ScoopyChatt/ScoopyAVL  (exists — separate from the Chattanooga repo)
 **GitHub token:** provided per session — never commit to the repo
 **Owner name + About story:** UNVERIFIED placeholder — confirm with Brandon
@@ -33,7 +36,8 @@ needs to reconcile them. Prices are duplicated into `inject-seo.cjs` and
 - **Host:** Vercel (auto-deploys on push to main)
 - **Root:** `apps/web/`
 - **Node version:** set in Vercel dashboard (do NOT add nodeVersion to vercel.json — invalid property, breaks builds)
-- **Build command in vercel.json:** `npm install --prefix apps/web && npm run build --prefix apps/web && node apps/web/tools/inject-seo.cjs`
+- **Build command in vercel.json:** `npm install --prefix apps/web && npm run build --prefix apps/web && npm run postbuild:web` — the post-build steps (inject-seo, sitemap, create-static-pages, prerender, verify-routes) live in the root `package.json` script `postbuild:web`, because Vercel rejects a `buildCommand` over 256 characters
+- `npm run build` also builds a server bundle (`vite.ssr.config.js` -> `apps/web/.ssr/`, gitignored) that `prerender.mjs` uses
 - **Output dir:** `dist/apps/web`
 - **Path alias:** `@` = `apps/web/src/`
 
@@ -83,8 +87,10 @@ silent: the page works when you click it locally and is broken for crawlers.
 
 **Always:**
 
-1. Create the component — `apps/web/src/pages/YourPage.jsx`, or
-   `apps/web/src/pages/blog/YourPost.jsx` for a blog post.
+1. Create the component — `apps/web/src/pages/YourPage.jsx`. For a blog post, prefer adding
+   an entry to `apps/web/src/data/geoPosts.js` (rendered by `GeoBlogPost.jsx`): inject-seo
+   and llms.txt pick up its title, description and fallback body automatically, so steps 5
+   and 6 are not needed. You still need steps 2-4 (route with `slug` prop, manifest, middleware).
 2. `apps/web/src/App.jsx` — lazy import **and** `<Route>`. Two separate edits.
 3. `apps/web/tools/route-manifest.cjs` — add the slug to `PAGES`, `SERVICE_AREAS`, or
    `BLOG_POSTS`. This is the source of truth: `generate-sitemap.cjs`, `inject-seo.cjs`
@@ -115,6 +121,7 @@ npm install --prefix apps/web && npm run build --prefix apps/web \
   && node apps/web/tools/inject-seo.cjs \
   && node apps/web/tools/generate-sitemap.cjs \
   && node apps/web/tools/create-static-pages.cjs \
+  && node apps/web/tools/prerender.mjs \
   && node apps/web/tools/verify-routes.cjs
 ```
 
@@ -128,7 +135,14 @@ There is no `apps/web/public/sitemap.xml`. The sitemap is generated into `dist` 
 
 ## SEO Architecture
 
-React SPA with no SSR. Per-page SEO via two layers:
+React SPA, prerendered at build time. `tools/prerender.mjs` renders every manifest route
+with React (`src/entry-server.jsx`, `AppRoutes` under a StaticRouter) and writes the real page
+into `<div id="root" data-prerendered>`; `main.jsx` hydrates those. This is what AI crawlers
+(GPTBot, ClaudeBot, PerplexityBot) read, since they do not run JavaScript. It never fails the
+build: a route that cannot render keeps the fallback body from inject-seo/create-static-pages,
+and its log line says so. Anything that touches `window`/`document` must stay inside effects.
+
+Per-page SEO via these layers:
 1. Build-time: `inject-seo.cjs` post-build script creates `/route/index.html` per route with the correct title + meta tags.
 2. Runtime: react-helmet-async updates tags for in-app navigation.
 
@@ -170,7 +184,8 @@ Located at `/how-it-works`. Differentiators to emphasize:
    `/pet-waste-station-installation-asheville`. All three quote per property rather than
    naming a commercial rate; if you set fixed community pricing, update all three plus
    their `create-static-pages.cjs` bodies.
-2. More Asheville local-intent blog posts
+2. More Asheville local-intent blog posts (Oct 2026: added what-a-visit-includes, fall/winter, vacation rentals via `data/geoPosts.js`)
+   `/comparison` lists only competitors with a verified Asheville page (`data/comparison.js`); re-check rows before editing
 3. Verify scoopyavl.com domain at resend.com/domains so lead emails send
 4. Set up + connect Google Business Profile for Asheville, link www.scoopyavl.com
 5. After every deploy: Search Console URL Inspection → Request Indexing for key pages

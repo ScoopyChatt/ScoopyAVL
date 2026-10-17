@@ -1,26 +1,27 @@
 #!/usr/bin/env node
 import fs from "fs";
 import path from "path";
+import { BUSINESS, SERVICE_AREA_TEXT, PRICE_TEXT, VISIT_STEPS, PROMISES } from "../src/data/business.js";
+import { locations } from "../src/data/locations.js";
+import { geoPosts } from "../src/data/geoPosts.js";
 
-// Static manifest approach: no JSX parsing, no encoding issues.
-// Update this list when new pages are added to inject-seo.cjs.
-// Excluded: OAuth callback routes and utility routes.
+// Writes public/llms.txt, the plain-text summary AI assistants read. Business facts,
+// service-area pages, and the GEO posts come from src/data so they match the site;
+// the other pages are listed below by hand. Excluded: OAuth callbacks, /thank-you.
 
 const SUMMARY =
-  "Scoopy Doo LLC is a locally owned pet waste removal company serving Asheville, NC " +
-  "and surrounding areas including Arden, Fletcher, Black Mountain, Hendersonville, Fairview, " +
-  "Weaverville, Brevard, Woodfin, Town Mountain (NC), and Mills River, Leicester, " +
-  "Biltmore Forest, and Mars Hill (NC). Services include weekly, bi-weekly, one-time, " +
-  "commercial, and HOA dog poop removal and yard cleanup. Every visit includes on-the-way " +
-  "text notifications and a gate photo confirmation. No contracts required -- get a free " +
-  "online quote at scoopyavl.com/quote.";
+  "Scoopy Doo AVL is a locally owned dog poop removal and pooper scooper service in Asheville, NC. " +
+  "It serves " + SERVICE_AREA_TEXT + ", with weekly, twice-weekly, every-other-week, and one-time " +
+  "pet waste removal for homes, plus common-area and pet waste station service for HOAs and apartment communities. " +
+  "Quotes and payment are 100% online at scoopyavl.com/quote, every visit includes an on-the-way text and a gate photo, " +
+  "and there are no contracts.";
 
 // [url, title, description]
 const PAGES = [
   ["/", "Dog Poop Removal & Pooper Scooper Service | Asheville NC", "Professional dog poop removal and pooper scooper service in Asheville, NC. Reliable weekly pet waste cleanup with online quotes, on-the-way texts, and gate photo confirmation."],
   ["/services", "Pet Waste Removal Services in Asheville, NC | Scoopy Doo", "Weekly, bi-weekly, one-time, commercial, and HOA pet waste removal in Asheville, NC. Professional dog poop scooping with online quotes and gate photo confirmation."],
-  ["/service-areas", "Service Areas | Pet Waste Removal Around Asheville, NC", "Scoopy Doo serves Asheville, Arden, Fletcher, Black Mountain, Hendersonville, Fairview, Weaverville, Brevard, Woodfin, Town Mountain (NC), and Mills River, Leicester, Biltmore Forest, Mars Hill (NC)."],
-  ["/about", "About Scoopy Doo | Asheville Pet Waste Removal", "Meet Scoopy Doo LLC, Asheville's locally owned pet waste removal company. Learn about our mission, service standards, and why hundreds of families trust us weekly."],
+  ["/service-areas", "Service Areas | Pet Waste Removal Around Asheville, NC", "Every town Scoopy Doo AVL serves, with a page for each: Asheville, West Asheville, Downtown Asheville, Arden, Fletcher, Hendersonville, Black Mountain, Weaverville, Fairview, Candler, Swannanoa, Woodfin, Mills River, Biltmore Forest, and Brevard, NC."],
+  ["/about", "About Scoopy Doo | Asheville Pet Waste Removal", "Scoopy Doo AVL, the locally owned pet waste removal company in Asheville, NC, and the service standards behind every visit."],
   ["/faq", "Pet Waste Removal FAQs | Scoopy Doo Asheville", "Answers to common questions about dog poop removal in Asheville: pricing, scheduling, service area, what to expect on each visit, and more."],
   ["/quote", "Get a Free Pet Waste Removal Quote | Asheville, NC", "Get a fast, free quote for dog poop removal in Asheville, NC. No contracts required."],
   ["/one-time-cleanup", "One-Time Dog Poop Cleanup in Asheville, NC | Scoopy Doo", "Get a one-time dog poop cleanup in Asheville, NC. Perfect for spring cleaning, first-time service, or move-out yard prep."],
@@ -50,48 +51,52 @@ const PAGES = [
   ["/blog/commercial-pet-waste-removal-asheville", "Commercial Pet Waste Removal in Asheville, NC | Scoopy Doo", "Professional pet waste removal for apartments, HOAs, and businesses in Asheville. Flexible scheduling, no contracts."],
   ["/blog/how-often-clean-yard", "How Often Should You Clean Your Yard of Dog Waste? | Scoopy Doo", "Weekly is the gold standard. Learn the right cleanup frequency based on your dog count, yard size, and Asheville season."],
   ["/blog/black-mountain", "Pet Waste Removal Tips for Black Mountain, NC | Scoopy Doo Blog", "Scoopy Doo serves Black Mountain with thorough yard cleanup. We handle larger lots and wooded terrain every week."],
-  ["/blog/weaverville", "Pet Waste Removal in Weaverville, NC | Scoopy Doo Blog", "Scoopy Doo serves Weaverville and Beaver Lake area homeowners. Waterfront cleanup protects the lake and your family."],
+  ["/blog/weaverville", "Pet Waste Removal in Weaverville, NC | Scoopy Doo Blog", "Weekly and one-time dog poop removal for Weaverville homeowners north of Asheville."],
+  ["/pricing", "Dog Poop Removal Pricing in Asheville, NC | Scoopy Doo", "Published prices: weekly $20 per visit, twice weekly $18, every other week $33, one-time cleanup from $85. No contracts."],
+  ["/comparison", "Pet Waste Removal Services in Asheville, NC: 2026 Comparison", "Side-by-side comparison of Asheville dog poop removal companies (Scoopy Doo AVL, DoodyCalls, Doo Doo Blues) by price, service area, and features."],
+  ["/hoa-pet-waste-removal-asheville", "HOA Pet Waste Removal in Asheville, NC | Scoopy Doo", "Common-area pet waste removal and station service for Asheville HOAs and condo associations, quoted per property."],
+  ["/apartment-dog-park-cleaning-asheville", "Apartment Dog Park Cleaning in Asheville, NC | Scoopy Doo", "Dog run, pet relief area, and courtyard cleaning for Asheville apartment communities."],
+  ["/pet-waste-station-installation-asheville", "Pet Waste Station Installation in Asheville, NC | Scoopy Doo", "Pet waste station installation, restocking, and emptying for Asheville HOAs and apartments."],
+  ["/blog/pooper-scooper-cost-asheville", "How Much Does Pooper Scooper Service Cost in Asheville?", "2026 pricing for weekly, twice-weekly, every-other-week, and one-time dog poop removal in Asheville, NC."],
+  ["/blog/best-dog-parks-asheville-nc", "Best Dog Parks in Asheville, NC (2026 Guide)", "Off-leash dog parks in Asheville with locations, amenities, and tips."],
+  ["/blog/dog-poop-cleanup-asheville-summer-heat", "Dog Poop Cleanup in Asheville During Hot, Humid Weather", "Why Asheville yards need regular dog waste cleanup in summer."],
 ];
 
-// Location/service-area pages
-const GA_LOCS = new Set(["mills-river", "biltmore-forest", "biltmore-forest", "mills-river"]);
-const LOC_SLUGS = [
-  "asheville", "arden", "fletcher", "black-mountain", "hendersonville", "fairview",
-  "weaverville", "brevard", "candler", "swannanoa", "west-asheville", "downtown",
-  "woodfin", "black-mountain",
-  "mills-river", "biltmore-forest", "biltmore-forest", "mills-river"
-];
-
-for (const slug of LOC_SLUGS) {
-  const city = slug.split("-").map(w => w[0].toUpperCase() + w.slice(1)).join(" ");
-  const state = GA_LOCS.has(slug) ? "NC" : "NC";
-  PAGES.push([
-    "/service/" + slug,
-    "Dog Poop Removal in " + city + ", " + state + " | Scoopy Doo",
-    "Professional pet waste removal in " + city + ", " + state + ". Weekly and bi-weekly pooper scooper service from Scoopy Doo. Get your free online quote today."
-  ]);
+for (const l of locations) {
+  PAGES.push(["/service/" + l.slug, l.seoTitle, l.seoDescription]);
+}
+for (const p of geoPosts) {
+  PAGES.push(["/blog/" + p.slug, p.title, p.description]);
 }
 
 function main() {
   const lines = [
-    "# Scoopy Doo LLC - Pet Waste Removal in Asheville, NC and Western North Carolina",
+    "# Scoopy Doo AVL - Dog Poop Removal in Asheville, NC",
     "",
-    SUMMARY,
+    "> " + SUMMARY,
     "",
-    "## Pages"
+    "## Key facts",
+    "- Business: " + BUSINESS.name + ", locally owned, Asheville, NC",
+    "- Phone/text: " + BUSINESS.phone + " | Email: " + BUSINESS.email,
+    "- Website and online quote: https://www.scoopyavl.com/quote",
+    "- Prices: " + PRICE_TEXT,
+    "- Service area: " + SERVICE_AREA_TEXT,
+    "- Every visit: " + VISIT_STEPS.join("; ") + ".",
+    "- Policies: " + PROMISES.join("; ") + ".",
+    "",
+    "## Pages",
   ];
-
+  const seen = new Set();
   for (const [url, title, desc] of PAGES) {
-    lines.push("- [" + title + "](" + url + "): " + desc);
+    if (seen.has(url)) continue;
+    seen.add(url);
+    lines.push("- [" + title + "](https://www.scoopyavl.com" + url + "): " + desc);
   }
 
   const outputPath = path.join(process.cwd(), "public", "llms.txt");
-  const dir = path.dirname(outputPath);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, lines.join("\n") + "\n", "utf8");
-  console.log("llms.txt written: " + PAGES.length + " pages");
+  console.log("llms.txt written: " + seen.size + " pages");
 }
 
 const isMain = import.meta.url === ("file://" + process.argv[1]);

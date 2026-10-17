@@ -11,7 +11,7 @@ export const getFaqData = (location = 'Asheville') => {
         },
         {
           question: "Does Scoopy Doo serve Western North Carolina?",
-          answer: "Yes. Scoopy Doo serves Mills River, Leicester, Mars Hill, Biltmore Forest, and the surrounding Buncombe and Henderson County communities. All Western North Carolina locations are covered at the same rates, with no extra fees. We run regular routes across the area, and most new customers can start within 2-5 days."
+          answer: "Yes. Scoopy Doo serves Asheville, West Asheville, Arden, Fletcher, Hendersonville, Black Mountain, Weaverville, Fairview, Candler, Swannanoa, Woodfin, Mills River, Biltmore Forest, and Brevard, NC, across Buncombe, Henderson, and Transylvania counties, at the same published rates everywhere. We run regular routes across the area, and most new customers can start within 2-5 days."
         },
         {
           question: "Is there a contract or long-term commitment?",
@@ -78,7 +78,7 @@ export const getFaqData = (location = 'Asheville') => {
       faqs: [
         {
           question: "Best pet waste company near me?",
-          answer: `When choosing a pet waste removal company, look for several key qualities: reliability and consistent scheduling, professional staff who arrive on time, transparent pricing with no hidden fees, and excellent customer service. A trustworthy pet waste company should be insured and bonded, use eco-friendly disposal methods, and offer flexible service options (weekly, bi-weekly, or monthly). They should communicate clearly about their service area and respond promptly to customer inquiries. Scoopy Doo LLC is a trusted local pet waste removal company serving the ${baseLocation} area with a reputation for dependable service, friendly staff, and commitment to keeping your yard clean and safe. We understand the unique needs of ${baseLocation} pet owners and provide customized service plans that fit your schedule and budget. Choose a local company that knows your community and prioritizes your family's health and satisfaction.`
+          answer: `When choosing a pet waste removal company, look for several key qualities: reliability and consistent scheduling, professional staff who arrive on time, transparent pricing with no hidden fees, and excellent customer service. A trustworthy pet waste company should carry liability insurance, use eco-friendly disposal methods, and offer flexible service options (weekly, bi-weekly, or monthly). They should communicate clearly about their service area and respond promptly to customer inquiries. Scoopy Doo AVL is a trusted local pet waste removal company serving the ${baseLocation} area with a reputation for dependable service, friendly staff, and commitment to keeping your yard clean and safe. We understand the unique needs of ${baseLocation} pet owners and provide customized service plans that fit your schedule and budget. Choose a local company that knows your community and prioritizes your family's health and satisfaction.`
         },
         {
           question: "What is your service workflow?",
@@ -109,16 +109,12 @@ export const getFaqData = (location = 'Asheville') => {
           answer: "Not at all! The beauty of our professional pooper scooper service is ultimate convenience. The vast majority of our clients are at work, running errands, or simply relaxing inside their homes while we work. As long as we have clear access to your yard and your gate is unlocked on your scheduled service day, we can handle everything independently. If your gate has a combination lock, you can securely provide the code to our office, and our technicians will lock it back up when they finish. You get to return home to a perfectly clean yard without ever having to adjust your schedule to accommodate our visit."
         },
         {
-          question: "Are you fully insured and bonded?",
-          answer: `Yes, Scoopy Doo LLC is a fully legitimate, professional business that is comprehensively insured and bonded. We carry robust general liability insurance to protect your property and our employees while we are working on your premises. Being fully insured is a critical mark of a professional pet waste removal company; it separates the trusted professionals from the weekend hobbyists. If an incredibly rare accident or property damage were to occur while we were servicing your yard, you are completely protected. We are happy to provide proof of insurance upon request, ensuring you feel entirely secure and confident in allowing our team onto your ${baseLocation} property week after week.`
+          question: "Are you insured?",
+          answer: `Yes. Scoopy Doo AVL carries general liability insurance to protect your property and our employees while we are working on your premises. Being fully insured is a critical mark of a professional pet waste removal company; it separates the trusted professionals from the weekend hobbyists. If an incredibly rare accident or property damage were to occur while we were servicing your yard, you are completely protected. We are happy to provide proof of insurance upon request, ensuring you feel entirely secure and confident in allowing our team onto your ${baseLocation} property week after week.`
         },
         {
           question: "What do your customers say about your service?",
           answer: `Our customers are our biggest advocates, and their feedback speaks volumes about our reliability and the quality of our work. Clients routinely praise Scoopy Doo LLC for our consistent communication, the dramatic improvement in their yard's usability, and our friendly, professional technicians. Many reviews highlight how our service has literally changed their weekly routines, completely removing the stress and arguments associated with dog chores. We frequently hear from customers who tell us they wish they had hired us years ago because of how effortless and life-changing the service is. We take immense pride in our reputation across the ${baseLocation} area and work tirelessly every single day to ensure every client feels valued and satisfied.`
-        },
-        {
-          question: "How many 5-star reviews do you have?",
-          answer: `Scoopy Doo LLC has proudly earned dozens of verified 5-star reviews from thrilled pet owners throughout the greater ${baseLocation} area. These reviews reflect our unwavering commitment to showing up on time, doing an incredibly thorough job, and treating our clients' pets and properties with the utmost respect. We don't just aim to pick up dog waste; we aim to deliver an exceptional customer experience from the moment you request a quote to the weekly completion notifications. Our growing wall of 5-star reviews is a testament to our position as the most trusted, reliable, and professional pet waste removal service in the region. We invite you to read them and see why your neighbors trust us!`
         }
       ]
     }

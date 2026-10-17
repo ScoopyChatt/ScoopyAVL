@@ -93,7 +93,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start">
                 <MapPin className="w-5 h-5 text-primary mr-3 flex-shrink-0 mt-0.5" />
-                <span className="text-sm">Serving Asheville, NC and Western North Carolina, including Mills River, Leicester, and Mars Hill, NC</span>
+                <span className="text-sm">Serving Asheville, Arden, Fletcher, Hendersonville, Black Mountain, Weaverville, and the rest of the Asheville area</span>
               </li>
               <li className="flex items-start">
                 <Clock className="w-5 h-5 text-primary mr-3 flex-shrink-0 mt-0.5" />

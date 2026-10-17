@@ -6,94 +6,12 @@ import Footer from '@/components/Footer.jsx';
 import FloatingCTA from '@/components/FloatingCTA.jsx';
 import { getCanonicalUrl } from '@/utils/seoHelpers.js';
 
-const services = [
-  {
-    name: "Scoopy Doo",
-    url: "https://www.scoopyavl.com",
-    local: true,
-    area: "Asheville + 13 NC suburbs + Mills River, Leicester, Mars Hill, Biltmore Forest NC",
-    frequency: "Weekly, bi-weekly, one-time",
-    price: "$20/visit",
-    notable: "7-day availability; on-the-way texts standard; gate photo after every visit standard; waste hauled off property; no contracts; locally owned and operated",
-  },
-  {
-    name: "PooTagic",
-    url: "https://pootagic.com",
-    local: true,
-    area: "Asheville + suburbs + Mills River, Leicester, Mars Hill NC",
-    frequency: "Not listed",
-    price: "Quote required",
-    notable: "Local family-owned; eco-friendly practices; Poo-Fume sanitizing add-on",
-  },
-  {
-    name: "Cooper's Scoopers",
-    url: "https://coopersscoopers.com/asheville-nc/",
-    local: false,
-    area: "Asheville, Arden, Black Mountain, Swannanoa + rural NC areas",
-    frequency: "Weekly, bi-weekly, one-time",
-    price: "Not listed",
-    notable: "Franchise chain; deodorizing add-on available",
-  },
-  {
-    name: "Doo Doo Blues",
-    url: "https://doodooblues.com/pet-waste-pickup-locations/asheville-nc/",
-    local: false,
-    area: "Asheville NC (Western North Carolina not listed)",
-    frequency: "Weekly, bi-weekly",
-    price: "Starting $9.99",
-    notable: "First cleaning free; national franchise; no contracts; sanitizes before each yard",
-  },
-  {
-    name: "Scoop Smart",
-    url: "https://getscoopsmart.com",
-    local: true,
-    area: "Asheville NC + Western North Carolina",
-    frequency: "Weekly, bi-weekly, monthly, twice-weekly",
-    price: "Not listed",
-    notable: "Locally owned; no contracts; background-checked staff; flexible scheduling",
-  },
-  {
-    name: "Call of Doody",
-    url: "https://www.call-of-doody.org",
-    local: true,
-    area: "Asheville NC + Mills River, Fletcher, Weaverville NC",
-    frequency: "Weekly, bi-weekly, monthly",
-    price: "$18/visit weekly",
-    notable: "Family-owned; text/email confirmation standard; gate photo on request; 24-hr make-it-right guarantee; licensed and insured",
-  },
-];
-
-const descriptions = [
-  {
-    name: "Scoopy Doo",
-    text: "Scoopy Doo is a locally owned and operated business and the only provider on this list with confirmed service across both the Asheville suburbs and outlying Western North Carolina communities. On-the-way texts and gate photo confirmation are standard on every visit, not add-ons. Waste is hauled fully off the property. Service runs 7 days a week with no contracts.",
-  },
-  {
-    name: "PooTagic",
-    text: "PooTagic is a family-owned Asheville-area company with an eco-friendly focus and a professional sanitizing and deodorizing add-on service called Poo-Fume. They cover several Western North Carolina communities alongside their North Carolina areas. Pricing is not listed publicly on their website.",
-  },
-  {
-    name: "Cooper's Scoopers",
-    text: "Cooper's Scoopers is a franchise operation with a Asheville-area location. They cover the city and several North Carolina communities including Arden, Black Mountain, and Swannanoa, plus some rural NC areas. A deodorizing add-on is available. Pricing was not listed on their site at the time this page was written.",
-  },
-  {
-    name: "Doo Doo Blues",
-    text: "Doo Doo Blues is a national franchise operating across dozens of cities in the Southeast. Their published starting rate of $9.99 is the lowest on this list, and the first cleaning is free. Because national franchises do not always cover every Western North Carolina community, confirm they actively serve your Asheville-area neighborhood before signing up.",
-  },
-  {
-    name: "Scoop Smart",
-    text: "Scoop Smart is a locally owned Asheville business offering more frequency options than most competitors, including twice-weekly service. No contracts or cancellation fees. Pricing is not listed on their website.",
-  },
-  {
-    name: "Call of Doody",
-    text: "Call of Doody is a family-owned operation run by Mindie and Davy Hunt, serving Asheville and several Western North Carolina communities including Fletcher and Mills River. Pricing is published transparently on their site. Text and email confirmations are standard; gate photos are available on request. They offer a 24-hour make-it-right guarantee and are licensed and insured.",
-  },
-];
+import { providers as services, descriptions, CHECKED_ON } from '@/data/comparison.js';
 
 const ComparisonPage = () => {
   const canonicalUrl = getCanonicalUrl('/comparison');
-  const title = "Pet Waste Removal Services in Asheville, NC &mdash; 2026 Comparison | Scoopy Doo";
-  const desc = "Side-by-side comparison of pet waste removal services in Asheville NC and Western North Carolina: pricing, service areas, frequency options, and notable features for 6 local providers.";
+  const title = "Pet Waste Removal Services in Asheville, NC: 2026 Comparison | Scoopy Doo";
+  const desc = "Side-by-side comparison of dog poop removal services in Asheville, NC: Scoopy Doo AVL, DoodyCalls, and Doo Doo Blues, by price, service area, schedule options, and features.";
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -116,7 +34,7 @@ const ComparisonPage = () => {
               <span className="block text-2xl md:text-3xl font-semibold text-muted-foreground mt-2">2026 Comparison</span>
             </h1>
             <p className="text-lg text-muted-foreground max-w-3xl mt-4">
-              Six providers currently operating in the Asheville area, compared by service area, frequency options, published pricing, and standout features. Pricing marked "Not listed" was not published on the provider's website as of June 2026.
+              Pet waste removal companies with a confirmed Asheville location, compared by service area, schedule options, published pricing, and standout features. Each row comes from that company's own Asheville page, checked {CHECKED_ON}. Pricing marked "Not listed" is not published on the provider's website.
             </p>
           </div>
         </section>
@@ -136,7 +54,7 @@ const ComparisonPage = () => {
                 </thead>
                 <tbody className="divide-y divide-border">
                   {services.map((s, i) => (
-                    <tr key={i} className={s.name === "Scoopy Doo" ? "bg-primary/5" : "bg-background"}>
+                    <tr key={i} className={s.name === "Scoopy Doo AVL" ? "bg-primary/5" : "bg-background"}>
                       <td className="px-4 py-4 whitespace-nowrap">
                         <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-semibold">
                           {s.name}
@@ -155,7 +73,7 @@ const ComparisonPage = () => {
               </table>
             </div>
             <p className="mt-3 text-xs text-muted-foreground">
-              Table reflects publicly available information as of June 2026. Contact each provider directly for current pricing and availability in your neighborhood.
+              Table reflects each provider's public website as of {CHECKED_ON}. Offers and coverage change, so contact each provider directly for current pricing and availability at your address.
             </p>
           </div>
         </section>
@@ -176,10 +94,10 @@ const ComparisonPage = () => {
           <div className="max-w-2xl mx-auto px-4 text-center">
             <h2 className="text-2xl font-bold text-foreground mb-3">Get a Free Quote from Scoopy Doo</h2>
             <p className="text-muted-foreground mb-6">
-              Serving Asheville NC and Western North Carolina &mdash; weekly, bi-weekly, and one-time service with no contracts. On-the-way texts and gate photo confirmation included on every visit.
+              Weekly service from $20 per visit across the Asheville area, with no contracts. On-the-way texts and gate photo confirmation included on every visit.
             </p>
             <Link
-              to="/quoterequest"
+              to="/quote"
               className="inline-block bg-primary text-primary-foreground font-semibold px-8 py-3 rounded-lg hover:bg-primary/90 transition-colors"
             >
               Get a Free Quote

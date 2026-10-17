@@ -12,7 +12,7 @@ import FloatingCTA from '@/components/FloatingCTA.jsx';
 import FAQSection from '@/components/FAQSection.jsx';
 import ReviewsSection from '@/components/ReviewsSection.jsx';
 import { getCanonicalUrl } from '@/utils/seoHelpers.js';
-import { generateLocalBusinessSchema, generateFAQPageSchema, generateBreadcrumbSchema, generateLocationSchema } from '@/utils/schemaGenerators.js';
+import { generateFAQPageSchema, generateBreadcrumbSchema, generateLocationSchema } from '@/utils/schemaGenerators.js';
 import { locations } from '@/data/locations.js';
 
 const LocationTemplate = ({ city: propCity }) => {
@@ -62,8 +62,8 @@ const LocationTemplate = ({ city: propCity }) => {
   const { name, seoTitle, seoDescription, serviceDescription, localContext, neighborhoods, testimonial, benefits, faqItems } = locationData;
   const canonicalUrl = getCanonicalUrl('/service/' + locationData.slug);
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: 'Home', url: 'https://scoopyavl.com/' },
-    { name: 'Service Areas', url: 'https://scoopyavl.com/service-areas' },
+    { name: 'Home', url: 'https://www.scoopyavl.com/' },
+    { name: 'Service Areas', url: 'https://www.scoopyavl.com/service-areas' },
     { name: name, url: canonicalUrl }
   ]);
   const faqSchema = faqItems && faqItems.length > 0 ? generateFAQPageSchema(faqItems) : null;
@@ -79,9 +79,6 @@ const LocationTemplate = ({ city: propCity }) => {
         <meta property="og:description" content={seoDescription} />
         <meta property="og:url" content={canonicalUrl} />
         <meta name="twitter:card" content="summary" />
-        <script type="application/ld+json">
-          {JSON.stringify(generateLocalBusinessSchema())}
-        </script>
         <script type="application/ld+json">
           {JSON.stringify(locationSchema)}
         </script>

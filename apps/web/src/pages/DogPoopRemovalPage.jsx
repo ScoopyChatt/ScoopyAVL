@@ -131,7 +131,7 @@ const DogPoopRemovalPage = () => {
               <MapPin className="w-10 h-10 text-primary mx-auto mb-4" />
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-balance">Serving Asheville & Surrounding Communities</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                We provide dog poop removal across Asheville, Arden, Hendersonville, Black Mountain, Fletcher, Fairview, Woodfin, Weaverville, Swannanoa, and Brevard, NC, plus Mills River, Leicester, and Mars Hill, NC. Check your address when you request a free quote.
+                We provide dog poop removal across Asheville, West Asheville, Arden, Fletcher, Hendersonville, Black Mountain, Weaverville, Fairview, Candler, Swannanoa, Woodfin, Mills River, Biltmore Forest, and Brevard, NC. Check your address when you request a free quote.
               </p>
             </div>
           </section>

@@ -8,8 +8,6 @@ import ChatWidgetGate from '@/components/ChatWidgetGate.jsx';
 
 import { useGTM } from '@/hooks/useGTM.js';
 import { usePixel } from '@/hooks/usePixel.js';
-import { CANONICAL_BASE_URL } from '@/config/seoConfig.js';
-import { generateLocalBusinessSchema } from '@/utils/seoHelpers.js';
 
 // Lazy loaded pages for code splitting
 const CoreServicePage = React.lazy(() => import('@/pages/CoreServicePage.jsx'));
@@ -68,6 +66,7 @@ const LawnHealthAndPetWaste = React.lazy(() => import('@/pages/blog/BlogArticle6
 const HealthRisksOfPetWaste = React.lazy(() => import('@/pages/blog/BlogArticle7_HealthRisksOfPetWaste.jsx'));
 const PetWasteManagementGuide = React.lazy(() => import('@/pages/blog/BlogArticle8_PetWasteManagementGuide.jsx'));
 const BenefitsPage = React.lazy(() => import('@/pages/blog/BenefitsPage.jsx'));
+const GeoBlogPost = React.lazy(() => import('@/pages/blog/GeoBlogPost.jsx'));
 
 // Media / Utilities
 const RedditOAuthCallbackPage = React.lazy(() => import('@/pages/RedditOAuthCallbackPage.jsx'));
@@ -104,21 +103,15 @@ const PageLoader = () => (
   </div>
 );
 
-function App() {
+// Everything inside the router. Split out so tools/prerender.mjs can render it under
+// a StaticRouter at build time and give crawlers the real page instead of an empty shell.
+export function AppRoutes() {
   useGTM('GTM-59B5PDXS');
 
   return (
-    <Router>
-      <Helmet>
-        <meta property="og:title" content="Scoopy Doo LLC" />
-        <meta property="og:description" content="Scoopy Doo, Asheville Pet Waste Removal" />
-        <meta property="og:image" content="https://horizons-cdn.hostinger.com/d0188638-a120-4cbd-8c61-d1420711a271/8088ef4935a7739f1747caefac1fdcc6.jpg" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={CANONICAL_BASE_URL} />
-        <script type="application/ld+json">
-          {JSON.stringify(generateLocalBusinessSchema())}
-        </script>
-      </Helmet>
+    <>
+      {/* Site-wide og tags and the LocalBusiness JSON-LD are written into every page's
+          static <head> at build time (tools/inject-seo.cjs), so they are not repeated here. */}
       
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -189,6 +182,10 @@ function App() {
           <Route path="/blog/health-risks-of-pet-waste" element={<HealthRisksOfPetWaste />} />
           <Route path="/blog/pet-waste-management-guide" element={<PetWasteManagementGuide />} />
           <Route path="/blog/benefits" element={<BenefitsPage />} />
+          {/* Posts from data/geoPosts.js. Paths are written out so verify-routes.cjs can see them. */}
+          <Route path="/blog/what-does-a-pooper-scooper-service-do-asheville" element={<GeoBlogPost slug="what-does-a-pooper-scooper-service-do-asheville" />} />
+          <Route path="/blog/fall-winter-dog-poop-cleanup-asheville" element={<GeoBlogPost slug="fall-winter-dog-poop-cleanup-asheville" />} />
+          <Route path="/blog/vacation-rental-pet-waste-cleanup-asheville" element={<GeoBlogPost slug="vacation-rental-pet-waste-cleanup-asheville" />} />
 
           <Route path="*" element={
             <>
@@ -208,6 +205,14 @@ function App() {
       
       <ChatWidgetGate />
       <Toaster />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppRoutes />
     </Router>
   );
 }
