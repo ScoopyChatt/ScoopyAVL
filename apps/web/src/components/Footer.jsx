@@ -40,15 +40,6 @@ const Footer = () => {
               >
                 <Instagram className="w-5 h-5" />
               </a>
-              <a 
-                href="https://www.yelp.com/biz/scoopy-doo-mills-river"
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="Review us on Yelp"
-                className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-slate-800 text-slate-300 hover:bg-[#d32323] hover:text-white transition-all duration-200 active:scale-95"
-              >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.16 12.73l-4.46 1.44a1.2 1.2 0 0 1-1.52-.79 1.2 1.2 0 0 1 .08-.92l2.23-4.08a.5.5 0 0 1 .68-.19c1.98 1.08 3.14 2.66 3 4.54zm-5.1 3.57l3.61 3.06a.5.5 0 0 1 .06.7c-1.22 1.51-2.97 2.2-4.86 1.83a1.2 1.2 0 0 1-.97-1.39l.71-4.63a1.2 1.2 0 0 1 1.45-.57zm-3.6-.38l-4.7.35a1.2 1.2 0 0 1-1.27-1.1c-.12-1.9.65-3.7 2.21-4.9a.5.5 0 0 1 .7.08l2.93 3.72a1.2 1.2 0 0 1-.87 1.85zM9.1 10.1l-3.43-3.3a.5.5 0 0 1 0-.71C7 4.76 8.85 4.2 10.7 4.6a1.2 1.2 0 0 1 .94 1.41L10.34 9.6a1.2 1.2 0 0 1-1.24.5zm2.44 1.2a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z"/></svg>
-              </a>
             </div>
           </div>
 
