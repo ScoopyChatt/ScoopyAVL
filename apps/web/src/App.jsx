@@ -106,7 +106,7 @@ const PageLoader = () => (
 // Everything inside the router. Split out so tools/prerender.mjs can render it under
 // a StaticRouter at build time and give crawlers the real page instead of an empty shell.
 export function AppRoutes() {
-  useGTM('GTM-59B5PDXS');
+  useGTM('GTM-P7C595MM');
 
   return (
     <>
